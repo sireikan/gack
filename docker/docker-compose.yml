@@ -2,23 +2,21 @@ version: '3'
 
 services:
   db:
-    image: mysql:8
+    build: ./mysql
     container_name: "database"
     ports:
       - "3306:3306"
     volumes:
       - ./mysql/sql/:/docker-entrypoint-initdb.d
-      - ./mysql/settings/:/var/lib/mysql
-      - ./mysql/sql/mysql.cnf:/etc/mysql/conf.d/my.cnf
+      - mysql-local:/var/lib/mysql
+      - ./mysql/conf/mysql.cnf:/etc/mysql/conf.d/my.cnf
     environment:
       MYSQL_DATABASE: "sample"
       MYSQL_ROOT_USER: "root"
       MYSQL_ROOT_PASSWORD: "root"
       TZ: "Asia/Tokyo"
   web:
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile
+    build: ./web
     volumes:
       - ~/src/github.com/sireikan/gack:/app
     ports:
@@ -26,3 +24,7 @@ services:
     tty: true
     depends_on:
       - db
+
+volumes:
+  mysql-local:
+    name: mysql-data

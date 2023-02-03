@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional
 import java.lang.RuntimeException
 import java.util.*
 import java.util.stream.Collectors
-import java.util.stream.Stream
 
 class UserRepository {
 
@@ -29,6 +28,7 @@ class UserRepository {
         return this.userRepository.findAll()
     }
 
+    @Transactional
     fun register(name: String, email: String, password: String, roles: List<String>) {
         if (this.userRepository.findByEmail(email).isPresent) {
             throw RuntimeException("invalid.")
@@ -40,9 +40,9 @@ class UserRepository {
     }
 
     private fun joinRoles(roles: List<String>): String {
-        if (roles == null || roles.isEmpty()) {
+        if (roles.isEmpty()) {
             return ""
         }
-        return roles.stream().map { it.trim() }.map { it.toUpperCase() }.collect(Collectors.joining(","))
+        return roles.stream().map { it.trim() }.map { it.uppercase(Locale.getDefault()) }.collect(Collectors.joining(","))
     }
 }

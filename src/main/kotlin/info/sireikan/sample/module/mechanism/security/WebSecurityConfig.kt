@@ -17,7 +17,11 @@ class WebSecurityConfig {
             header.frameOptions().disable()
         }
         http.authorizeHttpRequests { authorize ->
-            authorize.requestMatchers("/h2-console/**").permitAll().anyRequest().authenticated()
+            authorize
+                .requestMatchers("/", "/signup").permitAll()
+                .requestMatchers("/members/user/**").hasRole("USER")
+                .requestMatchers("/members/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
         }
         http.formLogin { form ->
             form.defaultSuccessUrl("/")
