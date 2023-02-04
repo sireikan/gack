@@ -15,6 +15,19 @@ services:
       MYSQL_ROOT_USER: "root"
       MYSQL_ROOT_PASSWORD: "root"
       TZ: "Asia/Tokyo"
+  redis:
+    build: ./redis
+    container_name: "redis"
+    environment:
+      TZ: Asia/Tokyo
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6379:6379
+    networks:
+      - redis-network
+    restart: always
+    tty: true
   web:
     build: ./web
     volumes:
@@ -24,7 +37,16 @@ services:
     tty: true
     depends_on:
       - db
+      - redis
+
+networks:
+  redis-network:
+    driver: bridge
 
 volumes:
   mysql-local:
     name: mysql-data
+  redis-data:
+    name: redis-data
+    driver: local
+
