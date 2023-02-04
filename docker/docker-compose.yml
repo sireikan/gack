@@ -5,7 +5,7 @@ services:
     build: ./mysql
     container_name: "database"
     ports:
-      - "3306:3306"
+      - "13306:3306"
     volumes:
       - ./mysql/sql/:/docker-entrypoint-initdb.d
       - mysql-local:/var/lib/mysql
@@ -20,7 +20,7 @@ services:
     volumes:
       - ~/src/github.com/sireikan/gack:/app
     ports:
-      - "8080:8080"
+      - "18080:8080"
     tty: true
     depends_on:
       - db

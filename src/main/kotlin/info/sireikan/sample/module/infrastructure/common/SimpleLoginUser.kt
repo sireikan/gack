@@ -40,7 +40,7 @@ class SimpleLoginUser : org.springframework.security.core.userdetails.User {
         }
 
         private fun convertGrantedAuthorities(roles: String): Collection<GrantedAuthority> {
-            if (roles == null || roles.isEmpty()) {
+            if (roles.isEmpty()) {
                 return Collections.emptySet()
             }
             var roleList = roles.split(",")

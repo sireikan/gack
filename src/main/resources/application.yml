@@ -5,6 +5,11 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   devtools:
+    remote:
+      restart:
+        enabled: true
+    livereload:
+      enabled: true
     restart:
       enabled: true
 mybatis:
