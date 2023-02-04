@@ -35,6 +35,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("mysql:mysql-connector-java")
+    implementation("io.lettuce:lettuce-core")
 
     compileOnly("org.projectlombok:lombok")
 

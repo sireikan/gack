@@ -49,37 +49,6 @@
         <div class="col-lg-4 col-sm-auto">
             <div class="card">
                 <h5 class="card-header indigo lighten-1 white-text text-center py-2">
-                    <strong>セッション</strong>
-                </h5>
-                <div class="card-body p-1">
-                    <ul class="list-group list-group-flush">
-                        <th:block th:if="${#session != null}">
-                            <li class="list-group-item">sessionId: <span th:text="${#session.id}"></span></li>
-                            <li class="list-group-item">lastAccessedTime: <span th:text="${#session.lastAccessedTime}"></span></li>
-                            <li class="list-group-item">maxInactiveInterval: <span th:text="${#session.maxInactiveInterval}"></span></li>
-                        </th:block>
-                        <li class="list-group-item" th:switch="${#request.isRequestedSessionIdFromCookie()}">
-                            RequestedSessionIdFromCookie :
-                            <span th:case="${true}" class="badge badge-info">yes</span>
-                            <span th:case="${false}">no</span>
-                        </li>
-                        <li class="list-group-item" th:switch="${#request.isRequestedSessionIdFromURL()}">
-                            RequestedSessionIdFromURL :
-                            <span th:case="${true}" class="badge badge-info">yes</span>
-                            <span th:case="${false}">no</span>
-                        </li>
-                        <li class="list-group-item" th:switch="${#request.isRequestedSessionIdValid()}">
-                            RequestedSessionIdValid :
-                            <span th:case="${true}" class="badge badge-info">yes</span>
-                            <span th:case="${false}">no</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-auto">
-            <div class="card">
-                <h5 class="card-header indigo lighten-1 white-text text-center py-2">
                     <strong>コンテンツ</strong>
                 </h5>
                 <div class="card-body p-1">
