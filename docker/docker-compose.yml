@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    container_name: app
+    build:
+      context: ./app
+    volumes:
+      - ~/src/github.com/sireikan/gack:/app
+    ports:
+      - "8080:8080"
