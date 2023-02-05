@@ -1,12 +1,10 @@
 package info.sireikan.sample.module.domain.common
 
 import jakarta.persistence.*
-import lombok.ToString
 
 
 @Table(name = "user")
 @Entity
-@ToString(exclude = ["email", "password"])
 class User() {
     constructor(
         id: Long?,

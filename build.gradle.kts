@@ -28,6 +28,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.session:spring-session-data-redis")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -37,11 +38,7 @@ dependencies {
     implementation("mysql:mysql-connector-java")
     implementation("io.lettuce:lettuce-core")
 
-    compileOnly("org.projectlombok:lombok")
-
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-
-    annotationProcessor("org.projectlombok:lombok")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

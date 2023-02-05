@@ -1,14 +1,11 @@
 package info.sireikan.sample.module.infrastructure.common
 
 import info.sireikan.sample.module.domain.common.User
-import lombok.extern.slf4j.Slf4j
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import java.util.*
 import java.util.stream.Collectors
-import java.util.stream.Stream
 
-@Slf4j
 class SimpleLoginUser : org.springframework.security.core.userdetails.User {
     private var user : User
 
