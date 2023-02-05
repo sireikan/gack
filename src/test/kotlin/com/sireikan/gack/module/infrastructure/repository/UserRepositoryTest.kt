@@ -1,7 +1,7 @@
 package com.sireikan.gack.module.infrastructure.repository
 
+import com.sireikan.gack.module.infrastructure.entity.User
 import org.junit.jupiter.api.Assertions
-
 import org.junit.jupiter.api.Test
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest
 import org.springframework.beans.factory.annotation.Autowired
@@ -38,5 +38,15 @@ class UserRepositoryTest {
     @Test
     fun isRunning() {
         Assertions.assertTrue(mysql.isRunning)
+    }
+
+    @Test
+    fun getAllTodoList() {
+        val userList: List<User> = userRepository.findAll()
+        Assertions.assertEquals(2, userList.size)
+        Assertions.assertEquals(1, userList[0].id)
+        Assertions.assertEquals("服をクリーニングに出す", userList[0].name)
+        Assertions.assertEquals(2, userList[1].id)
+        Assertions.assertEquals("きのこのマリネを作る", userList[1].name)
     }
 }
