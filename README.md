@@ -2,6 +2,7 @@
 
 ```shell
 cd docker
+docker-compose build --no-cache
 docker-compose up
 docker-compose up -d
 ```
