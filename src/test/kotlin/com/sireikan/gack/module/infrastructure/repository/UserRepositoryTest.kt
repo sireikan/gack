@@ -43,10 +43,10 @@ class UserRepositoryTest {
     @Test
     fun getAllTodoList() {
         val userList: List<User> = userRepository.findAll()
-        Assertions.assertEquals(2, userList.size)
+        Assertions.assertEquals(1, userList.size)
         Assertions.assertEquals(1, userList[0].id)
-        Assertions.assertEquals("服をクリーニングに出す", userList[0].name)
-        Assertions.assertEquals(2, userList[1].id)
-        Assertions.assertEquals("きのこのマリネを作る", userList[1].name)
+        Assertions.assertEquals("test", userList[0].name)
+        Assertions.assertEquals("test@example.com", userList[0].email)
+        Assertions.assertEquals("test", userList[0].password)
     }
 }
