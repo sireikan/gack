@@ -1,0 +1,170 @@
+openapi: 3.1.0
+x-stoplight:
+  id: frw7j6bzrk681
+info:
+  title: gack
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /:
+    parameters: []
+    get:
+      summary: Get User Info by User ID
+      tags: []
+      responses:
+        '200':
+          description: User Found
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples: {}
+      operationId: get-users-userId
+      description: Index Page
+  /user:
+    post:
+      summary: Create New User
+      operationId: post-user
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - name
+                - email
+                - password
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: Post the necessary fields for the API to create a new user.
+      description: Create a new user.
+    get:
+      summary: ''
+      operationId: get-user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              examples:
+                Example 1:
+                  value:
+                    - id: 0
+                      name: string
+                      email: string
+                      password: string
+      description: Get Users
+    parameters: []
+  '/user/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: user id
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Not Found
+      operationId: get-user-id
+    put:
+      summary: ''
+      operationId: put-user-id
+      responses:
+        '200':
+          description: OK
+      description: update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+    delete:
+      summary: ''
+      operationId: delete-user-id
+      responses:
+        '200':
+          description: OK
+      description: delete user
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      examples:
+        - id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - id
+        - name
+        - email
+        - password

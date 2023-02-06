@@ -1,8 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
 	id("org.springframework.boot") version "3.0.2"
 	id("io.spring.dependency-management") version "1.1.0"
+    id("org.openapi.generator") version "6.3.0"
 	kotlin("jvm") version "1.7.22"
 	kotlin("plugin.spring") version "1.7.22"
 }
@@ -20,6 +22,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     implementation("org.springframework.session:spring-session-data-redis")
 
@@ -33,6 +36,10 @@ dependencies {
     implementation("org.flywaydb:flyway-mysql")
 
     runtimeOnly("mysql:mysql-connector-java")
+
+    compileOnly("io.swagger.core.v3:swagger-annotations:2.2.8")
+    compileOnly("io.swagger.core.v3:swagger-models:2.2.8")
+    compileOnly("jakarta.annotation:jakarta.annotation-api:2.1.1")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
@@ -69,4 +76,39 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+task<GenerateTask>("generateApiDoc") {
+    generatorName.set("html2")
+    inputSpec.set("$projectDir/openapi.yaml")
+    outputDir.set("$buildDir/openapi/doc/")
+}
+
+task<GenerateTask>("generateApiServer") {
+    generatorName.set("kotlin-spring")
+    inputSpec.set("$projectDir/openapi.yaml")
+    outputDir.set("$buildDir/openapi/server-code/") // .gitignoreされているので注意(わざとここにあります)
+    apiPackage.set("com.sireikan.gack.openapi.generated.controller") // 各自のアプリケーションに合わせてパス名を変更する
+    modelPackage.set("com.sireikan.gack.openapi.generated.model") // 各自のアプリケーションに合わせてパス名を変更する
+    configOptions.set(
+        mapOf(
+            "interfaceOnly" to "true",
+        )
+    )
+    /**
+     * true にすると tags 準拠で、API の interface を生成する
+     */
+    additionalProperties.set(
+        mapOf(
+            "useTags" to "true"
+        )
+    )
+}
+
+tasks.compileKotlin {
+    dependsOn("generateApiServer")
+}
+
+kotlin.sourceSets.main {
+    kotlin.srcDir("$buildDir/openapi/server-code/src/main")
 }
