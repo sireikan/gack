@@ -106,7 +106,7 @@ task<GenerateTask>("generateApiServer") {
 }
 
 tasks.compileKotlin {
-    dependsOn("generateApiServer")
+//    dependsOn("generateApiServer")
 }
 
 kotlin.sourceSets.main {

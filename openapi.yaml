@@ -7,21 +7,6 @@ info:
 servers:
   - url: 'http://localhost:8080'
 paths:
-  /:
-    parameters: []
-    get:
-      summary: Get User Info by User ID
-      tags: []
-      responses:
-        '200':
-          description: User Found
-          content:
-            text/html:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples: {}
-      operationId: get-users-userId
-      description: Index Page
   /user:
     post:
       summary: Create New User
@@ -32,7 +17,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserResponse'
               examples:
                 New User Bob Fellow:
                   value:
@@ -51,18 +36,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-              required:
-                - name
-                - email
-                - password
+              $ref: '#/components/schemas/UserRequest'
             examples:
               Create User Bob Fellow:
                 value:
@@ -72,6 +46,8 @@ paths:
                   dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
+      tags:
+        - user
     get:
       summary: ''
       operationId: get-user
@@ -81,9 +57,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/MultipleUserResponse'
               examples:
                 Example 1:
                   value:
@@ -92,6 +66,8 @@ paths:
                       email: string
                       password: string
       description: Get Users
+      tags:
+        - user
     parameters: []
   '/user/{id}':
     parameters:
@@ -103,17 +79,18 @@ paths:
         description: user id
     get:
       summary: Your GET endpoint
-      tags: []
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserResponse'
         '404':
           description: Not Found
       operationId: get-user-id
+      tags:
+        - user
     put:
       summary: ''
       operationId: put-user-id
@@ -125,14 +102,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
+              $ref: '#/components/schemas/UserRequest'
     delete:
       summary: ''
       operationId: delete-user-id
@@ -142,21 +112,26 @@ paths:
       description: delete user
 components:
   schemas:
-    User:
-      title: User
+    UserRequest:
+      title: UserRequest
+      x-stoplight:
+        id: w4lh9zce4nbyj
       type: object
-      examples:
-        - id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          signUpDate: '2019-08-24'
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    UserResponse:
+      title: UserResponse
+      x-stoplight:
+        id: tzazowquuet89
+      type: object
       properties:
         id:
           type: integer
-          description: Unique identifier for the given user.
         name:
           type: string
         email:
@@ -168,3 +143,15 @@ components:
         - name
         - email
         - password
+    MultipleUserResponse:
+      title: MultipleUserResponse
+      x-stoplight:
+        id: vgmamje9jniw8
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+      required:
+        - users

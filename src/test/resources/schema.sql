@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS sample;
 
-CREATE TABLE user (
+CREATE TABLE IF NOT EXISTS user (
                       id BIGINT AUTO_INCREMENT,
                       name text NOT NULL,
                       email varchar(120) NOT NULL,
@@ -9,6 +9,4 @@ CREATE TABLE user (
                       UNIQUE KEY (email)
 );
 
-insert into user (id, name, email, password) values
-    (null, 'test', 'test@example.com', 'test')
-;
+DELETE FROM user;

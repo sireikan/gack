@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Select
 
 @Mapper
 interface UserRepository {
-    @Select("select * from user")
+    @Select("select * from user order by id")
     fun findAll(): List<User>
 }
