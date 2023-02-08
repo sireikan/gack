@@ -7,6 +7,7 @@ plugins {
     id("org.openapi.generator") version "6.3.0"
 	kotlin("jvm") version "1.7.22"
 	kotlin("plugin.spring") version "1.7.22"
+    kotlin("plugin.serialization") version "1.6.10"
 }
 
 group = "com.sireikan"
@@ -34,6 +35,8 @@ dependencies {
 
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-mysql")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
     runtimeOnly("mysql:mysql-connector-java")
 

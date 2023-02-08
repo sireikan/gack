@@ -1,4 +1,4 @@
-package com.sireikan.gack.controller
+package com.sireikan.gack.http.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.ReactiveRedisTemplate
