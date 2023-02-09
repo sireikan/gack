@@ -21,7 +21,7 @@ class UserRepositoryTest : AbstractRepositoryTest() {
         Assertions.assertEquals(0, userList.size)
     }
 
-    @Sql("/sql/UserRepository/findAll_exist_data.sql")
+    @Sql("/sql/UserRepositoryTest/findAll_exist_data.sql")
     @Test
     fun findAll_exist_data() {
         val userList: List<User> = userRepository.findAll()
@@ -32,7 +32,7 @@ class UserRepositoryTest : AbstractRepositoryTest() {
         Assertions.assertEquals("test", userList[0].password)
     }
 
-    @Sql("/sql/UserRepository/findAll_multi.sql")
+    @Sql("/sql/UserRepositoryTest/findAll_multi.sql")
     @Test
     fun findAll_multi() {
         val userList: List<User> = userRepository.findAll()
