@@ -37,8 +37,6 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-mysql")
 
-    implementation("org.apache.tomcat:tomcat-jdbc")
-
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
     runtimeOnly("mysql:mysql-connector-java")
