@@ -3,19 +3,9 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: 2
+executorType: machine
 jobs:
   build:
-    docker:
-      - image: cimg/base:stable
-        auth:
-          username: $DOCKERHUB_USER
-          password: $DOCKERHUB_ACCESS_TOKEN
-      # specify the version you desire here
-      - image: cimg/openjdk:19.0.2
-      - image: cimg/mysql:8.0
-
-    working_directory: ~/repo
-
     environment:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
@@ -23,20 +13,6 @@ jobs:
 
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle.kts" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: gradle dependencies
-
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle.kts" }}
 
       # run tests!
       - run: gradle test --debug
