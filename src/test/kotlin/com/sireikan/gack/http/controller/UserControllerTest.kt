@@ -4,34 +4,22 @@ import com.sireikan.gack.application.service.user.common.UserData
 import com.sireikan.gack.domain.model.user.*
 import com.sireikan.gack.http.model.user.MultipleUserResponse
 import com.sireikan.gack.http.model.user.UserResponse
+import com.sireikan.gack.module.infrastructure.repository.MysqlExtension
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.DynamicPropertyRegistry
-import org.springframework.test.context.DynamicPropertySource
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.testcontainers.containers.MySQLContainer
-import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
-import org.testcontainers.utility.DockerImageName
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
+@ExtendWith(MysqlExtension::class)
+@DirtiesContext
 class UserControllerTest {
-
-    companion object {
-        @JvmStatic
-        @Container
-        protected val mysql: MySQLContainer<*> = MySQLContainer(DockerImageName.parse("mysql:8.0")).withUsername("user").withPassword("password").withDatabaseName("sample")
-
-        @JvmStatic
-        @DynamicPropertySource
-        fun mysqlProperties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.datasource.url", mysql::getJdbcUrl)
-        }
-    }
 
     @Autowired
     lateinit var webClient: WebTestClient
