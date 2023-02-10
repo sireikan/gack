@@ -3,14 +3,20 @@ package com.sireikan.gack.module.infrastructure.repository
 import com.sireikan.gack.module.infrastructure.entity.User
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.jdbc.Sql
+import org.testcontainers.junit.jupiter.Testcontainers
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Testcontainers
+@ExtendWith(MysqlExtension::class)
+@DirtiesContext
 @MybatisTest
-class UserRepositoryTest : AbstractRepositoryTest() {
+class UserRepositoryTest {
 
     @Autowired
     lateinit var userRepository: UserRepository
