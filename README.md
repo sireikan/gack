@@ -17,3 +17,19 @@ docker-compose down
 ```shell
 docker-compose down --volume
 ```
+
+## compile
+```shell
+./gradlew build
+```
+
+## run
+```shell
+./gradlew bootRun
+```
+
+## test
+```shell
+./gradlew test
+```
+

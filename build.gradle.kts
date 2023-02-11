@@ -1,10 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
 	id("org.springframework.boot") version "3.0.2"
 	id("io.spring.dependency-management") version "1.1.0"
     id("org.openapi.generator") version "6.3.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "11.1.0"
 	kotlin("jvm") version "1.7.22"
 	kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.serialization") version "1.6.10"
@@ -16,6 +19,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
 	mavenCentral()
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
@@ -115,4 +119,25 @@ tasks.compileKotlin {
 
 kotlin.sourceSets.main {
     kotlin.srcDir("$buildDir/openapi/server-code/src/main")
+}
+
+ktlint {
+    version.set("0.48.2")
+    verbose.set(true)
+    outputToConsole.set(true)
+    coloredOutput.set(true)
+    reporters {
+        reporter(ReporterType.CHECKSTYLE)
+    }
+    ignoreFailures.set(true)
+}
+
+tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask> {
+    reportsOutputDirectory.set(
+        project.layout.buildDirectory.dir("report/")
+    )
+}
+
+tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask> {
+    workerMaxHeapSize.set("512m")
 }
