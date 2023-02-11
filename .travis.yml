@@ -1,0 +1,31 @@
+language: java
+dist: trusty
+jdk:
+  - oraclejdk19
+
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+before_install:
+  - sed -i.bak -e 's|https://nexus.codehaus.org/snapshots/|https://oss.sonatype.org/content/repositories/codehaus-snapshots/|g' ~/.m2/settings.xml
+
+install:
+  - bundle install
+
+before_script:
+  - bundle exec danger
+
+script:
+  - ./gradlew assembleDebug ktlintCheck
+  - bundle exec danger
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
