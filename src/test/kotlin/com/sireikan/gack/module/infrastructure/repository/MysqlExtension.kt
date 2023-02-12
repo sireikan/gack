@@ -18,10 +18,10 @@ class MysqlExtension : BeforeAllCallback, AfterAllCallback {
             .withExposedPorts(3306)
 
         this.mysql.start()
-        val jdbcUrl: String = String.format("jdbc:mysql://localhost:%d/sample?autoReconnect=true", this.mysql.firstMappedPort);
-        System.setProperty("spring.datasource.url", jdbcUrl);
-        System.setProperty("spring.datasource.username", "user");
-        System.setProperty("spring.datasource.password", "password");
+        val jdbcUrl: String = String.format("jdbc:mysql://localhost:%d/sample?autoReconnect=true", this.mysql.firstMappedPort)
+        System.setProperty("spring.datasource.url", jdbcUrl)
+        System.setProperty("spring.datasource.username", "user")
+        System.setProperty("spring.datasource.password", "password")
     }
 
     override fun afterAll(context: ExtensionContext?) {

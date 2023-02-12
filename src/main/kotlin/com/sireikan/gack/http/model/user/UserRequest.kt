@@ -14,16 +14,16 @@ data class UserRequest(
 
     @field:Valid
     @Schema(example = "null", description = "")
-    @get:JsonProperty("name") val name: kotlin.Any? = null,
+    @get:JsonProperty("name")
+    val name: kotlin.Any? = null,
 
     @field:Valid
     @Schema(example = "null", description = "")
-    @get:JsonProperty("email") val email: kotlin.Any? = null,
+    @get:JsonProperty("email")
+    val email: kotlin.Any? = null,
 
     @field:Valid
     @Schema(example = "null", description = "")
-    @get:JsonProperty("password") val password: kotlin.Any? = null
-) {
-
-}
-
+    @get:JsonProperty("password")
+    val password: kotlin.Any? = null,
+)
