@@ -22,7 +22,7 @@ class UserController : UserApi {
             MultipleUserResponse(
                 users = outputData.userList.stream().map { user -> UserResponse(user.userId, user.userName, user.email, user.password) }.toList(),
             ),
-            HttpStatus.OK
+            HttpStatus.OK,
         )
     }
 }

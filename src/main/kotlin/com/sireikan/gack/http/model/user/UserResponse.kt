@@ -16,21 +16,25 @@ import kotlinx.serialization.Serializable
 data class UserResponse(
 
     @field:Valid
-    @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("id", required = true) val id: Int,
+    @Schema
+    (example = "null", required = true, description = "")
+    @get:JsonProperty("id", required = true)
+    val id: Int,
+
+    @field:Valid
+    @Schema
+    (example = "null", required = true, description = "")
+    @get:JsonProperty("name", required = true)
+    val name: String,
+
+    @field:Valid
+    @Schema
+    (example = "null", required = true, description = "")
+    @get:JsonProperty("email", required = true)
+    val email: String,
 
     @field:Valid
     @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("name", required = true) val name: String,
-
-    @field:Valid
-    @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("email", required = true) val email: String,
-
-    @field:Valid
-    @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("password", required = true) val password: String
-) {
-
-}
-
+    @get:JsonProperty("password", required = true)
+    val password: String,
+)

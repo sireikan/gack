@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class GackApplication
 
 fun main(args: Array<String>) {
-	runApplication<GackApplication>(*args)
+    runApplication<GackApplication>(*args)
 }

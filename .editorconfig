@@ -1,0 +1,7 @@
+root = true
+
+[*.{kt,kts}]
+ktlint_code_style = official
+ktlint_standard = enabled
+ktlint_experimental = enabled
+ktlint_your-custom-rule-set_custom-rule = enabled

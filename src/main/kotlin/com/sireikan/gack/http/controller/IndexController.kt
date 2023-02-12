@@ -1,7 +1,6 @@
 package com.sireikan.gack.http.controller
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.redis.core.ValueOperations
 import org.springframework.stereotype.Controller
@@ -16,7 +15,7 @@ class IndexController {
     lateinit var redisTemplate: StringRedisTemplate
 
     @GetMapping("/")
-    fun index(model: Model) : String {
+    fun index(model: Model): String {
         return "index"
     }
 

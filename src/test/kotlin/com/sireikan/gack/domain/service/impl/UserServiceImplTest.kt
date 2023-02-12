@@ -31,9 +31,9 @@ class UserServiceImplTest {
 
     @Test
     fun findAll_exist() {
-        Mockito.`when`(userRepository.findAll()).thenReturn(listOf(
-            User(1, "name", "email", "password")
-        ))
+        Mockito.`when`(userRepository.findAll()).thenReturn(
+            listOf(User(1, "name", "email", "password")),
+        )
         val actual = userService.findAll()
 
         Assertions.assertEquals(1, actual.size)

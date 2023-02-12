@@ -8,17 +8,19 @@ package com.sireikan.gack.http.controller
 import com.sireikan.gack.http.model.user.MultipleUserResponse
 import com.sireikan.gack.http.model.user.UserRequest
 import com.sireikan.gack.http.model.user.UserResponse
-import io.swagger.v3.oas.annotations.*
-import io.swagger.v3.oas.annotations.enums.*
-import io.swagger.v3.oas.annotations.media.*
-import io.swagger.v3.oas.annotations.responses.*
-import io.swagger.v3.oas.annotations.security.*
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-
-import org.springframework.web.bind.annotation.*
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 
 @Validated
 @RequestMapping("\${api.base-path:}")
@@ -29,13 +31,13 @@ interface UserApi {
         operationId = "getUser",
         description = "Get Users",
         responses = [
-            ApiResponse(responseCode = "200", description = "OK", content = [Content(schema = Schema(implementation = MultipleUserResponse::class))])
-        ]
+            ApiResponse(responseCode = "200", description = "OK", content = [Content(schema = Schema(implementation = MultipleUserResponse::class))]),
+        ],
     )
     @RequestMapping(
-            method = [RequestMethod.GET],
-            value = ["/user"],
-            produces = ["application/json"]
+        method = [RequestMethod.GET],
+        value = ["/user"],
+        produces = ["application/json"],
     )
     fun getUser(): ResponseEntity<MultipleUserResponse> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
@@ -47,15 +49,20 @@ interface UserApi {
         description = "",
         responses = [
             ApiResponse(responseCode = "200", description = "OK", content = [Content(schema = Schema(implementation = UserResponse::class))]),
-            ApiResponse(responseCode = "404", description = "Not Found")
-        ]
+            ApiResponse(responseCode = "404", description = "Not Found"),
+        ],
     )
     @RequestMapping(
-            method = [RequestMethod.GET],
-            value = ["/user/{id}"],
-            produces = ["application/json"]
+        method = [RequestMethod.GET],
+        value = ["/user/{id}"],
+        produces = ["application/json"],
     )
-    fun getUserId(@Parameter(description = "user id", required = true) @PathVariable("id") id: kotlin.Any): ResponseEntity<UserResponse> {
+    fun getUserId(
+        @Parameter
+        (description = "user id", required = true)
+        @PathVariable("id")
+        id: kotlin.Any,
+    ): ResponseEntity<UserResponse> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 
@@ -66,16 +73,21 @@ interface UserApi {
         responses = [
             ApiResponse(responseCode = "200", description = "User Created", content = [Content(schema = Schema(implementation = UserResponse::class))]),
             ApiResponse(responseCode = "400", description = "Missing Required Information"),
-            ApiResponse(responseCode = "409", description = "Email Already Taken")
-        ]
+            ApiResponse(responseCode = "409", description = "Email Already Taken"),
+        ],
     )
     @RequestMapping(
-            method = [RequestMethod.POST],
-            value = ["/user"],
-            produces = ["application/json"],
-            consumes = ["application/json"]
+        method = [RequestMethod.POST],
+        value = ["/user"],
+        produces = ["application/json"],
+        consumes = ["application/json"],
     )
-    fun postUser(@Parameter(description = "Post the necessary fields for the API to create a new user.") @Valid @RequestBody(required = false) userRequest: UserRequest?): ResponseEntity<UserResponse> {
+    fun postUser(
+        @Parameter(description = "Post the necessary fields for the API to create a new user.")
+        @Valid
+        @RequestBody(required = false)
+        userRequest: UserRequest?,
+    ): ResponseEntity<UserResponse> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 }

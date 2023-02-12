@@ -14,8 +14,6 @@ data class MultipleUserResponse(
 
     @field:Valid
     @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("users", required = true) val users: List<UserResponse>
-) {
-
-}
-
+    @get:JsonProperty("users", required = true)
+    val users: List<UserResponse>,
+)

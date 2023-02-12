@@ -1,15 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
-	id("org.springframework.boot") version "3.0.2"
-	id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot") version "3.0.2"
+    id("io.spring.dependency-management") version "1.1.0"
     id("org.openapi.generator") version "6.3.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.1.0"
-	kotlin("jvm") version "1.7.22"
-	kotlin("plugin.spring") version "1.7.22"
+    kotlin("jvm") version "1.7.22"
+    kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.serialization") version "1.6.10"
     jacoco
 }
@@ -19,13 +19,13 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
-	mavenCentral()
+    mavenCentral()
     maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-	implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -35,9 +35,9 @@ dependencies {
 
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1")
 
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-mysql")
@@ -50,7 +50,7 @@ dependencies {
     compileOnly("io.swagger.core.v3:swagger-models:2.2.8")
     compileOnly("jakarta.annotation:jakarta.annotation-api:2.1.1")
 
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -77,14 +77,14 @@ dependencyManagement {
 }
 
 tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
-	}
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "17"
+    }
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 task<GenerateTask>("generateApiDoc") {
@@ -102,15 +102,15 @@ task<GenerateTask>("generateApiServer") {
     configOptions.set(
         mapOf(
             "interfaceOnly" to "true",
-        )
+        ),
     )
     /**
      * true にすると tags 準拠で、API の interface を生成する
      */
     additionalProperties.set(
         mapOf(
-            "useTags" to "true"
-        )
+            "useTags" to "true",
+        ),
     )
 }
 
@@ -135,7 +135,7 @@ ktlint {
 
 tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask> {
     reportsOutputDirectory.set(
-        project.layout.buildDirectory.dir("report/")
+        project.layout.buildDirectory.dir("report/"),
     )
 }
 
