@@ -1,6 +1,6 @@
 package com.sireikan.gack.http.controller
 
-import com.sireikan.gack.application.service.user.common.UserData
+import com.sireikan.gack.application.service.usecase.user.data.UserData
 import com.sireikan.gack.domain.model.user.Email
 import com.sireikan.gack.domain.model.user.Password
 import com.sireikan.gack.domain.model.user.User
@@ -8,7 +8,7 @@ import com.sireikan.gack.domain.model.user.UserId
 import com.sireikan.gack.domain.model.user.UserName
 import com.sireikan.gack.http.model.user.MultipleUserResponse
 import com.sireikan.gack.http.model.user.UserResponse
-import com.sireikan.gack.module.infrastructure.repository.MysqlExtension
+import com.sireikan.gack.infrastructure.mapper.MysqlExtension
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
