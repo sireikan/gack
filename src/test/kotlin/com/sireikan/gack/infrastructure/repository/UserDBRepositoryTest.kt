@@ -1,5 +1,6 @@
 package com.sireikan.gack.infrastructure.repository
 
+import com.sireikan.gack.domain.repository.UserOrderKey
 import com.sireikan.gack.domain.repository.UserRepository
 import com.sireikan.gack.infrastructure.entity.User
 import com.sireikan.gack.infrastructure.mapper.UserMapper
@@ -22,23 +23,23 @@ class UserDBRepositoryTest {
 
     @Test
     fun findAll() {
-        Mockito.`when`(userMapper.findAll()).thenReturn(emptyList())
-        val actual = userRepository.findAll()
+        Mockito.`when`(userMapper.findAll("id")).thenReturn(emptyList())
+        val actual = userRepository.findAll(UserOrderKey.USER_ID)
 
         Assertions.assertEquals(0, actual.size)
     }
 
     @Test
     fun findAll_exist() {
-        Mockito.`when`(userMapper.findAll()).thenReturn(
-            listOf(User(1, "name", "email", "password")),
+        Mockito.`when`(userMapper.findAll("id")).thenReturn(
+            listOf(User.create(1, "name", "email", "password")),
         )
-        val actual = userRepository.findAll()
+        val actual = userRepository.findAll(UserOrderKey.USER_ID)
 
         Assertions.assertEquals(1, actual.size)
-        Assertions.assertSame(1, actual.get(0).id.getValue())
-        Assertions.assertSame("name", actual.get(0).name.getValue())
-        Assertions.assertSame("email", actual.get(0).email.getValue())
-        Assertions.assertSame("password", actual.get(0).password.getValue())
+        Assertions.assertSame(1, actual.get(0).id.userId)
+        Assertions.assertSame("name", actual.get(0).name.userName)
+        Assertions.assertSame("email", actual.get(0).email.email)
+        Assertions.assertSame("password", actual.get(0).password.password)
     }
 }

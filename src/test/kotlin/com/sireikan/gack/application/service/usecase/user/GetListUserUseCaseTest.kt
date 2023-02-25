@@ -5,6 +5,7 @@ import com.sireikan.gack.domain.model.user.Password
 import com.sireikan.gack.domain.model.user.User
 import com.sireikan.gack.domain.model.user.UserId
 import com.sireikan.gack.domain.model.user.UserName
+import com.sireikan.gack.domain.repository.UserOrderKey
 import com.sireikan.gack.domain.repository.UserRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -25,7 +26,7 @@ class GetListUserUseCaseTest {
 
     @Test
     fun findAll() {
-        Mockito.`when`(userRepository.findAll()).thenReturn(emptyList())
+        Mockito.`when`(userRepository.findAll(UserOrderKey.USER_ID)).thenReturn(emptyList())
         val actual = getListUserUseCase.execute()
 
         Assertions.assertEquals(0, actual.userList.size)
@@ -33,7 +34,7 @@ class GetListUserUseCaseTest {
 
     @Test
     fun findAll_exist() {
-        Mockito.`when`(userRepository.findAll()).thenReturn(
+        Mockito.`when`(userRepository.findAll(UserOrderKey.USER_ID)).thenReturn(
             listOf(User(UserId(1), UserName("name"), Email("email"), Password("password"))),
         )
         val actual = getListUserUseCase.execute()

@@ -9,9 +9,9 @@ class UserData {
     var password: String
 
     constructor(user: User) {
-        this.userId = user.id.getValue()
-        this.userName = user.name.getValue()
-        this.email = user.email.getValue()
-        this.password = user.password.getValue()
+        this.userId = user.id.userId
+        this.userName = user.name.userName
+        this.email = user.email.email
+        this.password = user.password.password
     }
 }

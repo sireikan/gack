@@ -7,6 +7,6 @@ class PasswordTest {
     @Test
     fun create() {
         val password: Password = Password("password")
-        Assertions.assertSame("password", password.getValue())
+        Assertions.assertSame("password", password.password)
     }
 }

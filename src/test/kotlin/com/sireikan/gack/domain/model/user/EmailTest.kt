@@ -7,6 +7,6 @@ class EmailTest {
     @Test
     fun create() {
         val email: Email = Email("email")
-        Assertions.assertSame("email", email.getValue())
+        Assertions.assertSame("email", email.email)
     }
 }

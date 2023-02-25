@@ -7,6 +7,6 @@ class UserNameTest {
     @Test
     fun create() {
         val userName: UserName = UserName("name")
-        Assertions.assertSame("name", userName.getValue())
+        Assertions.assertSame("name", userName.userName)
     }
 }

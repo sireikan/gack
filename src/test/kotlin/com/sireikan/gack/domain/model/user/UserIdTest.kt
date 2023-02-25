@@ -7,6 +7,6 @@ class UserIdTest {
     @Test
     fun create() {
         val userId: UserId = UserId(1)
-        Assertions.assertSame(1, userId.getValue())
+        Assertions.assertSame(1, userId.userId)
     }
 }
