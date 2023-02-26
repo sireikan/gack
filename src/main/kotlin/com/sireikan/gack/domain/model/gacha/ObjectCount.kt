@@ -2,8 +2,8 @@ package com.sireikan.gack.domain.model.gacha
 
 import com.sireikan.gack.domain.error.DomainException
 
-data class ObjectCount (
-    val count: Int
+data class ObjectCount(
+    val count: Int,
 ) {
     init {
         if (count <= 0) {

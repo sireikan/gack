@@ -1,5 +1,18 @@
 package com.sireikan.gack.domain.model.gacha
 
-data class BannerImage (
-    val url: String
-)
+import com.sireikan.gack.domain.error.DomainException
+
+class BannerImage private constructor(
+    val url: String,
+) {
+    companion object {
+        fun create(url: String): BannerImage {
+            return BannerImage(url)
+        }
+    }
+    init {
+        if (url.isBlank()) {
+            throw DomainException("BannerImage is invalid.")
+        }
+    }
+}

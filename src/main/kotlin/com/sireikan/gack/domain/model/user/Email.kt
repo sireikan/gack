@@ -1,5 +1,5 @@
 package com.sireikan.gack.domain.model.user
 
-class Email (
-    val email: String
+class Email(
+    val email: String,
 )

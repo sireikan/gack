@@ -1,10 +1,10 @@
 package com.sireikan.gack.infrastructure.entity
 
-class User private constructor (
+class User private constructor(
     val id: Int,
     val name: String,
     val email: String,
-    val password: String
+    val password: String,
 ) {
     companion object {
         fun create(id: Int, name: String, email: String, password: String): User {
@@ -12,7 +12,7 @@ class User private constructor (
                 id,
                 name,
                 email,
-                password
+                password,
             )
         }
     }

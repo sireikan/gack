@@ -5,18 +5,18 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class ProbabilityTest {
+class GachaExecCountTest {
     @Test
     fun create() {
-        val probability: Probability = Probability(100)
-        Assertions.assertSame(100, probability.probability)
+        val gachaExecCount: GachaExecCount = GachaExecCount.create(1)
+        Assertions.assertSame(1, gachaExecCount.count)
     }
 
     @Test
     fun error() {
         val exception: DomainException = assertThrows<DomainException>() {
-            Probability(0)
+            GachaExecCount.create(0)
         }
-        Assertions.assertSame("Probability is invalid.", exception.message)
+        Assertions.assertSame("GachaExecCount is invalid.", exception.message)
     }
 }

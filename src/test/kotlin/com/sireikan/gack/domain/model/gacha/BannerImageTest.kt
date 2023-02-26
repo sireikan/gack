@@ -5,18 +5,18 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class ProbabilityTest {
+class BannerImageTest {
     @Test
     fun create() {
-        val probability: Probability = Probability(100)
-        Assertions.assertSame(100, probability.probability)
+        val bannerImage: BannerImage = BannerImage.create("https://hogehoge.png")
+        Assertions.assertSame("https://hogehoge.png", bannerImage.url)
     }
 
     @Test
     fun error() {
         val exception: DomainException = assertThrows<DomainException>() {
-            Probability(0)
+            BannerImage.create("")
         }
-        Assertions.assertSame("Probability is invalid.", exception.message)
+        Assertions.assertSame("BannerImage is invalid.", exception.message)
     }
 }

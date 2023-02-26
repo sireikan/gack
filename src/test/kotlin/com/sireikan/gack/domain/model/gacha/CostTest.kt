@@ -5,18 +5,18 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class ProbabilityTest {
+class CostTest {
     @Test
     fun create() {
-        val probability: Probability = Probability(100)
-        Assertions.assertSame(100, probability.probability)
+        val cost: Cost = Cost.create(100)
+        Assertions.assertSame(100, cost.cost)
     }
 
     @Test
     fun error() {
         val exception: DomainException = assertThrows<DomainException>() {
-            Probability(0)
+            Cost.create(-1)
         }
-        Assertions.assertSame("Probability is invalid.", exception.message)
+        Assertions.assertSame("Cost is invalid.", exception.message)
     }
 }
