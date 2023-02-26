@@ -5,18 +5,18 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class ProbabilityTest {
+class ObjectIdTest {
     @Test
     fun create() {
-        val probability: Probability = Probability.create(100)
-        Assertions.assertSame(100, probability.probability)
+        val objectId: ObjectId = ObjectId.create(1)
+        Assertions.assertSame(1L, objectId.id)
     }
 
     @Test
     fun error() {
         val exception: DomainException = assertThrows<DomainException>() {
-            Probability.create(0)
+            ObjectId.create(-1)
         }
-        Assertions.assertSame("Probability is invalid.", exception.message)
+        Assertions.assertSame("ObjectId is invalid.", exception.message)
     }
 }

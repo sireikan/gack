@@ -2,12 +2,20 @@ package com.sireikan.gack.domain.model.gacha
 
 import com.sireikan.gack.domain.error.DomainException
 
-data class GachaName(
+class GachaName private constructor(
     val name: String,
 ) {
+    companion object {
+        fun create(name: String): GachaName {
+            return GachaName(name)
+        }
+    }
     init {
-        if (name.isBlank() || name.length > 20) {
-            throw DomainException("Gacha name is invalid.")
+        if (name.isBlank()) {
+            throw DomainException("GachaName is invalid.")
+        }
+        if (name.length > 20) {
+            throw DomainException("GachaName is longer.")
         }
     }
 }
