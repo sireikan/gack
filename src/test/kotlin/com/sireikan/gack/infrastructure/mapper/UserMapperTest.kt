@@ -16,18 +16,14 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @ExtendWith(MysqlExtension::class)
 @DirtiesContext
 @MybatisTest
-class UserMapperTest {
-
-    @Autowired
-    lateinit var userMapper: UserMapper
-
+class UserMapperTest(@Autowired private val userMapper: UserMapper) {
     @Test
     fun findAll_no_data() {
         val userList: List<User> = userMapper.findAll("id")
         Assertions.assertEquals(0, userList.size)
     }
 
-    @Sql("/sql/UserRepositoryTest/findAll_exist_data.sql")
+    @Sql("/sql/UserMapperTest/findAll_exist_data.sql")
     @Test
     fun findAll_exist_data() {
         val userList: List<User> = userMapper.findAll("id")
@@ -38,7 +34,7 @@ class UserMapperTest {
         Assertions.assertEquals("test", userList[0].password)
     }
 
-    @Sql("/sql/UserRepositoryTest/findAll_multi.sql")
+    @Sql("/sql/UserMapperTest/findAll_multi.sql")
     @Test
     fun findAll_multi() {
         val userList: List<User> = userMapper.findAll("id")
