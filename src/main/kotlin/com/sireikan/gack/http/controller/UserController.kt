@@ -2,8 +2,9 @@ package com.sireikan.gack.http.controller
 
 import com.sireikan.gack.application.service.usecase.user.GetListUserUseCase
 import com.sireikan.gack.application.service.usecase.user.data.UserGetListOutputData
-import com.sireikan.gack.http.model.user.MultipleUserResponse
-import com.sireikan.gack.http.model.user.UserResponse
+import com.sireikan.gack.openapi.generated.controller.UserApi
+import com.sireikan.gack.openapi.generated.model.MultipleUserResponse
+import com.sireikan.gack.openapi.generated.model.UserResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

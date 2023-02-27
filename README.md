@@ -35,9 +35,7 @@ docker-compose down --volume
 
 ## openapi
 - generateApiServer実行でopenapi.yamlからAPIクラスを自動生成する
-- openapi-generator側がkotlin対応できていない部分があるのでそのままだとコンパイルエラーになる
-- そのためコード管理に自動生成ファイルを含むようにしている
-- コンパイルエラーがなくなったら自動生成先を参照するようにすればよい
+- 自前でいじらないようにgit管理からは外す
 
 ## klintCheck
 - 実行で一通りlint

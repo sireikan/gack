@@ -234,7 +234,8 @@ components:
       type: object
       properties:
         gacha_id:
-          type: number
+          type: integer
+          format: int64
       required:
         - gacha_id
     GachaInfoResponse:
@@ -277,7 +278,8 @@ components:
         object_type:
           type: integer
         object_id:
-          type: number
+          type: integer
+          format: int64
         object_count:
           type: integer
       required:

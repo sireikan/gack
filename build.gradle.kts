@@ -132,6 +132,11 @@ ktlint {
         reporter(ReporterType.CHECKSTYLE)
     }
     ignoreFailures.set(true)
+    filter {
+        exclude { element ->
+            element.file.path.contains("$buildDir/openapi/server-code/src/main")
+        }
+    }
 }
 
 tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask> {
