@@ -5,7 +5,7 @@ import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 plugins {
     id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
-    id("org.openapi.generator") version "6.3.0"
+    id("org.openapi.generator") version "6.4.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.1.0"
     kotlin("jvm") version "1.7.22"
@@ -102,6 +102,7 @@ task<GenerateTask>("generateApiServer") {
     configOptions.set(
         mapOf(
             "interfaceOnly" to "true",
+            "useSpringBoot3" to "true",
         ),
     )
     /**
