@@ -110,6 +110,38 @@ paths:
         '200':
           description: OK
       description: delete user
+  '/gacha/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GachaResponse'
+      operationId: get-gacha-id
+      tags:
+        - gacha
+  /gacha/:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - gacha
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultipleGachaResponse'
+      operationId: get-gacha
 components:
   schemas:
     UserRequest:
@@ -155,3 +187,99 @@ components:
             $ref: '#/components/schemas/UserResponse'
       required:
         - users
+    GachaRequest:
+      title: GachaRequest
+      x-stoplight:
+        id: 8917jz2f2qrvy
+      type: object
+      properties:
+        gacha_id:
+          type: number
+    GachaInfoResponse:
+      title: GachaInfoResponse
+      x-stoplight:
+        id: bay8rmrdmqnw2
+      type: object
+      properties:
+        gacha_name:
+          type: string
+        banner_image:
+          type: string
+        exec_count:
+          type: integer
+    GachaCostResponse:
+      title: GachaCostResponse
+      x-stoplight:
+        id: ovj3qp2umzy41
+      type: object
+      properties:
+        cost_type:
+          type: integer
+        cost:
+          type: integer
+    GachaProbabilityResponse:
+      title: GachaProbabilityResponse
+      x-stoplight:
+        id: fxrcil3c4b9wl
+      type: object
+      properties:
+        probability:
+          type: integer
+        object_type:
+          type: integer
+        object_id:
+          type: number
+        object_count:
+          type: integer
+    MultipleGachaCostResponse:
+      title: MultipleGachaCostResponse
+      x-stoplight:
+        id: o3v5j8lvvh3ff
+      type: object
+      properties:
+        costs:
+          type: array
+          items:
+            $ref: '#/components/schemas/GachaCostResponse'
+    MultipleGachaProbabilityResponse:
+      title: MultipleGachaProbabilityResponse
+      x-stoplight:
+        id: okiwjvufl1wfa
+      type: object
+      properties:
+        probabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GachaProbabilityResponse'
+    MultipleGachaInfoResponse:
+      title: MultipleGachaInfoResponse
+      x-stoplight:
+        id: cise2xx8i90hc
+      type: object
+      properties:
+        infos:
+          type: array
+          items:
+            $ref: '#/components/schemas/GachaInfoResponse'
+    GachaResponse:
+      title: GachaResponse
+      x-stoplight:
+        id: aw5xak3o01e4n
+      type: object
+      properties:
+        gacha_info:
+          $ref: '#/components/schemas/GachaInfoResponse'
+        gacha_costs:
+          $ref: '#/components/schemas/MultipleGachaCostResponse'
+        gacha_probabilities:
+          $ref: '#/components/schemas/MultipleGachaProbabilityResponse'
+    MultipleGachaResponse:
+      title: MultipleGachaResponse
+      x-stoplight:
+        id: lq401bz72wx4x
+      type: object
+      properties:
+        gachas:
+          type: array
+          items:
+            $ref: '#/components/schemas/GachaResponse'
