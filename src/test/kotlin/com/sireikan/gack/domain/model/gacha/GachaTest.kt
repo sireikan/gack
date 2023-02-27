@@ -19,7 +19,7 @@ class GachaTest {
             GachaId.create(1),
             GachaInfo.create(GachaName.create("name"), BannerImage.create("htttps://hogehoge.png"), GachaExecCount.create(1)),
             listOf(GachaCost.create(CostType.GAME_COIN, Cost.create(10))),
-            listOf(GachaProbability.create(Probability.create(100), ObjectType.CHARACTER, ObjectId.create(1), ObjectCount.create(1)))
+            listOf(GachaProbability.create(Probability.create(100), ObjectType.CHARACTER, ObjectId.create(1), ObjectCount.create(1))),
         )
         Assertions.assertSame(1L, gacha.gachaId.id)
         Assertions.assertSame("name", gacha.gachaInfo.gachaName.name)

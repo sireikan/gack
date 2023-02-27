@@ -8,9 +8,9 @@ import com.sireikan.gack.domain.model.user.UserName
 import com.sireikan.gack.domain.repository.UserOrderKey
 import com.sireikan.gack.domain.repository.UserRepository
 import com.sireikan.gack.infrastructure.mapper.UserMapper
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
-@Service
+@Component
 class UserDBRepository(private val userMapper: UserMapper) : UserRepository {
     override fun findAll(userOrderKey: UserOrderKey): List<User> {
         val order = buildOrderColumn(userOrderKey)
