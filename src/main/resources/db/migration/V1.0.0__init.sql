@@ -8,7 +8,3 @@ CREATE TABLE user (
     PRIMARY KEY (id),
     UNIQUE KEY (email)
 );
-
-insert into user (id, name, email, password) values
-    (null, 'test', 'test@example.com', 'test')
-;
