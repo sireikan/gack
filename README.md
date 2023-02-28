@@ -1,3 +1,8 @@
+## 仮のDB作成
+```sql
+CREATE DATABASE IF NOT EXISTS sample;
+```
+
 ## 起動方法
 
 ```shell
