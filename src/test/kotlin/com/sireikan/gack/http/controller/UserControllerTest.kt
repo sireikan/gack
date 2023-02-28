@@ -22,6 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @Testcontainers
 @ExtendWith(MysqlExtension::class)
 @DirtiesContext
+@Sql(scripts = ["/sql/Common/delete.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class UserControllerTest {
 
     @Autowired

@@ -16,6 +16,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @ExtendWith(MysqlExtension::class)
 @DirtiesContext
 @MybatisTest
+@Sql(scripts = ["/sql/Common/delete.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class UserMapperTest(@Autowired private val userMapper: UserMapper) {
     @Test
     fun findAll_no_data() {

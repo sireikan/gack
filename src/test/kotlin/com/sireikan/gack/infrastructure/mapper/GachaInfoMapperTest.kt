@@ -16,6 +16,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @ExtendWith(MysqlExtension::class)
 @DirtiesContext
 @MybatisTest
+@Sql(scripts = ["/sql/Common/delete.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class GachaInfoMapperTest(@Autowired private val gachaInfoMapper: GachaInfoMapper) {
     @Test
     fun find_no_data() {
