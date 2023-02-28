@@ -1,9 +1,11 @@
 package com.sireikan.gack.application.service.usecase.user.data
 
-class UserGetListOutputData {
-    var userList: List<UserData>
-
-    constructor(userList: List<UserData>) {
-        this.userList = userList
+class UserGetListOutputData private constructor(
+    val userList: List<UserData>,
+) {
+    companion object {
+        fun create(userList: List<UserData>): UserGetListOutputData {
+            return UserGetListOutputData(userList)
+        }
     }
 }

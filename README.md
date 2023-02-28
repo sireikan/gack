@@ -33,3 +33,10 @@ docker-compose down --volume
 ./gradlew test
 ```
 
+## openapi
+- generateApiServer実行でopenapi.yamlからAPIクラスを自動生成する
+- 自前でいじらないようにgit管理からは外す
+
+## klintCheck
+- 実行で一通りlint
+- Cleanしてから実行するがよい

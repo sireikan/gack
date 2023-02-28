@@ -28,9 +28,9 @@ class GachaDBRepository(
     private val gachaCostMapper: GachaCostMapper,
     private val gachaProbabilityMapper: GachaProbabilityMapper,
 ) : GachaRepository {
-    override fun find(gachaId: GachaId, gachaOrderKey: GachaOrderKey): Gacha {
+    override fun find(gachaId: GachaId, gachaOrderKey: GachaOrderKey): Gacha? {
         val order = buildOrderColumn(gachaOrderKey)
-        val gachaInfo: GachaInfo = gachaInfoMapper.find(gachaId.id)
+        val gachaInfo: GachaInfo = gachaInfoMapper.find(gachaId.id) ?: return null
         val gachaCostList: List<GachaCost> = gachaCostMapper.findAllByGachaId(gachaId.id, order)
         val gachaProbabilityList: List<GachaProbability> = gachaProbabilityMapper.findAllByGachaId(gachaId.id, order)
         return Gacha.reconstruct(

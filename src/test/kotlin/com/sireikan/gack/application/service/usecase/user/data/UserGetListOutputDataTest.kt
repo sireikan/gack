@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class UserGetListOutputDataTest {
     @Test
     fun create() {
-        val userGetListOutputData: UserGetListOutputData = UserGetListOutputData(emptyList())
+        val userGetListOutputData: UserGetListOutputData = UserGetListOutputData.create(emptyList())
         Assertions.assertSame(0, userGetListOutputData.userList.size)
     }
 }

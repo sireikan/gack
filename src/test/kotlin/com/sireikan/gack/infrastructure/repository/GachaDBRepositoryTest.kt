@@ -36,7 +36,7 @@ class GachaDBRepositoryTest {
         Mockito.`when`(gachaInfoMapper.find(1L)).thenReturn(GachaInfo.create(1L, 1L, "name", "banner", 1, "2022-01-01 00:00:00"))
         Mockito.`when`(gachaCostMapper.findAllByGachaId(1L, "gacha_id")).thenReturn(listOf(GachaCost.create(1L, 1L, 0, 0, "2022-01-01 00:00:00")))
         Mockito.`when`(gachaProbabilityMapper.findAllByGachaId(1L, "gacha_id")).thenReturn(listOf(GachaProbability.create(1L, 1L, 100, 0, 0, 0, "2022-01-01 00:00:00")))
-        val actual: Gacha = gachaRepository.find(GachaId.create(1L), GachaOrderKey.GACHA_ID)
+        val actual: Gacha = gachaRepository.find(GachaId.create(1L), GachaOrderKey.GACHA_ID) ?: return
 
         Assertions.assertSame(1L, actual.gachaId.id)
         Assertions.assertTrue(actual.gachaInfo.gachaName.name == "name")

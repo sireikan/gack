@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class UserDataTest {
     @Test
     fun create() {
-        val userData: UserData = UserData(User(UserId(1), UserName("name"), Email("email"), Password("password")))
+        val userData: UserData = UserData.create(User(UserId(1), UserName("name"), Email("email"), Password("password")))
         Assertions.assertSame(1, userData.userId)
         Assertions.assertSame("name", userData.userName)
         Assertions.assertSame("email", userData.email)
