@@ -148,6 +148,8 @@ paths:
                           object_type: 0
                           object_id: 0
                           object_count: 0
+        '404':
+          description: Not Found
       operationId: get-gacha-id
       tags:
         - gacha
