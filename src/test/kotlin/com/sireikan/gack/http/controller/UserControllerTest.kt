@@ -6,9 +6,9 @@ import com.sireikan.gack.domain.model.user.Password
 import com.sireikan.gack.domain.model.user.User
 import com.sireikan.gack.domain.model.user.UserId
 import com.sireikan.gack.domain.model.user.UserName
-import com.sireikan.gack.http.model.user.MultipleUserResponse
-import com.sireikan.gack.http.model.user.UserResponse
 import com.sireikan.gack.infrastructure.mapper.MysqlExtension
+import com.sireikan.gack.openapi.generated.model.MultipleUserResponse
+import com.sireikan.gack.openapi.generated.model.UserResponse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,7 +39,7 @@ class UserControllerTest {
     @Sql("/sql/UserControllerTest/getUser_exist.sql")
     @Test
     fun getUser_exist(@Autowired webClient: WebTestClient) {
-        val userDataList: List<UserData> = listOf(UserData(User(UserId(1), UserName("test"), Email("test@example.com"), Password("test"))))
+        val userDataList: List<UserData> = listOf(UserData.create(User(UserId(1), UserName("test"), Email("test@example.com"), Password("test"))))
         val expected: MultipleUserResponse = MultipleUserResponse(users = userDataList.stream().map { user -> UserResponse(user.userId, user.userName, user.email, user.password) }.toList())
         webClient.get().uri("/user").exchange()
             .expectStatus().isOk

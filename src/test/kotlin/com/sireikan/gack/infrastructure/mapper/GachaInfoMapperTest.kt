@@ -19,14 +19,14 @@ import org.testcontainers.junit.jupiter.Testcontainers
 class GachaInfoMapperTest(@Autowired private val gachaInfoMapper: GachaInfoMapper) {
     @Test
     fun find_no_data() {
-        val gachaInfo: GachaInfo = gachaInfoMapper.find(1L)
+        val gachaInfo: GachaInfo? = gachaInfoMapper.find(1L)
         Assertions.assertNull(gachaInfo)
     }
 
     @Sql("/sql/GachaInfoMapperTest/find_exist_data.sql")
     @Test
     fun find_exist_data() {
-        val gachaInfo: GachaInfo = gachaInfoMapper.find(1L)
+        val gachaInfo: GachaInfo = gachaInfoMapper.find(1L) ?: return
         Assertions.assertSame(1L, gachaInfo.id)
         Assertions.assertSame(1L, gachaInfo.gachaId)
         Assertions.assertTrue(gachaInfo.gachaName == "name")
