@@ -53,4 +53,18 @@ class GachaCostMapperTest(@Autowired private val gachaCostMapper: GachaCostMappe
         Assertions.assertSame(0, gachaCostList[0].cost)
         Assertions.assertTrue(gachaCostList[0].created == "2022-01-01 00:00:00")
     }
+
+    @Test
+    fun insert() {
+        val gachaCost: GachaCost = GachaCost.create(1L, 1L, 1, 1, "2022-01-01 00:00:00")
+        gachaCostMapper.insert(gachaCost)
+
+        val gachaCostList: List<GachaCost> = gachaCostMapper.findAllByGachaId(1L, "gacha_id")
+        Assertions.assertSame(1, gachaCostList.size)
+        Assertions.assertSame(1L, gachaCostList[0].id)
+        Assertions.assertSame(1L, gachaCostList[0].gachaId)
+        Assertions.assertSame(1, gachaCostList[0].costType)
+        Assertions.assertSame(1, gachaCostList[0].cost)
+        Assertions.assertTrue(gachaCostList[0].created == "2022-01-01 00:00:00")
+    }
 }

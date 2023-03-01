@@ -21,6 +21,10 @@ import com.sireikan.gack.infrastructure.mapper.GachaCostMapper
 import com.sireikan.gack.infrastructure.mapper.GachaInfoMapper
 import com.sireikan.gack.infrastructure.mapper.GachaProbabilityMapper
 import org.springframework.stereotype.Component
+import java.security.SecureRandom
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Component
 class GachaDBRepository(
@@ -112,6 +116,48 @@ class GachaDBRepository(
                 }.toList(),
             )
         }.toList()
+    }
+
+    override fun insert(gacha: Gacha) {
+        val secureRandom = SecureRandom()
+        val created: String = SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(Calendar.getInstance().time)
+        gachaInfoMapper.insert(GachaInfo.create(
+            secureRandom.nextLong(),
+            gacha.gachaId.id,
+            gacha.gachaInfo.gachaName.name,
+            gacha.gachaInfo.bannerImage.url,
+            gacha.gachaInfo.execCount.count,
+            created
+        ))
+        gacha.gachaCostList.stream().forEach { cost ->
+            gachaCostMapper.insert(GachaCost.create(
+                secureRandom.nextLong(),
+                gacha.gachaId.id,
+                when (cost.costType) {
+                    CostType.NONE -> 0
+                    CostType.GAME_COIN -> 1
+                    CostType.PURCHASE_COIN -> 2
+                },
+                cost.cost.cost,
+                created
+            ))
+        }
+        gacha.gachaProbabilityList.stream().forEach { probability ->
+            gachaProbabilityMapper.insert(GachaProbability.create(
+                secureRandom.nextLong(),
+                gacha.gachaId.id,
+                probability.probability.probability,
+                when (probability.objectType) {
+                    ObjectType.NONE -> 0
+                    ObjectType.CHARACTER -> 1
+                    ObjectType.ITEM -> 2
+                    ObjectType.GAME_COIN -> 3
+                },
+                probability.objectId.id,
+                probability.objectCount.count,
+                created
+            ))
+        }
     }
 
     private fun buildOrderColumn(gachaOrderKey: GachaOrderKey): String {
