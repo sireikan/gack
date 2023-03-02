@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Select
 
 @Mapper
 interface UserMapper {
-    @Select("<script> select * from user order by #{order} </script>")
+    @Select("select * from user order by #{order}")
     fun findAll(@Param("order") order: String): List<User>
 }

@@ -1,15 +1,19 @@
 package com.sireikan.gack.infrastructure.mapper
 
 import com.sireikan.gack.infrastructure.entity.GachaInfo
+import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Param
 import org.apache.ibatis.annotations.Select
 
 @Mapper
 interface GachaInfoMapper {
-    @Select("<script> select * from gacha_info where gacha_id = #{gacha_id} </script>")
+    @Select("select * from gacha_info where gacha_id = #{gacha_id}")
     fun find(@Param("gacha_id") gachaId: Long): GachaInfo?
 
-    @Select("<script> select * from gacha_info order by #{order} </script>")
+    @Select("select * from gacha_info order by #{order}")
     fun findAll(@Param("order") order: String): List<GachaInfo>
+
+    @Insert("insert into gacha_info (id, gacha_id, gacha_name, banner_image, exec_count, created) values (#{id}, #{gachaId}, #{gachaName}, #{bannerImage}, #{execCount}, #{created})")
+    fun insert(gachaInfo: GachaInfo)
 }

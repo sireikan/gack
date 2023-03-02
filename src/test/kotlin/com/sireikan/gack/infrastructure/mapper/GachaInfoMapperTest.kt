@@ -1,6 +1,7 @@
 package com.sireikan.gack.infrastructure.mapper
 
 import com.sireikan.gack.infrastructure.entity.GachaInfo
+import org.junit.Assert
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -53,5 +54,19 @@ class GachaInfoMapperTest(@Autowired private val gachaInfoMapper: GachaInfoMappe
         Assertions.assertTrue(gachaInfoList[0].bannerImage == "https://hoge.png")
         Assertions.assertEquals(1, gachaInfoList[0].execCount)
         Assertions.assertTrue(gachaInfoList[0].created == "2022-01-01 00:00:00")
+    }
+
+    @Test
+    fun insert() {
+        val gachaInfo: GachaInfo = GachaInfo.create(1L, 1L, "name", "banner", 1, "2023-01-01 00:00:00")
+        gachaInfoMapper.insert(gachaInfo)
+
+        val actual: GachaInfo = gachaInfoMapper.find(1L) ?: Assertions.fail()
+        Assertions.assertSame(1L, actual.id)
+        Assertions.assertSame(1L, actual.gachaId)
+        Assertions.assertTrue(actual.gachaName == "name")
+        Assertions.assertTrue(actual.bannerImage == "banner")
+        Assertions.assertSame(1, actual.execCount)
+        Assertions.assertTrue(actual.created == "2023-01-01 00:00:00")
     }
 }

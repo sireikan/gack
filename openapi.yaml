@@ -153,6 +153,28 @@ paths:
       operationId: get-gacha-id
       tags:
         - gacha
+    put:
+      summary: ''
+      operationId: put-gacha-id
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GachaPutRequest'
+        description: ''
+      tags:
+        - gacha
+    delete:
+      summary: ''
+      operationId: delete-gacha-id
+      responses:
+        '200':
+          description: OK
+      tags:
+        - gacha
   /gacha/:
     get:
       summary: Your GET endpoint
@@ -170,9 +192,9 @@ paths:
                   value:
                     gachas:
                       - gacha_info:
-                          gacha_name: name
-                          banner_image: 'https://hoge.png'
-                          exec_count: 1
+                          gacha_name: string
+                          banner_image: string
+                          exec_count: 0
                         gacha_costs:
                           costs:
                             - cost_type: 0
@@ -184,6 +206,37 @@ paths:
                               object_id: 0
                               object_count: 0
       operationId: get-gacha
+    post:
+      summary: ''
+      operationId: post-gacha
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GachaPostRequest'
+            examples:
+              Example 1:
+                value:
+                  gacha_id: 0
+                  gacha_info:
+                    gacha_name: string
+                    banner_image: string
+                    exec_count: 0
+                  gacha_costs:
+                    costs:
+                      - cost_type: 0
+                        cost: 0
+                  gacha_probabilities:
+                    probabilities:
+                      - probability: 0
+                        object_type: 0
+                        object_id: 0
+                        object_count: 0
+      tags:
+        - gacha
 components:
   schemas:
     UserRequest:
@@ -353,3 +406,112 @@ components:
             $ref: '#/components/schemas/GachaResponse'
       required:
         - gachas
+    GachaPostRequest:
+      title: GachaPostRequest
+      x-stoplight:
+        id: ze6a0i1kw1bh9
+      type: object
+      properties:
+        gacha_id:
+          type: integer
+          format: int64
+        gacha_info:
+          $ref: '#/components/schemas/GachaInfoRequest'
+        gacha_costs:
+          $ref: '#/components/schemas/MultipleGachaCostRequest'
+        gacha_probabilities:
+          $ref: '#/components/schemas/MultipleGachaProbabilityRequest'
+      required:
+        - gacha_id
+        - gacha_info
+        - gacha_costs
+        - gacha_probabilities
+    GachaInfoRequest:
+      title: GachaInfoRequest
+      x-stoplight:
+        id: cwriuge0pmbru
+      type: object
+      properties:
+        gacha_name:
+          type: string
+        banner_image:
+          type: string
+        exec_count:
+          type: integer
+      required:
+        - gacha_name
+        - banner_image
+        - exec_count
+    GachaCostRequest:
+      title: GachaCostRequest
+      x-stoplight:
+        id: v3ng1opoxtftz
+      type: object
+      properties:
+        cost_type:
+          type: integer
+        cost:
+          type: integer
+      required:
+        - cost_type
+        - cost
+    GachaProbabilityRequest:
+      title: GachaProbabilityRequest
+      x-stoplight:
+        id: 4767jrh58b1ie
+      type: object
+      properties:
+        probability:
+          type: integer
+        object_type:
+          type: integer
+        object_id:
+          type: integer
+          format: int64
+        object_count:
+          type: integer
+      required:
+        - probability
+        - object_type
+        - object_id
+        - object_count
+    MultipleGachaCostRequest:
+      title: MultipleGachaCostRequest
+      x-stoplight:
+        id: bt718igppkl5m
+      type: object
+      properties:
+        costs:
+          type: array
+          items:
+            $ref: '#/components/schemas/GachaCostRequest'
+      required:
+        - costs
+    MultipleGachaProbabilityRequest:
+      title: MultipleGachaProbabilityRequest
+      x-stoplight:
+        id: bt7y5jzwoiyjt
+      type: object
+      properties:
+        probabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GachaProbabilityRequest'
+      required:
+        - probabilities
+    GachaPutRequest:
+      title: GachaPutRequest
+      x-stoplight:
+        id: psmu7w8iepy2m
+      type: object
+      properties:
+        gacha_info:
+          $ref: '#/components/schemas/GachaInfoRequest'
+        gacha_costs:
+          $ref: '#/components/schemas/MultipleGachaCostRequest'
+        gacha_probabilities:
+          $ref: '#/components/schemas/MultipleGachaProbabilityRequest'
+      required:
+        - gacha_info
+        - gacha_costs
+        - gacha_probabilities

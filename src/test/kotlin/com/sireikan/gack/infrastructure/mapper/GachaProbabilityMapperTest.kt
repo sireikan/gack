@@ -57,4 +57,20 @@ class GachaProbabilityMapperTest(@Autowired private val gachaProbabilityMapper: 
         Assertions.assertSame(0, gachaProbabilityList[0].objectCount)
         Assertions.assertTrue(gachaProbabilityList[0].created == "2022-01-01 00:00:00")
     }
+
+    @Test
+    fun insert() {
+        val gachaProbability: GachaProbability = GachaProbability.create(1L, 1L, 100, 1, 1L, 1, "2022-01-01 00:00:00")
+        gachaProbabilityMapper.insert(gachaProbability)
+
+        val gachaProbabilityList: List<GachaProbability> = gachaProbabilityMapper.findAllByGachaId(1L, "gacha_id")
+        Assertions.assertSame(1, gachaProbabilityList.size)
+        Assertions.assertSame(1L, gachaProbabilityList[0].id)
+        Assertions.assertSame(1L, gachaProbabilityList[0].gachaId)
+        Assertions.assertSame(100, gachaProbabilityList[0].probability)
+        Assertions.assertSame(1, gachaProbabilityList[0].objectType)
+        Assertions.assertSame(1L, gachaProbabilityList[0].objectId)
+        Assertions.assertSame(1, gachaProbabilityList[0].objectCount)
+        Assertions.assertTrue(gachaProbabilityList[0].created == "2022-01-01 00:00:00")
+    }
 }
