@@ -388,6 +388,9 @@ components:
         id: ze6a0i1kw1bh9
       type: object
       properties:
+        gacha_id:
+          type: integer
+          format: int64
         gacha_info:
           $ref: '#/components/schemas/GachaInfoRequest'
         gacha_costs:
