@@ -5,7 +5,9 @@ import com.sireikan.gack.application.service.usecase.gacha.data.GachaCreateData
 import com.sireikan.gack.domain.model.gacha.*
 import com.sireikan.gack.domain.repository.GachaRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
+@Transactional
 @Service
 class CreateGachaUseCase(
     private val gachaRepository: GachaRepository,
