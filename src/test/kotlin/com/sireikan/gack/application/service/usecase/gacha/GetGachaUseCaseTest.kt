@@ -44,7 +44,7 @@ class GetGachaUseCaseTest {
     @Test
     fun execute_exist() {
         Mockito.`when`(gachaRepository.find(GachaId.create(1L), GachaOrderKey.GACHA_ID)).thenReturn(
-            Gacha.reconstruct(
+            Gacha.create(
                 GachaId.create(1L),
                 GachaInfo.create(GachaName.create("name"), BannerImage.create("banner"), GachaExecCount.create(1)),
                 listOf(GachaCost.create(CostType.NONE, Cost.create(0))),

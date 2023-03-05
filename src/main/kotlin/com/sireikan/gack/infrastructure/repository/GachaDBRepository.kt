@@ -16,15 +16,13 @@ import com.sireikan.gack.domain.repository.GachaRepository
 import com.sireikan.gack.infrastructure.entity.GachaCost
 import com.sireikan.gack.infrastructure.entity.GachaInfo
 import com.sireikan.gack.infrastructure.entity.GachaProbability
-import com.sireikan.gack.infrastructure.error.RepositoryException
 import com.sireikan.gack.infrastructure.mapper.GachaCostMapper
 import com.sireikan.gack.infrastructure.mapper.GachaInfoMapper
 import com.sireikan.gack.infrastructure.mapper.GachaProbabilityMapper
 import org.springframework.stereotype.Component
 import java.security.SecureRandom
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
 
 @Component
 class GachaDBRepository(
@@ -37,7 +35,7 @@ class GachaDBRepository(
         val gachaInfo: GachaInfo = gachaInfoMapper.find(gachaId.id) ?: return null
         val gachaCostList: List<GachaCost> = gachaCostMapper.findAllByGachaId(gachaId.id, order)
         val gachaProbabilityList: List<GachaProbability> = gachaProbabilityMapper.findAllByGachaId(gachaId.id, order)
-        return Gacha.reconstruct(
+        return Gacha.create(
             gachaId,
             com.sireikan.gack.domain.model.gacha.GachaInfo.create(
                 GachaName.create(gachaInfo.gachaName),
@@ -46,25 +44,14 @@ class GachaDBRepository(
             ),
             gachaCostList.stream().map { cost ->
                 com.sireikan.gack.domain.model.gacha.GachaCost.create(
-                    when (cost.costType) {
-                        0 -> CostType.NONE
-                        1 -> CostType.GAME_COIN
-                        2 -> CostType.PURCHASE_COIN
-                        else -> throw RepositoryException("GachaCost is invalid.")
-                    },
+                    CostType.from(cost.costType),
                     Cost.create(cost.cost),
                 )
             }.toList(),
             gachaProbabilityList.stream().map { probability ->
                 com.sireikan.gack.domain.model.gacha.GachaProbability.create(
                     Probability.create(probability.probability),
-                    when (probability.objectType) {
-                        0 -> ObjectType.NONE
-                        1 -> ObjectType.CHARACTER
-                        2 -> ObjectType.ITEM
-                        3 -> ObjectType.GAME_COIN
-                        else -> throw RepositoryException("GachaProbability is invalid.")
-                    },
+                    ObjectType.from(probability.objectType),
                     ObjectId.create(probability.objectId),
                     ObjectCount.create(probability.objectCount),
                 )
@@ -78,7 +65,7 @@ class GachaDBRepository(
         val gachaCostList: List<GachaCost> = gachaCostMapper.findAll(order)
         val gachaProbabilityList: List<GachaProbability> = gachaProbabilityMapper.findAll(order)
         return gachaInfoList.stream().map { gachaInfo ->
-            Gacha.reconstruct(
+            Gacha.create(
                 GachaId.create(gachaInfo.gachaId),
                 com.sireikan.gack.domain.model.gacha.GachaInfo.create(
                     GachaName.create(gachaInfo.gachaName),
@@ -89,12 +76,7 @@ class GachaDBRepository(
                     gachaCost.gachaId == gachaInfo.gachaId
                 }.map { cost ->
                     com.sireikan.gack.domain.model.gacha.GachaCost.create(
-                        when (cost.costType) {
-                            0 -> CostType.NONE
-                            1 -> CostType.GAME_COIN
-                            2 -> CostType.PURCHASE_COIN
-                            else -> throw RepositoryException("GachaCost is invalid.")
-                        },
+                        CostType.from(cost.costType),
                         Cost.create(cost.cost),
                     )
                 }.toList(),
@@ -103,13 +85,7 @@ class GachaDBRepository(
                 }.map { probability ->
                     com.sireikan.gack.domain.model.gacha.GachaProbability.create(
                         Probability.create(probability.probability),
-                        when (probability.objectType) {
-                            0 -> ObjectType.NONE
-                            1 -> ObjectType.CHARACTER
-                            2 -> ObjectType.ITEM
-                            3 -> ObjectType.GAME_COIN
-                            else -> throw RepositoryException("GachaProbability is invalid.")
-                        },
+                        ObjectType.from(probability.objectType),
                         ObjectId.create(probability.objectId),
                         ObjectCount.create(probability.objectCount),
                     )
@@ -121,42 +97,39 @@ class GachaDBRepository(
     override fun insert(gacha: Gacha) {
         val secureRandom = SecureRandom()
         val created: String = SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(Calendar.getInstance().time)
-        gachaInfoMapper.insert(GachaInfo.create(
-            secureRandom.nextLong(),
-            gacha.gachaId.id,
-            gacha.gachaInfo.gachaName.name,
-            gacha.gachaInfo.bannerImage.url,
-            gacha.gachaInfo.execCount.count,
-            created
-        ))
-        gacha.gachaCostList.stream().forEach { cost ->
-            gachaCostMapper.insert(GachaCost.create(
+        gachaInfoMapper.insert(
+            GachaInfo.create(
                 secureRandom.nextLong(),
                 gacha.gachaId.id,
-                when (cost.costType) {
-                    CostType.NONE -> 0
-                    CostType.GAME_COIN -> 1
-                    CostType.PURCHASE_COIN -> 2
-                },
-                cost.cost.cost,
-                created
-            ))
+                gacha.gachaInfo.gachaName.name,
+                gacha.gachaInfo.bannerImage.url,
+                gacha.gachaInfo.execCount.count,
+                created,
+            ),
+        )
+        gacha.gachaCostList.stream().forEach { cost ->
+            gachaCostMapper.insert(
+                GachaCost.create(
+                    secureRandom.nextLong(),
+                    gacha.gachaId.id,
+                    cost.costType.value,
+                    cost.cost.cost,
+                    created,
+                ),
+            )
         }
         gacha.gachaProbabilityList.stream().forEach { probability ->
-            gachaProbabilityMapper.insert(GachaProbability.create(
-                secureRandom.nextLong(),
-                gacha.gachaId.id,
-                probability.probability.probability,
-                when (probability.objectType) {
-                    ObjectType.NONE -> 0
-                    ObjectType.CHARACTER -> 1
-                    ObjectType.ITEM -> 2
-                    ObjectType.GAME_COIN -> 3
-                },
-                probability.objectId.id,
-                probability.objectCount.count,
-                created
-            ))
+            gachaProbabilityMapper.insert(
+                GachaProbability.create(
+                    secureRandom.nextLong(),
+                    gacha.gachaId.id,
+                    probability.probability.probability,
+                    probability.objectType.value,
+                    probability.objectId.id,
+                    probability.objectCount.count,
+                    created,
+                ),
+            )
         }
     }
 

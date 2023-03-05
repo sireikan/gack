@@ -10,7 +10,7 @@ class GachaCreateDataTest {
             1L,
             GachaInfoData.create("name", "banner", 1),
             listOf(GachaCostData.create(1, 1)),
-            listOf(GachaProbabilityData.create(100, 1, 1L, 1))
+            listOf(GachaProbabilityData.create(100, 1, 1L, 1)),
         )
         Assertions.assertSame(1L, gachaCreateData.gachaId)
         Assertions.assertTrue(gachaCreateData.gachaInfoData.gachaName == "name")
