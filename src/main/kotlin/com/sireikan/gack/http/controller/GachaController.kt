@@ -2,10 +2,7 @@ package com.sireikan.gack.http.controller
 
 import com.sireikan.gack.application.service.usecase.gacha.CreateGachaUseCase
 import com.sireikan.gack.application.service.usecase.gacha.GetGachaUseCase
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaCreateData
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaInfoData
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaInputData
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaOutputData
+import com.sireikan.gack.application.service.usecase.gacha.data.*
 import com.sireikan.gack.openapi.generated.controller.GachaApi
 import com.sireikan.gack.openapi.generated.model.GachaCostResponse
 import com.sireikan.gack.openapi.generated.model.GachaInfoResponse
@@ -70,8 +67,20 @@ class GachaController(
                     gachaPostRequest.gachaInfo.bannerImage,
                     gachaPostRequest.gachaInfo.execCount,
                 ),
-                listOf(),
-                listOf(),
+                gachaPostRequest.gachaCosts.costs.stream().map { cost ->
+                    GachaCostData.create(
+                        cost.costType,
+                        cost.cost
+                    )
+                }.toList(),
+                gachaPostRequest.gachaProbabilities.probabilities.stream().map { probability ->
+                    GachaProbabilityData.create(
+                        probability.probability,
+                        probability.objectType,
+                        probability.objectId,
+                        probability.objectCount
+                    )
+                }.toList(),
             ),
         )
         return ResponseEntity(

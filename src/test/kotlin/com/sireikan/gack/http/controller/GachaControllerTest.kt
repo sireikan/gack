@@ -1,12 +1,7 @@
 package com.sireikan.gack.http.controller
 
 import com.sireikan.gack.infrastructure.mapper.MysqlExtension
-import com.sireikan.gack.openapi.generated.model.GachaCostResponse
-import com.sireikan.gack.openapi.generated.model.GachaInfoResponse
-import com.sireikan.gack.openapi.generated.model.GachaProbabilityResponse
-import com.sireikan.gack.openapi.generated.model.GachaResponse
-import com.sireikan.gack.openapi.generated.model.MultipleGachaCostResponse
-import com.sireikan.gack.openapi.generated.model.MultipleGachaProbabilityResponse
+import com.sireikan.gack.openapi.generated.model.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.web.reactive.function.BodyInserter
+import org.springframework.web.reactive.function.BodyInserters
 import org.testcontainers.junit.jupiter.Testcontainers
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -36,6 +33,55 @@ class GachaControllerTest {
     fun getGachaId_exist(@Autowired webClient: WebTestClient) {
         val expected: GachaResponse = GachaResponse(
             GachaInfoResponse("name", "https://hoge.png", 1),
+            MultipleGachaCostResponse(
+                listOf(GachaCostResponse(1, 1)),
+            ),
+            MultipleGachaProbabilityResponse(
+                listOf(GachaProbabilityResponse(100, 1, 1L, 1)),
+            ),
+        )
+        webClient.get().uri("/gacha/1").exchange()
+            .expectStatus().isOk
+            .expectBody(GachaResponse::class.java)
+            .isEqualTo(expected)
+    }
+
+    @Test
+    fun postGacha(@Autowired webClient: WebTestClient) {
+        webClient.post().uri("/gacha/")
+            .body(BodyInserters.fromValue(
+                GachaPostRequest(
+                    1L,
+                    GachaInfoRequest(
+                        "name",
+                        "banner",
+                        1
+                    ),
+                    MultipleGachaCostRequest(
+                        listOf(
+                            GachaCostRequest(
+                            1,
+                            1
+                        )
+                        )
+                    ),
+                    MultipleGachaProbabilityRequest(
+                        listOf(
+                            GachaProbabilityRequest(
+                            100,
+                            1,
+                            1L,
+                            1
+                        )
+                        )
+                    )
+                )
+            ))
+            .exchange()
+            .expectStatus().isOk
+
+        val expected: GachaResponse = GachaResponse(
+            GachaInfoResponse("name", "banner", 1),
             MultipleGachaCostResponse(
                 listOf(GachaCostResponse(1, 1)),
             ),
