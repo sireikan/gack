@@ -1,7 +1,6 @@
 package com.sireikan.gack.infrastructure.mapper
 
 import com.sireikan.gack.infrastructure.entity.GachaInfo
-import org.junit.Assert
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

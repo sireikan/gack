@@ -6,16 +6,7 @@ import org.junit.jupiter.api.Test
 class GachaTest {
     @Test
     fun create() {
-        val gacha: Gacha = Gacha.create(GachaId.create(1), GachaInfo.create(GachaName.create("name"), BannerImage.create("htttps://hogehoge.png"), GachaExecCount.create(1)))
-        Assertions.assertSame(1L, gacha.gachaId.id)
-        Assertions.assertSame("name", gacha.gachaInfo.gachaName.name)
-        Assertions.assertSame("htttps://hogehoge.png", gacha.gachaInfo.bannerImage.url)
-        Assertions.assertSame(1, gacha.gachaInfo.execCount.count)
-    }
-
-    @Test
-    fun reconstruct() {
-        val gacha: Gacha = Gacha.reconstruct(
+        val gacha: Gacha = Gacha.create(
             GachaId.create(1),
             GachaInfo.create(GachaName.create("name"), BannerImage.create("htttps://hogehoge.png"), GachaExecCount.create(1)),
             listOf(GachaCost.create(CostType.GAME_COIN, Cost.create(10))),
