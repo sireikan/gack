@@ -20,9 +20,9 @@ import com.sireikan.gack.infrastructure.mapper.GachaCostMapper
 import com.sireikan.gack.infrastructure.mapper.GachaInfoMapper
 import com.sireikan.gack.infrastructure.mapper.GachaProbabilityMapper
 import org.springframework.stereotype.Component
-import java.security.SecureRandom
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.concurrent.ThreadLocalRandom
 
 @Component
 class GachaDBRepository(
@@ -95,11 +95,10 @@ class GachaDBRepository(
     }
 
     override fun insert(gacha: Gacha) {
-        val secureRandom = SecureRandom()
         val created: String = SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(Calendar.getInstance().time)
         gachaInfoMapper.insert(
             GachaInfo.create(
-                secureRandom.nextLong(),
+                ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
                 gacha.gachaId.id,
                 gacha.gachaInfo.gachaName.name,
                 gacha.gachaInfo.bannerImage.url,
@@ -110,7 +109,7 @@ class GachaDBRepository(
         gacha.gachaCostList.stream().forEach { cost ->
             gachaCostMapper.insert(
                 GachaCost.create(
-                    secureRandom.nextLong(),
+                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
                     gacha.gachaId.id,
                     cost.costType.value,
                     cost.cost.cost,
@@ -121,7 +120,7 @@ class GachaDBRepository(
         gacha.gachaProbabilityList.stream().forEach { probability ->
             gachaProbabilityMapper.insert(
                 GachaProbability.create(
-                    secureRandom.nextLong(),
+                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
                     gacha.gachaId.id,
                     probability.probability.probability,
                     probability.objectType.value,
