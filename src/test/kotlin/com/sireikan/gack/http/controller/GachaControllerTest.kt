@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.web.reactive.function.BodyInserter
+import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.web.reactive.function.BodyInserters
 import org.testcontainers.junit.jupiter.Testcontainers
 
@@ -23,6 +23,39 @@ class GachaControllerTest {
     lateinit var webClient: WebTestClient
 
     @Test
+    fun getGacha() {
+        val expected: MultipleGachaResponse = MultipleGachaResponse(
+            listOf()
+        )
+        webClient.get().uri("/gacha/").exchange()
+            .expectStatus().isOk
+            .expectBody(MultipleGachaResponse::class.java)
+            .isEqualTo(expected)
+    }
+
+    @Sql("/sql/GachaControllerTest/getGacha_exist.sql")
+    @Test
+    fun getGacha_exist() {
+        val expected: MultipleGachaResponse = MultipleGachaResponse(
+            listOf(
+                GachaResponse(
+                    GachaInfoResponse("name", "https://hoge.png", 1),
+                    MultipleGachaCostResponse(
+                        listOf(GachaCostResponse(1, 1)),
+                    ),
+                    MultipleGachaProbabilityResponse(
+                        listOf(GachaProbabilityResponse(100, 1, 1L, 1)),
+                    ),
+                ),
+            )
+        )
+        webClient.get().uri("/gacha/").exchange()
+            .expectStatus().isOk
+            .expectBody(MultipleGachaResponse::class.java)
+            .isEqualTo(expected)
+    }
+
+    @Test
     fun getGachaId() {
         webClient.get().uri("/gacha/1").exchange()
             .expectStatus().isNotFound
@@ -30,7 +63,7 @@ class GachaControllerTest {
 
     @Sql("/sql/GachaControllerTest/getGachaId_exist.sql")
     @Test
-    fun getGachaId_exist(@Autowired webClient: WebTestClient) {
+    fun getGachaId_exist() {
         val expected: GachaResponse = GachaResponse(
             GachaInfoResponse("name", "https://hoge.png", 1),
             MultipleGachaCostResponse(
@@ -47,36 +80,38 @@ class GachaControllerTest {
     }
 
     @Test
-    fun postGacha(@Autowired webClient: WebTestClient) {
+    fun postGacha() {
         webClient.post().uri("/gacha/")
-            .body(BodyInserters.fromValue(
-                GachaPostRequest(
-                    1L,
-                    GachaInfoRequest(
-                        "name",
-                        "banner",
-                        1
-                    ),
-                    MultipleGachaCostRequest(
-                        listOf(
-                            GachaCostRequest(
+            .body(
+                BodyInserters.fromValue(
+                    GachaPostRequest(
+                        1L,
+                        GachaInfoRequest(
+                            "name",
+                            "banner",
                             1,
-                            1
-                        )
-                        )
+                        ),
+                        MultipleGachaCostRequest(
+                            listOf(
+                                GachaCostRequest(
+                                    1,
+                                    1,
+                                ),
+                            ),
+                        ),
+                        MultipleGachaProbabilityRequest(
+                            listOf(
+                                GachaProbabilityRequest(
+                                    100,
+                                    1,
+                                    1L,
+                                    1,
+                                ),
+                            ),
+                        ),
                     ),
-                    MultipleGachaProbabilityRequest(
-                        listOf(
-                            GachaProbabilityRequest(
-                            100,
-                            1,
-                            1L,
-                            1
-                        )
-                        )
-                    )
-                )
-            ))
+                ),
+            )
             .exchange()
             .expectStatus().isOk
 

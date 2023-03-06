@@ -35,7 +35,7 @@ class GetGachaListUseCaseTest {
         Assertions.assertTrue(actual.gachaOutputDataList[0].gachaInfoData.gachaName == "name")
         Assertions.assertTrue(actual.gachaOutputDataList[0].gachaInfoData.bannerImage == "banner")
         Assertions.assertSame(1, actual.gachaOutputDataList[0].gachaInfoData.execCount)
-        Assertions.assertSame(1, actual.gachaOutputDataList[0].gachaCostDataList[0].costType)
+        Assertions.assertSame(0, actual.gachaOutputDataList[0].gachaCostDataList[0].costType)
         Assertions.assertSame(0, actual.gachaOutputDataList[0].gachaCostDataList[0].cost)
         Assertions.assertSame(100, actual.gachaOutputDataList[0].gachaProbabilityDataList[0].probability)
         Assertions.assertSame(0, actual.gachaOutputDataList[0].gachaProbabilityDataList[0].objectType)

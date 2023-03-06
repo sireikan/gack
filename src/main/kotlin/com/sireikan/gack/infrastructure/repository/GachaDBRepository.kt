@@ -95,7 +95,7 @@ class GachaDBRepository(
     }
 
     override fun insert(gacha: Gacha) {
-        val created: String = SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(Calendar.getInstance().time)
+        val created: String = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().time)
         gachaInfoMapper.insert(
             GachaInfo.create(
                 ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),

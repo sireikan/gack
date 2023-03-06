@@ -1,10 +1,16 @@
 package com.sireikan.gack.application.service.usecase.gacha
 
-import com.sireikan.gack.application.service.usecase.gacha.data.*
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaCostData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaInfoData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaListOutputData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaOutputData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaProbabilityData
 import com.sireikan.gack.domain.model.gacha.Gacha
 import com.sireikan.gack.domain.repository.GachaOrderKey
 import com.sireikan.gack.domain.repository.GachaRepository
+import org.springframework.stereotype.Service
 
+@Service
 class GetGachaListUseCase(
     private val gachaRepository: GachaRepository,
 ) {
@@ -33,7 +39,7 @@ class GetGachaListUseCase(
                         )
                     }.toList(),
                 )
-            }.toList()
+            }.toList(),
         )
     }
 }

@@ -1,6 +1,5 @@
 package com.sireikan.gack.infrastructure.entity
 
-import com.sireikan.gack.domain.error.DomainException
 import com.sireikan.gack.infrastructure.error.RepositoryException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

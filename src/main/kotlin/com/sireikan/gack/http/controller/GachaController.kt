@@ -3,9 +3,23 @@ package com.sireikan.gack.http.controller
 import com.sireikan.gack.application.service.usecase.gacha.CreateGachaUseCase
 import com.sireikan.gack.application.service.usecase.gacha.GetGachaListUseCase
 import com.sireikan.gack.application.service.usecase.gacha.GetGachaUseCase
-import com.sireikan.gack.application.service.usecase.gacha.data.*
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaCostData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaCreateData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaInfoData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaInputData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaListOutputData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaOutputData
+import com.sireikan.gack.application.service.usecase.gacha.data.GachaProbabilityData
 import com.sireikan.gack.openapi.generated.controller.GachaApi
-import com.sireikan.gack.openapi.generated.model.*
+import com.sireikan.gack.openapi.generated.model.GachaCostResponse
+import com.sireikan.gack.openapi.generated.model.GachaInfoResponse
+import com.sireikan.gack.openapi.generated.model.GachaPostRequest
+import com.sireikan.gack.openapi.generated.model.GachaProbabilityResponse
+import com.sireikan.gack.openapi.generated.model.GachaPutRequest
+import com.sireikan.gack.openapi.generated.model.GachaResponse
+import com.sireikan.gack.openapi.generated.model.MultipleGachaCostResponse
+import com.sireikan.gack.openapi.generated.model.MultipleGachaProbabilityResponse
+import com.sireikan.gack.openapi.generated.model.MultipleGachaResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -47,7 +61,7 @@ class GachaController(
                             }.toList(),
                         ),
                     )
-                }.toList()
+                }.toList(),
             ),
             HttpStatus.OK,
         )
@@ -102,7 +116,7 @@ class GachaController(
                 gachaPostRequest.gachaCosts.costs.stream().map { cost ->
                     GachaCostData.create(
                         cost.costType,
-                        cost.cost
+                        cost.cost,
                     )
                 }.toList(),
                 gachaPostRequest.gachaProbabilities.probabilities.stream().map { probability ->
@@ -110,7 +124,7 @@ class GachaController(
                         probability.probability,
                         probability.objectType,
                         probability.objectId,
-                        probability.objectCount
+                        probability.objectCount,
                     )
                 }.toList(),
             ),
