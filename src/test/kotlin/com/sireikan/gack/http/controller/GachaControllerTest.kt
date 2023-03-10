@@ -1,7 +1,19 @@
 package com.sireikan.gack.http.controller
 
 import com.sireikan.gack.infrastructure.mapper.MysqlExtension
-import com.sireikan.gack.openapi.generated.model.*
+import com.sireikan.gack.openapi.generated.model.GachaCostRequest
+import com.sireikan.gack.openapi.generated.model.GachaCostResponse
+import com.sireikan.gack.openapi.generated.model.GachaInfoRequest
+import com.sireikan.gack.openapi.generated.model.GachaInfoResponse
+import com.sireikan.gack.openapi.generated.model.GachaPostRequest
+import com.sireikan.gack.openapi.generated.model.GachaProbabilityRequest
+import com.sireikan.gack.openapi.generated.model.GachaProbabilityResponse
+import com.sireikan.gack.openapi.generated.model.GachaResponse
+import com.sireikan.gack.openapi.generated.model.MultipleGachaCostRequest
+import com.sireikan.gack.openapi.generated.model.MultipleGachaCostResponse
+import com.sireikan.gack.openapi.generated.model.MultipleGachaProbabilityRequest
+import com.sireikan.gack.openapi.generated.model.MultipleGachaProbabilityResponse
+import com.sireikan.gack.openapi.generated.model.MultipleGachaResponse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,7 +37,7 @@ class GachaControllerTest {
     @Test
     fun getGacha() {
         val expected: MultipleGachaResponse = MultipleGachaResponse(
-            listOf()
+            listOf(),
         )
         webClient.get().uri("/gacha/").exchange()
             .expectStatus().isOk
@@ -47,7 +59,7 @@ class GachaControllerTest {
                         listOf(GachaProbabilityResponse(100, 1, 1L, 1)),
                     ),
                 ),
-            )
+            ),
         )
         webClient.get().uri("/gacha/").exchange()
             .expectStatus().isOk

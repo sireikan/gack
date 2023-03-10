@@ -13,8 +13,18 @@ import com.sireikan.gack.domain.model.gacha.ObjectType
 import com.sireikan.gack.domain.model.gacha.Probability
 import com.sireikan.gack.domain.repository.GachaOrderKey
 import com.sireikan.gack.domain.repository.GachaRepository
-import com.sireikan.gack.infrastructure.entity.*
-import com.sireikan.gack.infrastructure.mapper.*
+import com.sireikan.gack.infrastructure.entity.GachaCost
+import com.sireikan.gack.infrastructure.entity.GachaCostLog
+import com.sireikan.gack.infrastructure.entity.GachaInfo
+import com.sireikan.gack.infrastructure.entity.GachaInfoLog
+import com.sireikan.gack.infrastructure.entity.GachaProbability
+import com.sireikan.gack.infrastructure.entity.GachaProbabilityLog
+import com.sireikan.gack.infrastructure.mapper.GachaCostLogMapper
+import com.sireikan.gack.infrastructure.mapper.GachaCostMapper
+import com.sireikan.gack.infrastructure.mapper.GachaInfoLogMapper
+import com.sireikan.gack.infrastructure.mapper.GachaInfoMapper
+import com.sireikan.gack.infrastructure.mapper.GachaProbabilityLogMapper
+import com.sireikan.gack.infrastructure.mapper.GachaProbabilityMapper
 import org.springframework.stereotype.Component
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -27,7 +37,7 @@ class GachaDBRepository(
     private val gachaCostMapper: GachaCostMapper,
     private val gachaCostLogMapper: GachaCostLogMapper,
     private val gachaProbabilityMapper: GachaProbabilityMapper,
-    private val gachaProbabilityLogMapper: GachaProbabilityLogMapper
+    private val gachaProbabilityLogMapper: GachaProbabilityLogMapper,
 ) : GachaRepository {
     override fun find(gachaId: GachaId, gachaOrderKey: GachaOrderKey): Gacha? {
         val order = buildOrderColumn(gachaOrderKey)
@@ -112,8 +122,8 @@ class GachaDBRepository(
                 gacha.gachaInfo.bannerImage.url,
                 gacha.gachaInfo.execCount.count,
                 created,
-                null
-            )
+                null,
+            ),
         )
         gacha.gachaCostList.stream().forEach { cost ->
             gachaCostMapper.insert(
@@ -131,8 +141,8 @@ class GachaDBRepository(
                     cost.costType.value,
                     cost.cost.cost,
                     created,
-                    null
-                )
+                    null,
+                ),
             )
         }
         gacha.gachaProbabilityList.stream().forEach { probability ->
@@ -155,8 +165,8 @@ class GachaDBRepository(
                     probability.objectId.id,
                     probability.objectCount.count,
                     created,
-                    null
-                )
+                    null,
+                ),
             )
         }
     }
@@ -181,8 +191,8 @@ class GachaDBRepository(
                 gacha.gachaInfo.bannerImage.url,
                 gacha.gachaInfo.execCount.count,
                 created,
-                null
-            )
+                null,
+            ),
         )
         gachaCostMapper.deleteByGachaId(gacha.gachaId.id)
         gacha.gachaCostList.stream().forEach { cost ->
@@ -201,8 +211,8 @@ class GachaDBRepository(
                     cost.costType.value,
                     cost.cost.cost,
                     created,
-                    null
-                )
+                    null,
+                ),
             )
         }
         gachaProbabilityMapper.deleteByGachaId(gacha.gachaId.id)
@@ -215,8 +225,8 @@ class GachaDBRepository(
                     probability.objectType.value,
                     probability.objectId.id,
                     probability.objectCount.count,
-                    created
-                )
+                    created,
+                ),
             )
             gachaProbabilityLogMapper.insert(
                 GachaProbabilityLog.create(
@@ -226,8 +236,8 @@ class GachaDBRepository(
                     probability.objectId.id,
                     probability.objectCount.count,
                     created,
-                    null
-                )
+                    null,
+                ),
             )
         }
     }

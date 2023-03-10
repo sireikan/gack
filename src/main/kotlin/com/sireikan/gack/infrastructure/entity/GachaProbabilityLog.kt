@@ -1,7 +1,5 @@
 package com.sireikan.gack.infrastructure.entity
 
-import com.sireikan.gack.infrastructure.error.RepositoryException
-
 class GachaProbabilityLog private constructor(
     val gachaId: Long,
     val probability: Int,

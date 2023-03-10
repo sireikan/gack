@@ -9,7 +9,12 @@ import com.sireikan.gack.domain.repository.GachaRepository
 import com.sireikan.gack.infrastructure.entity.GachaCost
 import com.sireikan.gack.infrastructure.entity.GachaInfo
 import com.sireikan.gack.infrastructure.entity.GachaProbability
-import com.sireikan.gack.infrastructure.mapper.*
+import com.sireikan.gack.infrastructure.mapper.GachaCostLogMapper
+import com.sireikan.gack.infrastructure.mapper.GachaCostMapper
+import com.sireikan.gack.infrastructure.mapper.GachaInfoLogMapper
+import com.sireikan.gack.infrastructure.mapper.GachaInfoMapper
+import com.sireikan.gack.infrastructure.mapper.GachaProbabilityLogMapper
+import com.sireikan.gack.infrastructure.mapper.GachaProbabilityMapper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
