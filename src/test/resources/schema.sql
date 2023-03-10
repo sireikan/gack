@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS gacha_info_log(
     banner_image TEXT NOT NULL,
     exec_count INT UNSIGNED NOT NULL,
     created datetime NOT NULL,
+    deleted datetime,
     PRIMARY KEY (id),
     INDEX gacha_info_log_idx_1 (gacha_id)
 );
@@ -56,6 +57,7 @@ CREATE TABLE IF NOT EXISTS gacha_cost_log(
      cost_type INT UNSIGNED NOT NULL,
     cost INT UNSIGNED NOT NULL,
     created datetime NOT NULL,
+    deleted datetime,
     PRIMARY KEY (id),
     INDEX gacha_cost_log_idx_1 (gacha_id)
 );
@@ -84,6 +86,7 @@ CREATE TABLE IF NOT EXISTS gacha_probability_log(
     object_id BIGINT UNSIGNED NOT NULL,
     object_count INT UNSIGNED NOT NULL,
     created datetime NOT NULL,
+    deleted datetime,
     PRIMARY KEY (id),
     INDEX gacha_probability_log_idx_1 (gacha_id)
 );

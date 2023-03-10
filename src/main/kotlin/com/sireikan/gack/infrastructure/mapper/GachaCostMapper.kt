@@ -1,10 +1,12 @@
 package com.sireikan.gack.infrastructure.mapper
 
 import com.sireikan.gack.infrastructure.entity.GachaCost
+import org.apache.ibatis.annotations.Delete
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Param
 import org.apache.ibatis.annotations.Select
+import org.apache.ibatis.annotations.Update
 
 @Mapper
 interface GachaCostMapper {
@@ -16,4 +18,7 @@ interface GachaCostMapper {
 
     @Insert("insert into gacha_cost (id, gacha_id, cost_type, cost, created) values (#{id}, #{gachaId}, #{costType}, #{cost}, #{created})")
     fun insert(gachaCost: GachaCost)
+
+    @Delete("delete from gacha_cost where gacha_id = #{gachaId}")
+    fun deleteByGachaId(@Param("gacha_id") gachaId: Long)
 }

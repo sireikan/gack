@@ -7,4 +7,5 @@ interface GachaRepository {
     fun find(gachaId: GachaId, gachaOrderKey: GachaOrderKey): Gacha?
     fun findAll(gachaOrderKey: GachaOrderKey): List<Gacha>
     fun insert(gacha: Gacha)
+    fun update(gacha: Gacha)
 }
