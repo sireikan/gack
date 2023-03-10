@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Mapper
 
 @Mapper
 interface GachaCostLogMapper {
-    @Insert("insert into gacha_cost_log (gacha_id, cost_type, cost, created) values (#{gachaId}, #{costType}, #{cost}, #{created})")
+    @Insert("insert into gacha_cost_log (gacha_id, cost_type, cost, created, deleted) values (#{gachaId}, #{costType}, #{cost}, #{created}, #{deleted})")
     fun insert(gachaCostLog: GachaCostLog)
 }

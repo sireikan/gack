@@ -13,14 +13,8 @@ import com.sireikan.gack.domain.model.gacha.ObjectType
 import com.sireikan.gack.domain.model.gacha.Probability
 import com.sireikan.gack.domain.repository.GachaOrderKey
 import com.sireikan.gack.domain.repository.GachaRepository
-import com.sireikan.gack.infrastructure.entity.GachaCost
-import com.sireikan.gack.infrastructure.entity.GachaCostLog
-import com.sireikan.gack.infrastructure.entity.GachaInfo
-import com.sireikan.gack.infrastructure.entity.GachaProbability
-import com.sireikan.gack.infrastructure.mapper.GachaCostLogMapper
-import com.sireikan.gack.infrastructure.mapper.GachaCostMapper
-import com.sireikan.gack.infrastructure.mapper.GachaInfoMapper
-import com.sireikan.gack.infrastructure.mapper.GachaProbabilityMapper
+import com.sireikan.gack.infrastructure.entity.*
+import com.sireikan.gack.infrastructure.mapper.*
 import org.springframework.stereotype.Component
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -29,9 +23,11 @@ import java.util.concurrent.ThreadLocalRandom
 @Component
 class GachaDBRepository(
     private val gachaInfoMapper: GachaInfoMapper,
+    private val gachaInfoLogMapper: GachaInfoLogMapper,
     private val gachaCostMapper: GachaCostMapper,
     private val gachaCostLogMapper: GachaCostLogMapper,
     private val gachaProbabilityMapper: GachaProbabilityMapper,
+    private val gachaProbabilityLogMapper: GachaProbabilityLogMapper
 ) : GachaRepository {
     override fun find(gachaId: GachaId, gachaOrderKey: GachaOrderKey): Gacha? {
         val order = buildOrderColumn(gachaOrderKey)
@@ -109,6 +105,16 @@ class GachaDBRepository(
                 created,
             ),
         )
+        gachaInfoLogMapper.insert(
+            GachaInfoLog.create(
+                gacha.gachaId.id,
+                gacha.gachaInfo.gachaName.name,
+                gacha.gachaInfo.bannerImage.url,
+                gacha.gachaInfo.execCount.count,
+                created,
+                null
+            )
+        )
         gacha.gachaCostList.stream().forEach { cost ->
             gachaCostMapper.insert(
                 GachaCost.create(
@@ -141,12 +147,43 @@ class GachaDBRepository(
                     created,
                 ),
             )
-
+            gachaProbabilityLogMapper.insert(
+                GachaProbabilityLog.create(
+                    gacha.gachaId.id,
+                    probability.probability.probability,
+                    probability.objectType.value,
+                    probability.objectId.id,
+                    probability.objectCount.count,
+                    created,
+                    null
+                )
+            )
         }
     }
 
     override fun update(gacha: Gacha) {
         val created: String = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().time)
+        gachaInfoMapper.deleteByGachaId(gacha.gachaId.id)
+        gachaInfoMapper.insert(
+            GachaInfo.create(
+                ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                gacha.gachaId.id,
+                gacha.gachaInfo.gachaName.name,
+                gacha.gachaInfo.bannerImage.url,
+                gacha.gachaInfo.execCount.count,
+                created,
+            ),
+        )
+        gachaInfoLogMapper.insert(
+            GachaInfoLog.create(
+                gacha.gachaId.id,
+                gacha.gachaInfo.gachaName.name,
+                gacha.gachaInfo.bannerImage.url,
+                gacha.gachaInfo.execCount.count,
+                created,
+                null
+            )
+        )
         gachaCostMapper.deleteByGachaId(gacha.gachaId.id)
         gacha.gachaCostList.stream().forEach { cost ->
             gachaCostMapper.insert(
@@ -163,6 +200,31 @@ class GachaDBRepository(
                     gacha.gachaId.id,
                     cost.costType.value,
                     cost.cost.cost,
+                    created,
+                    null
+                )
+            )
+        }
+        gachaProbabilityMapper.deleteByGachaId(gacha.gachaId.id)
+        gacha.gachaProbabilityList.stream().forEach { probability ->
+            gachaProbabilityMapper.insert(
+                GachaProbability.create(
+                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                    gacha.gachaId.id,
+                    probability.probability.probability,
+                    probability.objectType.value,
+                    probability.objectId.id,
+                    probability.objectCount.count,
+                    created
+                )
+            )
+            gachaProbabilityLogMapper.insert(
+                GachaProbabilityLog.create(
+                    gacha.gachaId.id,
+                    probability.probability.probability,
+                    probability.objectType.value,
+                    probability.objectId.id,
+                    probability.objectCount.count,
                     created,
                     null
                 )

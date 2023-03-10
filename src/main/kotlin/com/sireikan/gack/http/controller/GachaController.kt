@@ -135,10 +135,19 @@ class GachaController(
     }
 
     override fun putGachaId(id: String, gachaPutRequest: GachaPutRequest?): ResponseEntity<Unit> {
-        return super.putGachaId(id, gachaPutRequest)
+        if (gachaPutRequest == null) {
+            return ResponseEntity(
+                HttpStatus.BAD_REQUEST,
+            )
+        }
+        return ResponseEntity(
+            HttpStatus.OK,
+        )
     }
 
     override fun deleteGachaId(id: String): ResponseEntity<Unit> {
-        return super.deleteGachaId(id)
+        return ResponseEntity(
+            HttpStatus.OK,
+        )
     }
 }

@@ -14,13 +14,4 @@ class GachaCostLog private constructor(
             return GachaCostLog(gachaId, costType, cost, created, deleted)
         }
     }
-
-    init {
-        if (gachaId < 0) {
-            throw RepositoryException("GachaCostLog is invalid.")
-        }
-        if (cost < 0) {
-            throw RepositoryException("GachaCostLog is invalid.")
-        }
-    }
 }

@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test
 class GachaProbabilityLogTest {
     @Test
     fun create() {
-        val gachaProbabilityLog: GachaProbabilityLog = GachaProbabilityLog.create(1L, 1L, 100, 0, 1L, 1, "2023-01-01 00:00:00", null)
-        Assertions.assertSame(1L, gachaProbabilityLog.id)
+        val gachaProbabilityLog: GachaProbabilityLog = GachaProbabilityLog.create(1L, 100, 0, 1L, 1, "2023-01-01 00:00:00", null)
         Assertions.assertSame(1L, gachaProbabilityLog.gachaId)
         Assertions.assertSame(100, gachaProbabilityLog.probability)
         Assertions.assertSame(0, gachaProbabilityLog.objectType)
