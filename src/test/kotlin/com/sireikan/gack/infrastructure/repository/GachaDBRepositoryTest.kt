@@ -9,8 +9,11 @@ import com.sireikan.gack.domain.repository.GachaRepository
 import com.sireikan.gack.infrastructure.entity.GachaCost
 import com.sireikan.gack.infrastructure.entity.GachaInfo
 import com.sireikan.gack.infrastructure.entity.GachaProbability
+import com.sireikan.gack.infrastructure.mapper.GachaCostLogMapper
 import com.sireikan.gack.infrastructure.mapper.GachaCostMapper
+import com.sireikan.gack.infrastructure.mapper.GachaInfoLogMapper
 import com.sireikan.gack.infrastructure.mapper.GachaInfoMapper
+import com.sireikan.gack.infrastructure.mapper.GachaProbabilityLogMapper
 import com.sireikan.gack.infrastructure.mapper.GachaProbabilityMapper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -19,16 +22,22 @@ import org.mockito.Mockito
 
 class GachaDBRepositoryTest {
     private lateinit var gachaInfoMapper: GachaInfoMapper
+    private lateinit var gachaInfoLogMapper: GachaInfoLogMapper
     private lateinit var gachaCostMapper: GachaCostMapper
+    private lateinit var gachaCostLogMapper: GachaCostLogMapper
     private lateinit var gachaProbabilityMapper: GachaProbabilityMapper
+    private lateinit var gachaProbabilityLogMapper: GachaProbabilityLogMapper
     private lateinit var gachaRepository: GachaRepository
 
     @BeforeEach
     fun setup() {
         gachaInfoMapper = Mockito.mock(GachaInfoMapper::class.java)
+        gachaInfoLogMapper = Mockito.mock(GachaInfoLogMapper::class.java)
         gachaCostMapper = Mockito.mock(GachaCostMapper::class.java)
+        gachaCostLogMapper = Mockito.mock(GachaCostLogMapper::class.java)
         gachaProbabilityMapper = Mockito.mock(GachaProbabilityMapper::class.java)
-        gachaRepository = GachaDBRepository(gachaInfoMapper, gachaCostMapper, gachaProbabilityMapper)
+        gachaProbabilityLogMapper = Mockito.mock(GachaProbabilityLogMapper::class.java)
+        gachaRepository = GachaDBRepository(gachaInfoMapper, gachaInfoLogMapper, gachaCostMapper, gachaCostLogMapper, gachaProbabilityMapper, gachaProbabilityLogMapper)
     }
 
     @Test

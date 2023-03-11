@@ -8,6 +8,7 @@ services:
       - ~/src/github.com/sireikan/gack:/app
     ports:
       - "8080:8080"
+      - "5005:5005"
     depends_on:
       db:
         condition: service_started

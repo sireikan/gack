@@ -1,6 +1,7 @@
 package com.sireikan.gack.application.service.usecase.gacha.data
 
-import com.sireikan.gack.application.service.usecase.error.UseCaseException
+import com.sireikan.gack.application.service.usecase.error.EmptyListUseCaseException
+import com.sireikan.gack.application.service.usecase.error.InvalidGachaIdUseCaseException
 
 class GachaCreateData private constructor(
     val gachaId: Long,
@@ -15,13 +16,13 @@ class GachaCreateData private constructor(
     }
     init {
         if (gachaId < 1L) {
-            throw UseCaseException("gachaId is invalid.")
+            throw InvalidGachaIdUseCaseException("gachaId is invalid.")
         }
         if (gachaCostDataList.isEmpty()) {
-            throw UseCaseException("gachaCostDataList is invalid.")
+            throw EmptyListUseCaseException("gachaCostDataList is invalid.")
         }
         if (gachaProbabilityDataList.isEmpty()) {
-            throw UseCaseException("gachaProbabilityDataList is invalid.")
+            throw EmptyListUseCaseException("gachaProbabilityDataList is invalid.")
         }
     }
 }
