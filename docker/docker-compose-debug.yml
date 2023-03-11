@@ -1,0 +1,53 @@
+version: '3'
+services:
+  app:
+    container_name: app
+    build:
+      context: ./app
+      dockerfile: DockerfileDebug
+    volumes:
+      - ~/src/github.com/sireikan/gack:/app
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    depends_on:
+      db:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      - app-net
+  db:
+    container_name: db
+    build:
+      context: ./mysql
+    environment:
+      MYSQL_DATABASE: sample
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - ./mysql/settings:/var/lib/mysql
+      - ./mysql/logs:/var/log/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+    networks:
+      - app-net
+  redis:
+    container_name: redis
+    build:
+      context: ./redis
+    environment:
+      TZ: Asia/Tokyo
+    volumes:
+      - ./redis/redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - app-net
+networks:
+  app-net:
+    driver: bridge

@@ -12,12 +12,6 @@ spring:
   data:
     redis:
       host: "redis"
-  devtools:
-    livereload: true
-    restart:
-      enabled: true
-      poll-interval: 2s
-      quiet-period: 1s
 logging:
   level:
     org:

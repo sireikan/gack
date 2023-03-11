@@ -7,9 +7,13 @@ CREATE DATABASE IF NOT EXISTS sample;
 
 ```shell
 cd docker
-docker-compose build --no-cache
-docker-compose up
-docker-compose up -d
+
+## 通常
+docker-compose build --no-cache && docker-compose up
+
+## enable remote debug
+docker-compose -f docker-compose-debug.yml build --no-cache && docker-compose up
+
 ```
 
 ## コンテナ停止
