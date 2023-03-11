@@ -18,6 +18,6 @@ interface GachaProbabilityMapper {
     @Insert("insert into gacha_probability (id, gacha_id, probability, object_type, object_id, object_count, created) values (#{id}, #{gachaId}, #{probability}, #{objectType}, #{objectId}, #{objectCount}, #{created})")
     fun insert(gachaProbability: GachaProbability)
 
-    @Delete("delete from gacha_probability where gacha_id = #{gachaId}")
+    @Delete("delete from gacha_probability where gacha_id = #{gacha_id}")
     fun deleteByGachaId(@Param("gacha_id") gachaId: Long)
 }

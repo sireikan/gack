@@ -18,6 +18,6 @@ interface GachaCostMapper {
     @Insert("insert into gacha_cost (id, gacha_id, cost_type, cost, created) values (#{id}, #{gachaId}, #{costType}, #{cost}, #{created})")
     fun insert(gachaCost: GachaCost)
 
-    @Delete("delete from gacha_cost where gacha_id = #{gachaId}")
+    @Delete("delete from gacha_cost where gacha_id = #{gacha_id}")
     fun deleteByGachaId(@Param("gacha_id") gachaId: Long)
 }

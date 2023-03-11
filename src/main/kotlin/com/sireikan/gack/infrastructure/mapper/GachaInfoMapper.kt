@@ -18,6 +18,6 @@ interface GachaInfoMapper {
     @Insert("insert into gacha_info (id, gacha_id, gacha_name, banner_image, exec_count, created) values (#{id}, #{gachaId}, #{gachaName}, #{bannerImage}, #{execCount}, #{created})")
     fun insert(gachaInfo: GachaInfo)
 
-    @Delete("delete from gacha_info where gacha_id = #{gachaId}")
+    @Delete("delete from gacha_info where gacha_id = #{gacha_id}")
     fun deleteByGachaId(@Param("gacha_id") gachaId: Long)
 }
