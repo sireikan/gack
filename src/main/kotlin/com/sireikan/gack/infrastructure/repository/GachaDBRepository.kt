@@ -242,6 +242,12 @@ class GachaDBRepository(
         }
     }
 
+    override fun delete(gachaId: GachaId) {
+        gachaInfoMapper.deleteByGachaId(gachaId.id)
+        gachaCostMapper.deleteByGachaId(gachaId.id)
+        gachaProbabilityMapper.deleteByGachaId(gachaId.id)
+    }
+
     private fun buildOrderColumn(gachaOrderKey: GachaOrderKey): String {
         return when (gachaOrderKey) {
             GachaOrderKey.GACHA_ID -> "gacha_id"

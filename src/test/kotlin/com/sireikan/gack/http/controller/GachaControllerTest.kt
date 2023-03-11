@@ -1,19 +1,7 @@
 package com.sireikan.gack.http.controller
 
 import com.sireikan.gack.infrastructure.mapper.MysqlExtension
-import com.sireikan.gack.openapi.generated.model.GachaCostRequest
-import com.sireikan.gack.openapi.generated.model.GachaCostResponse
-import com.sireikan.gack.openapi.generated.model.GachaInfoRequest
-import com.sireikan.gack.openapi.generated.model.GachaInfoResponse
-import com.sireikan.gack.openapi.generated.model.GachaPostRequest
-import com.sireikan.gack.openapi.generated.model.GachaProbabilityRequest
-import com.sireikan.gack.openapi.generated.model.GachaProbabilityResponse
-import com.sireikan.gack.openapi.generated.model.GachaResponse
-import com.sireikan.gack.openapi.generated.model.MultipleGachaCostRequest
-import com.sireikan.gack.openapi.generated.model.MultipleGachaCostResponse
-import com.sireikan.gack.openapi.generated.model.MultipleGachaProbabilityRequest
-import com.sireikan.gack.openapi.generated.model.MultipleGachaProbabilityResponse
-import com.sireikan.gack.openapi.generated.model.MultipleGachaResponse
+import com.sireikan.gack.openapi.generated.model.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -140,5 +128,110 @@ class GachaControllerTest {
             .expectStatus().isOk
             .expectBody(GachaResponse::class.java)
             .isEqualTo(expected)
+    }
+
+    @Test
+    fun putGacha() {
+        webClient.put().uri("/gacha/1")
+            .body(
+                BodyInserters.fromValue(
+                    GachaPutRequest(
+                        GachaInfoRequest(
+                            "name",
+                            "banner",
+                            1,
+                        ),
+                        MultipleGachaCostRequest(
+                            listOf(
+                                GachaCostRequest(
+                                    1,
+                                    1,
+                                ),
+                            ),
+                        ),
+                        MultipleGachaProbabilityRequest(
+                            listOf(
+                                GachaProbabilityRequest(
+                                    100,
+                                    1,
+                                    1L,
+                                    1,
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            )
+            .exchange()
+            .expectStatus().isBadRequest
+    }
+
+    @Sql("/sql/GachaControllerTest/putGacha_exist.sql")
+    @Test
+    fun putGacha_exist() {
+        webClient.put().uri("/gacha/1")
+            .body(
+                BodyInserters.fromValue(
+                    GachaPutRequest(
+                        GachaInfoRequest(
+                            "name",
+                            "banner",
+                            1,
+                        ),
+                        MultipleGachaCostRequest(
+                            listOf(
+                                GachaCostRequest(
+                                    1,
+                                    1,
+                                ),
+                            ),
+                        ),
+                        MultipleGachaProbabilityRequest(
+                            listOf(
+                                GachaProbabilityRequest(
+                                    100,
+                                    1,
+                                    1L,
+                                    1,
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            )
+            .exchange()
+            .expectStatus().isOk
+
+        val expected: GachaResponse = GachaResponse(
+            GachaInfoResponse("name", "banner", 1),
+            MultipleGachaCostResponse(
+                listOf(GachaCostResponse(1, 1)),
+            ),
+            MultipleGachaProbabilityResponse(
+                listOf(GachaProbabilityResponse(100, 1, 1L, 1)),
+            ),
+        )
+        webClient.get().uri("/gacha/1").exchange()
+            .expectStatus().isOk
+            .expectBody(GachaResponse::class.java)
+            .isEqualTo(expected)
+    }
+
+    @Test
+    fun deleteGacha() {
+        webClient.delete().uri("/gacha/1")
+            .exchange()
+            .expectStatus().isBadRequest
+    }
+
+    @Sql("/sql/GachaControllerTest/deleteGacha_exist.sql")
+    @Test
+    fun deleteGacha_exist() {
+        webClient.delete().uri("/gacha/1")
+            .exchange()
+            .expectStatus().isOk
+
+        webClient.get().uri("/gacha/1").exchange()
+            .expectStatus().isNotFound
     }
 }

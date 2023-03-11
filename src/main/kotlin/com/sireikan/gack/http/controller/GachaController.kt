@@ -1,15 +1,8 @@
 package com.sireikan.gack.http.controller
 
-import com.sireikan.gack.application.service.usecase.gacha.CreateGachaUseCase
-import com.sireikan.gack.application.service.usecase.gacha.GetGachaListUseCase
-import com.sireikan.gack.application.service.usecase.gacha.GetGachaUseCase
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaCostData
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaCreateData
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaInfoData
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaInputData
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaListOutputData
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaOutputData
-import com.sireikan.gack.application.service.usecase.gacha.data.GachaProbabilityData
+import com.sireikan.gack.application.service.usecase.error.UseCaseException
+import com.sireikan.gack.application.service.usecase.gacha.*
+import com.sireikan.gack.application.service.usecase.gacha.data.*
 import com.sireikan.gack.openapi.generated.controller.GachaApi
 import com.sireikan.gack.openapi.generated.model.GachaCostResponse
 import com.sireikan.gack.openapi.generated.model.GachaInfoResponse
@@ -30,6 +23,8 @@ class GachaController(
     @Autowired val getGachaListUseCase: GetGachaListUseCase,
     @Autowired val getGachaUseCase: GetGachaUseCase,
     @Autowired val createGachaUseCase: CreateGachaUseCase,
+    @Autowired val updateGachaUseCase: UpdateGachaUseCase,
+    @Autowired val deleteGachaUseCase: DeleteGachaUseCase,
 ) : GachaApi {
     override fun getGacha(): ResponseEntity<MultipleGachaResponse> {
         val gachaListOutputData: GachaListOutputData = getGachaListUseCase.execute()
@@ -140,12 +135,57 @@ class GachaController(
                 HttpStatus.BAD_REQUEST,
             )
         }
+        try {
+            updateGachaUseCase.execute(
+                GachaUpdateData.create(
+                    id.toLong(),
+                    GachaInfoData.create(
+                        gachaPutRequest.gachaInfo.gachaName,
+                        gachaPutRequest.gachaInfo.bannerImage,
+                        gachaPutRequest.gachaInfo.execCount,
+                    ),
+                    gachaPutRequest.gachaCosts.costs.stream().map { cost ->
+                        GachaCostData.create(
+                            cost.costType,
+                            cost.cost,
+                        )
+                    }.toList(),
+                    gachaPutRequest.gachaProbabilities.probabilities.stream().map { probability ->
+                        GachaProbabilityData.create(
+                            probability.probability,
+                            probability.objectType,
+                            probability.objectId,
+                            probability.objectCount,
+                        )
+                    }.toList(),
+                )
+            )
+        } catch (useCaseException: UseCaseException) {
+            return ResponseEntity(
+                HttpStatus.BAD_REQUEST,
+            )
+        } catch (exception: Exception) {
+            return ResponseEntity(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            )
+        }
         return ResponseEntity(
             HttpStatus.OK,
         )
     }
 
     override fun deleteGachaId(id: String): ResponseEntity<Unit> {
+        try {
+            deleteGachaUseCase.execute(id.toLong())
+        } catch (useCaseException: UseCaseException) {
+            return ResponseEntity(
+                HttpStatus.BAD_REQUEST,
+            )
+        } catch (exception: Exception) {
+            return ResponseEntity(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            )
+        }
         return ResponseEntity(
             HttpStatus.OK,
         )
