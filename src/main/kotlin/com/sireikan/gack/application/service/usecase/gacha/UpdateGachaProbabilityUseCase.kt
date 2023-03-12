@@ -1,5 +1,6 @@
 package com.sireikan.gack.application.service.usecase.gacha
 
+import com.sireikan.gack.application.service.usecase.error.GachaNotFoundUseCaseException
 import com.sireikan.gack.application.service.usecase.gacha.data.GachaInputData
 import com.sireikan.gack.application.service.usecase.gacha.data.GachaProbabilityData
 import com.sireikan.gack.domain.model.gacha.GachaId
@@ -8,6 +9,7 @@ import com.sireikan.gack.domain.model.gacha.ObjectCount
 import com.sireikan.gack.domain.model.gacha.ObjectId
 import com.sireikan.gack.domain.model.gacha.ObjectType
 import com.sireikan.gack.domain.model.gacha.Probability
+import com.sireikan.gack.domain.repository.GachaOrderKey
 import com.sireikan.gack.domain.repository.GachaRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,6 +20,8 @@ class UpdateGachaProbabilityUseCase(
     private val gachaRepository: GachaRepository,
 ) {
     fun execute(gachaInputData: GachaInputData, gachaProbabilityDataList: List<GachaProbabilityData>) {
+        gachaRepository.find(GachaId.create(gachaInputData.gachaId), GachaOrderKey.GACHA_ID)
+            ?: throw GachaNotFoundUseCaseException("Gacha is not found.")
         gachaRepository.updateGachaProbability(
             GachaId.create(gachaInputData.gachaId),
             gachaProbabilityDataList.stream().map { probability ->

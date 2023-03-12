@@ -229,6 +229,7 @@ class GachaControllerTest {
             .isEqualTo(expected)
     }
 
+    @Sql("/sql/Common/delete.sql")
     @Test
     fun putGachaGachaIdGachaInfoId() {
         webClient.put().uri("/gacha/1/gachaInfo/")
@@ -276,6 +277,7 @@ class GachaControllerTest {
             .isEqualTo(expected)
     }
 
+    @Sql("/sql/Common/delete.sql")
     @Test
     fun putGachaGachaIdGachaCostId() {
         webClient.put().uri("/gacha/1/gachaCost/")
@@ -298,7 +300,7 @@ class GachaControllerTest {
     @Sql("/sql/GachaControllerTest/putGachaGachaIdGachaCostId_exist.sql")
     @Test
     fun putGachaGachaIdGachaCostId_exist() {
-        webClient.put().uri("/gacha/1")
+        webClient.put().uri("/gacha/1/gachaCost/")
             .body(
                 BodyInserters.fromValue(
                     MultipleGachaCostRequest(
@@ -315,7 +317,7 @@ class GachaControllerTest {
             .expectStatus().isOk
 
         val expected: GachaResponse = GachaResponse(
-            GachaInfoResponse("name", "banner", 1),
+            GachaInfoResponse("name", "https://hoge.png", 1),
             MultipleGachaCostResponse(
                 listOf(GachaCostResponse(2, 2)),
             ),
@@ -329,6 +331,7 @@ class GachaControllerTest {
             .isEqualTo(expected)
     }
 
+    @Sql("/sql/Common/delete.sql")
     @Test
     fun putGachaGachaIdGachaProbabilityId() {
         webClient.put().uri("/gacha/1/gachaProbability/")
@@ -372,7 +375,7 @@ class GachaControllerTest {
             .expectStatus().isOk
 
         val expected: GachaResponse = GachaResponse(
-            GachaInfoResponse("name", "banner", 1),
+            GachaInfoResponse("name", "https://hoge.png", 1),
             MultipleGachaCostResponse(
                 listOf(GachaCostResponse(1, 1)),
             ),
