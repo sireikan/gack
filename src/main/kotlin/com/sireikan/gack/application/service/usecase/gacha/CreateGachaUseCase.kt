@@ -19,7 +19,7 @@ import com.sireikan.gack.domain.repository.GachaRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Transactional
+@Transactional(rollbackFor = [Exception::class])
 @Service
 class CreateGachaUseCase(
     private val gachaRepository: GachaRepository,

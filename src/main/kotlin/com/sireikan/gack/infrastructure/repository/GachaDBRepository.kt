@@ -242,6 +242,88 @@ class GachaDBRepository(
         }
     }
 
+    override fun updateGachaInfo(gachaId: GachaId, gachaInfo: com.sireikan.gack.domain.model.gacha.GachaInfo) {
+        val created: String = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().time)
+        gachaInfoMapper.deleteByGachaId(gachaId.id)
+        gachaInfoMapper.insert(
+            GachaInfo.create(
+                ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                gachaId.id,
+                gachaInfo.gachaName.name,
+                gachaInfo.bannerImage.url,
+                gachaInfo.execCount.count,
+                created,
+            ),
+        )
+        gachaInfoLogMapper.insert(
+            GachaInfoLog.create(
+                gachaId.id,
+                gachaInfo.gachaName.name,
+                gachaInfo.bannerImage.url,
+                gachaInfo.execCount.count,
+                created,
+                null,
+            ),
+        )
+    }
+
+    override fun updateGachaCost(gachaId: GachaId, gachaCostList: List<com.sireikan.gack.domain.model.gacha.GachaCost>) {
+        val created: String = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().time)
+        gachaCostMapper.deleteByGachaId(gachaId.id)
+        gachaCostList.stream().forEach { cost ->
+            gachaCostMapper.insert(
+                GachaCost.create(
+                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                    gachaId.id,
+                    cost.costType.value,
+                    cost.cost.cost,
+                    created,
+                ),
+            )
+            gachaCostLogMapper.insert(
+                GachaCostLog.create(
+                    gachaId.id,
+                    cost.costType.value,
+                    cost.cost.cost,
+                    created,
+                    null,
+                ),
+            )
+        }
+    }
+
+    override fun updateGachaProbability(
+        gachaId: GachaId,
+        gachaProbabilityList: List<com.sireikan.gack.domain.model.gacha.GachaProbability>,
+    ) {
+        val created: String = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().time)
+        gachaProbabilityMapper.deleteByGachaId(gachaId.id)
+        gachaProbabilityList.stream().forEach { probability ->
+            gachaProbabilityMapper.insert(
+                GachaProbability.create(
+                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                    gachaId.id,
+                    probability.probability.probability,
+                    probability.objectType.value,
+                    probability.objectId.id,
+                    probability.objectCount.count,
+                    created,
+                ),
+            )
+            gachaProbabilityLogMapper.insert(
+                GachaProbabilityLog.create(
+                    gachaId.id,
+                    probability.probability.probability,
+                    probability.objectType.value,
+                    probability.objectId.id,
+                    probability.objectCount.count,
+                    created,
+                    null,
+                ),
+            )
+        }
+    }
+
     override fun delete(gachaId: GachaId) {
         gachaInfoMapper.deleteByGachaId(gachaId.id)
         gachaCostMapper.deleteByGachaId(gachaId.id)
