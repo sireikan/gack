@@ -12,22 +12,22 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 
-class GetListUserUseCaseTest {
+class GetUserListUseCaseTest {
 
     private lateinit var userRepository: UserRepository
 
-    private lateinit var getListUserUseCase: GetListUserUseCase
+    private lateinit var getUserListUseCase: GetUserListUseCase
 
     @BeforeEach
     fun setUp() {
         userRepository = Mockito.mock(UserRepository::class.java)
-        getListUserUseCase = GetListUserUseCase(userRepository)
+        getUserListUseCase = GetUserListUseCase(userRepository)
     }
 
     @Test
     fun findAll() {
         Mockito.`when`(userRepository.findAll(UserOrderKey.USER_ID)).thenReturn(emptyList())
-        val actual = getListUserUseCase.execute()
+        val actual = getUserListUseCase.execute()
 
         Assertions.assertEquals(0, actual.userList.size)
     }
@@ -37,7 +37,7 @@ class GetListUserUseCaseTest {
         Mockito.`when`(userRepository.findAll(UserOrderKey.USER_ID)).thenReturn(
             listOf(User(UserId(1), UserName("name"), Email("email"), Password("password"))),
         )
-        val actual = getListUserUseCase.execute()
+        val actual = getUserListUseCase.execute()
 
         Assertions.assertEquals(1, actual.userList.size)
         Assertions.assertSame(1, actual.userList[0].userId)

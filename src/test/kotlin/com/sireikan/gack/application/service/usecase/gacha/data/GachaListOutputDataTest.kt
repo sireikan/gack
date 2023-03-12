@@ -12,8 +12,8 @@ class GachaListOutputDataTest {
                     GachaInfoData.create("name", "banner", 1),
                     listOf(GachaCostData.create(1, 1)),
                     listOf(GachaProbabilityData.create(100, 1, 1L, 1)),
-                )
-            )
+                ),
+            ),
         )
         Assertions.assertTrue(gachaListOutputData.gachaOutputDataList[0].gachaInfoData.gachaName == "name")
         Assertions.assertTrue(gachaListOutputData.gachaOutputDataList[0].gachaInfoData.bannerImage == "banner")

@@ -8,13 +8,13 @@ import com.sireikan.gack.domain.model.user.UserName
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class UserDataTest {
+class GetUserOutputDataTest {
     @Test
     fun create() {
-        val userData: UserData = UserData.create(User(UserId(1), UserName("name"), Email("email"), Password("password")))
-        Assertions.assertSame(1, userData.userId)
-        Assertions.assertSame("name", userData.userName)
-        Assertions.assertSame("email", userData.email)
-        Assertions.assertSame("password", userData.password)
+        val data: GetUserOutputData = GetUserOutputData.create(User(UserId(1), UserName("name"), Email("email"), Password("password")))
+        Assertions.assertSame(1, data.userId)
+        Assertions.assertSame("name", data.userName)
+        Assertions.assertSame("email", data.email)
+        Assertions.assertSame("password", data.password)
     }
 }

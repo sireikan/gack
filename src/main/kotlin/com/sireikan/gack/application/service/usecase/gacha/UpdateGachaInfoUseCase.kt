@@ -27,7 +27,7 @@ class UpdateGachaInfoUseCase(
                 GachaName.create(gachaInfoData.gachaName),
                 BannerImage.create(gachaInfoData.bannerImage),
                 GachaExecCount.create(gachaInfoData.execCount),
-            )
+            ),
         )
     }
 }

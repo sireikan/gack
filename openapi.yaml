@@ -71,6 +71,7 @@ paths:
     parameters:
       - schema:
           type: integer
+          format: int64
         name: id
         in: path
         required: true
@@ -96,6 +97,7 @@ paths:
       operationId: get-user-id
       tags:
         - user
+      description: ''
     put:
       summary: ''
       operationId: put-user-id
@@ -108,6 +110,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserRequest'
+      tags:
+        - user
     delete:
       summary: ''
       operationId: delete-user-id
@@ -115,10 +119,13 @@ paths:
         '200':
           description: OK
       description: delete user
+      tags:
+        - user
   '/gacha/{id}':
     parameters:
       - schema:
           type: integer
+          format: int64
         name: id
         in: path
         required: true
@@ -237,11 +244,12 @@ paths:
                         object_count: 0
       tags:
         - gacha
-  '/gacha/{gachaId}/gachaCost/':
+  '/gacha/{id}/gachaCost/':
     parameters:
       - schema:
           type: integer
-        name: gachaId
+          format: int64
+        name: id
         in: path
         required: true
     put:
@@ -257,11 +265,18 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MultipleGachaCostRequest'
-  '/gacha/{gachaId}/gachaProbability/':
+            examples:
+              Example 1:
+                value:
+                  costs:
+                    - cost_type: 0
+                      cost: 0
+  '/gacha/{id}/gachaProbability/':
     parameters:
       - schema:
           type: integer
-        name: gachaId
+          format: int64
+        name: id
         in: path
         required: true
     put:
@@ -277,12 +292,22 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MultipleGachaProbabilityRequest'
+            examples:
+              Example 1:
+                value:
+                  probabilities:
+                    - probability: 0
+                      object_type: 0
+                      object_id: 0
+                      object_count: 0
         description: ''
-  '/gacha/{gachaId}/gachaInfo/':
+      description: ''
+  '/gacha/{id}/gachaInfo/':
     parameters:
       - schema:
           type: integer
-        name: gachaId
+          format: int64
+        name: id
         in: path
         required: true
     put:
@@ -299,6 +324,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GachaInfoRequest'
+            examples:
+              Example 1:
+                value:
+                  gacha_name: string
+                  banner_image: string
+                  exec_count: 0
 components:
   schemas:
     UserRequest:
