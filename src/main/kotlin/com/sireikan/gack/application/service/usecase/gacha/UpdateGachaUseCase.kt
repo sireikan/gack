@@ -2,13 +2,26 @@ package com.sireikan.gack.application.service.usecase.gacha
 
 import com.sireikan.gack.application.service.usecase.error.GachaNotFoundUseCaseException
 import com.sireikan.gack.application.service.usecase.gacha.data.GachaUpdateData
-import com.sireikan.gack.domain.model.gacha.*
+import com.sireikan.gack.domain.model.gacha.BannerImage
+import com.sireikan.gack.domain.model.gacha.Cost
+import com.sireikan.gack.domain.model.gacha.CostType
+import com.sireikan.gack.domain.model.gacha.Gacha
+import com.sireikan.gack.domain.model.gacha.GachaCost
+import com.sireikan.gack.domain.model.gacha.GachaExecCount
+import com.sireikan.gack.domain.model.gacha.GachaId
+import com.sireikan.gack.domain.model.gacha.GachaInfo
+import com.sireikan.gack.domain.model.gacha.GachaName
+import com.sireikan.gack.domain.model.gacha.GachaProbability
+import com.sireikan.gack.domain.model.gacha.ObjectCount
+import com.sireikan.gack.domain.model.gacha.ObjectId
+import com.sireikan.gack.domain.model.gacha.ObjectType
+import com.sireikan.gack.domain.model.gacha.Probability
 import com.sireikan.gack.domain.repository.GachaOrderKey
 import com.sireikan.gack.domain.repository.GachaRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Transactional
+@Transactional(rollbackFor = [Exception::class])
 @Service
 class UpdateGachaUseCase(
     private val gachaRepository: GachaRepository,

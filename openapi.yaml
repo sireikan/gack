@@ -118,7 +118,7 @@ paths:
   '/gacha/{id}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: id
         in: path
         required: true
@@ -237,6 +237,68 @@ paths:
                         object_count: 0
       tags:
         - gacha
+  '/gacha/{gachaId}/gachaCost/':
+    parameters:
+      - schema:
+          type: integer
+        name: gachaId
+        in: path
+        required: true
+    put:
+      summary: ''
+      operationId: put-gacha-gachaId-gachaCost-id
+      responses:
+        '200':
+          description: OK
+      tags:
+        - gacha
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultipleGachaCostRequest'
+  '/gacha/{gachaId}/gachaProbability/':
+    parameters:
+      - schema:
+          type: integer
+        name: gachaId
+        in: path
+        required: true
+    put:
+      summary: ''
+      operationId: put-gacha-gachaId-gachaProbability-id
+      responses:
+        '200':
+          description: OK
+      tags:
+        - gacha
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultipleGachaProbabilityRequest'
+        description: ''
+  '/gacha/{gachaId}/gachaInfo/':
+    parameters:
+      - schema:
+          type: integer
+        name: gachaId
+        in: path
+        required: true
+    put:
+      summary: ''
+      operationId: put-gacha-gachaId-gachaInfo-id
+      responses:
+        '200':
+          description: OK
+      tags:
+        - gacha
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GachaInfoRequest'
 components:
   schemas:
     UserRequest:
