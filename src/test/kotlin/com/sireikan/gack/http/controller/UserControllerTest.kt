@@ -1,8 +1,6 @@
 package com.sireikan.gack.http.controller
 
-import com.sireikan.gack.application.service.usecase.user.data.GetUserOutputData
-import com.sireikan.gack.domain.model.user.Email
-import com.sireikan.gack.domain.model.user.Password
+import com.sireikan.gack.application.service.usecase.user.data.UserData
 import com.sireikan.gack.domain.model.user.User
 import com.sireikan.gack.domain.model.user.UserId
 import com.sireikan.gack.domain.model.user.UserName
@@ -40,7 +38,7 @@ class UserControllerTest {
     @Sql("/sql/UserControllerTest/getUser_exist.sql")
     @Test
     fun getUser_exist(@Autowired webClient: WebTestClient) {
-        val userDataList: List<GetUserOutputData> = listOf(GetUserOutputData.create(User(UserId(1), UserName("test"), Email("test@example.com"), Password("test"))))
+        val userDataList: List<UserData> = listOf(UserData.create(User(UserId(1), UserName("test"), Email("test@example.com"), Password("test"))))
         val expected: MultipleUserResponse = MultipleUserResponse(users = userDataList.stream().map { user -> UserResponse(user.userId, user.userName, user.email, user.password) }.toList())
         webClient.get().uri("/user").exchange()
             .expectStatus().isOk

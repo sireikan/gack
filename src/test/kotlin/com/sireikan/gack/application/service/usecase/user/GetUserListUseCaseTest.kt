@@ -1,7 +1,5 @@
 package com.sireikan.gack.application.service.usecase.user
 
-import com.sireikan.gack.domain.model.user.Email
-import com.sireikan.gack.domain.model.user.Password
 import com.sireikan.gack.domain.model.user.User
 import com.sireikan.gack.domain.model.user.UserId
 import com.sireikan.gack.domain.model.user.UserName

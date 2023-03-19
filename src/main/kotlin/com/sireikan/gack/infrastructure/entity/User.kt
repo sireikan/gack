@@ -1,19 +1,25 @@
 package com.sireikan.gack.infrastructure.entity
 
+import com.sireikan.gack.infrastructure.error.RepositoryException
+
 class User private constructor(
-    val id: Int,
+    val id: Long,
     val name: String,
-    val email: String,
-    val password: String,
+    val created: String?,
 ) {
     companion object {
-        fun create(id: Int, name: String, email: String, password: String): User {
+        fun create(id: Long, name: String, created: String?): User {
             return User(
                 id,
                 name,
-                email,
-                password,
+                created,
             )
+        }
+    }
+
+    init {
+        if (name.isEmpty()) {
+            throw RepositoryException("User is invalid.")
         }
     }
 }
