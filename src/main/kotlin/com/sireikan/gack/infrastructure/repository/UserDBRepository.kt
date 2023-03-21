@@ -35,7 +35,7 @@ class UserDBRepository(private val userMapper: UserMapper) : UserRepository {
                 id,
                 userName.userName,
                 created,
-            )
+            ),
         )
         return id
     }
@@ -46,7 +46,7 @@ class UserDBRepository(private val userMapper: UserMapper) : UserRepository {
                 user.id.userId,
                 user.name.userName,
                 null,
-            )
+            ),
         )
     }
 

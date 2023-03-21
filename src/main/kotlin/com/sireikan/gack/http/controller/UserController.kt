@@ -23,12 +23,16 @@ class UserController : UserApi {
 
     @Autowired
     lateinit var getUserUseCase: GetUserUseCase
+
     @Autowired
     lateinit var getUserListUseCase: GetUserListUseCase
+
     @Autowired
     lateinit var createUserUseCase: CreateUserUseCase
+
     @Autowired
     lateinit var updateUserUseCase: UpdateUserUseCase
+
     @Autowired
     lateinit var deleteUserUseCase: DeleteUserUseCase
 
@@ -37,9 +41,9 @@ class UserController : UserApi {
         return ResponseEntity(
             UserResponse(
                 userData.userId,
-                userData.userName
+                userData.userName,
             ),
-            HttpStatus.OK
+            HttpStatus.OK,
         )
     }
 
@@ -67,9 +71,9 @@ class UserController : UserApi {
         return ResponseEntity(
             UserResponse(
                 id,
-                createUserData.userName
+                createUserData.userName,
             ),
-            HttpStatus.OK
+            HttpStatus.OK,
         )
     }
 
@@ -82,14 +86,14 @@ class UserController : UserApi {
         val updateUserData: UpdateUserData = UpdateUserData.create(id, userRequest.name)
         updateUserUseCase.execute(updateUserData)
         return ResponseEntity(
-            HttpStatus.OK
+            HttpStatus.OK,
         )
     }
 
     override fun deleteUserId(id: Long): ResponseEntity<Unit> {
         deleteUserUseCase.execute(id)
         return ResponseEntity(
-            HttpStatus.OK
+            HttpStatus.OK,
         )
     }
 }

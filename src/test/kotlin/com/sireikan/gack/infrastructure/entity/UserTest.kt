@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 class UserTest {
     @Test
     fun create() {
-        val user = User.create(1, "name", "2023-01-01 00:00:00")
-        Assertions.assertSame(1, user.id)
+        val user = User.create(1L, "name", "2023-01-01 00:00:00")
+        Assertions.assertSame(1L, user.id)
         Assertions.assertSame("name", user.name)
         Assertions.assertSame("2023-01-01 00:00:00", user.created)
     }

@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test
 class GetUserOutputDataTest {
     @Test
     fun create() {
-        val data: UserData = UserData.create(User(UserId(1), UserName("name")))
-        Assertions.assertSame(1, data.userId)
+        val data: UserData = UserData.create(User(UserId(1L), UserName("name")))
+        Assertions.assertSame(1L, data.userId)
         Assertions.assertSame("name", data.userName)
     }
 }
