@@ -33,14 +33,12 @@ class GetUserListUseCaseTest {
     @Test
     fun findAll_exist() {
         Mockito.`when`(userRepository.findAll(UserOrderKey.USER_ID)).thenReturn(
-            listOf(User(UserId(1), UserName("name"), Email("email"), Password("password"))),
+            listOf(User(UserId(1), UserName("name"))),
         )
         val actual = getUserListUseCase.execute()
 
         Assertions.assertEquals(1, actual.userList.size)
         Assertions.assertSame(1, actual.userList[0].userId)
         Assertions.assertSame("name", actual.userList[0].userName)
-        Assertions.assertSame("email", actual.userList[0].email)
-        Assertions.assertSame("password", actual.userList[0].password)
     }
 }

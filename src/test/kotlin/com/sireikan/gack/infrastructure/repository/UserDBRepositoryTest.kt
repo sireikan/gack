@@ -32,14 +32,12 @@ class UserDBRepositoryTest {
     @Test
     fun findAll_exist() {
         Mockito.`when`(userMapper.findAll("id")).thenReturn(
-            listOf(User.create(1, "name", "email", "password")),
+            listOf(User.create(1, "name", "2023-01-01 00:00:00")),
         )
         val actual = userRepository.findAll(UserOrderKey.USER_ID)
 
         Assertions.assertEquals(1, actual.size)
         Assertions.assertSame(1, actual.get(0).id.userId)
         Assertions.assertSame("name", actual.get(0).name.userName)
-        Assertions.assertSame("email", actual.get(0).email.email)
-        Assertions.assertSame("password", actual.get(0).password.password)
     }
 }

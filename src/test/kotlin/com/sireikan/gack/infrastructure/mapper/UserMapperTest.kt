@@ -31,8 +31,6 @@ class UserMapperTest(@Autowired private val userMapper: UserMapper) {
         Assertions.assertEquals(1, userList.size)
         Assertions.assertEquals(1, userList[0].id)
         Assertions.assertEquals("test", userList[0].name)
-        Assertions.assertEquals("test@example.com", userList[0].email)
-        Assertions.assertEquals("test", userList[0].password)
     }
 
     @Sql("/sql/UserMapperTest/findAll_multi.sql")
@@ -42,11 +40,7 @@ class UserMapperTest(@Autowired private val userMapper: UserMapper) {
         Assertions.assertEquals(2, userList.size)
         Assertions.assertEquals(1, userList[0].id)
         Assertions.assertEquals("test", userList[0].name)
-        Assertions.assertEquals("test1@example.com", userList[0].email)
-        Assertions.assertEquals("test", userList[0].password)
         Assertions.assertEquals(2, userList[1].id)
         Assertions.assertEquals("test", userList[1].name)
-        Assertions.assertEquals("test2@example.com", userList[1].email)
-        Assertions.assertEquals("test", userList[1].password)
     }
 }

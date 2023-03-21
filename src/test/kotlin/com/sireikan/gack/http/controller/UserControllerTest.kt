@@ -38,8 +38,8 @@ class UserControllerTest {
     @Sql("/sql/UserControllerTest/getUser_exist.sql")
     @Test
     fun getUser_exist(@Autowired webClient: WebTestClient) {
-        val userDataList: List<UserData> = listOf(UserData.create(User(UserId(1), UserName("test"), Email("test@example.com"), Password("test"))))
-        val expected: MultipleUserResponse = MultipleUserResponse(users = userDataList.stream().map { user -> UserResponse(user.userId, user.userName, user.email, user.password) }.toList())
+        val userDataList: List<UserData> = listOf(UserData.create(User(UserId(1), UserName("test"))))
+        val expected: MultipleUserResponse = MultipleUserResponse(users = userDataList.stream().map { user -> UserResponse(user.userId, user.userName) }.toList())
         webClient.get().uri("/user").exchange()
             .expectStatus().isOk
             .expectBody(MultipleUserResponse::class.java)
