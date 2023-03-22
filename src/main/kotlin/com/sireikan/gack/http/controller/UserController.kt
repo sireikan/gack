@@ -37,7 +37,7 @@ class UserController : UserApi {
     lateinit var deleteUserUseCase: DeleteUserUseCase
 
     override fun getUserId(id: Long): ResponseEntity<UserResponse> {
-        val userData: UserData = getUserUseCase.execute(id)
+        val userData: UserData = getUserUseCase.execute(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND,)
         return ResponseEntity(
             UserResponse(
                 userData.userId,

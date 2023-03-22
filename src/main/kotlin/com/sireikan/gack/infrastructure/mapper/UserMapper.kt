@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Update
 @Mapper
 interface UserMapper {
     @Select("select * from user where id = #{id}")
-    fun find(@Param("id") id: Long): User
+    fun find(@Param("id") id: Long): User?
 
     @Select("select * from user order by #{order}")
     fun findAll(@Param("order") order: String): List<User>

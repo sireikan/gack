@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class GetUserUseCase(private val userRepository: UserRepository) {
-    fun execute(id: Long): UserData {
-        val user: User = userRepository.find(UserId(id))
-        return UserData.Companion.create(user.id.userId, user.name.userName)
+    fun execute(id: Long): UserData? {
+        val user: User = userRepository.find(UserId(id)) ?: return null
+        return UserData.create(user.id.userId, user.name.userName)
     }
 }

@@ -6,10 +6,10 @@ import com.sireikan.gack.domain.model.user.UserName
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class GetUserOutputDataTest {
+class UpdateUserDataTest {
     @Test
     fun create() {
-        val data: UserData = UserData.create(User(UserId(1L), UserName("name")))
+        val data: UpdateUserData = UpdateUserData.create(User(UserId(1L), UserName("name")))
         Assertions.assertSame(1L, data.userId)
         Assertions.assertSame("name", data.userName)
     }

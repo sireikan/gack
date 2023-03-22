@@ -3,10 +3,10 @@ package com.sireikan.gack.application.service.usecase.user.data
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class GetUserListOutputDataTest {
+class CreateUserDataTest {
     @Test
     fun create() {
-        val data: UserListData = UserListData.create(emptyList())
-        Assertions.assertSame(0, data.userList.size)
+        val data: CreateUserData = CreateUserData.create("name")
+        Assertions.assertSame("name", data.userName)
     }
 }

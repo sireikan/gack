@@ -14,8 +14,8 @@ import java.util.concurrent.ThreadLocalRandom
 @Component
 class UserDBRepository(private val userMapper: UserMapper) : UserRepository {
 
-    override fun find(userId: UserId): User {
-        val user = userMapper.find(userId.userId)
+    override fun find(userId: UserId): User? {
+        val user = userMapper.find(userId.userId) ?: return null
         return User(UserId(user.id), UserName(user.name))
     }
 
