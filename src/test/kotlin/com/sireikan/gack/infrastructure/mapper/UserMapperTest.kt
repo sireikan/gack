@@ -57,4 +57,45 @@ class UserMapperTest(@Autowired private val userMapper: UserMapper) {
         Assertions.assertEquals(2, userList[1].id)
         Assertions.assertEquals("test", userList[1].name)
     }
+
+    @Test
+    fun insert() {
+        userMapper.insert(User.create(
+            1L,
+            "test",
+            "2022-01-01 00:00:00"
+        ))
+        val user: User? = userMapper.find(1L)
+        if (user == null) {
+            Assertions.fail<String>("error")
+            return
+        }
+        Assertions.assertEquals(1, user.id)
+        Assertions.assertEquals("test", user.name)
+    }
+
+    @Sql("/sql/UserMapperTest/update.sql")
+    @Test
+    fun update() {
+        userMapper.update(User.create(
+            1L,
+            "test2",
+            "2022-01-01 00:00:00"
+        ))
+        val user: User? = userMapper.find(1L)
+        if (user == null) {
+            Assertions.fail<String>("error")
+            return
+        }
+        Assertions.assertEquals(1, user.id)
+        Assertions.assertEquals("test2", user.name)
+    }
+
+    @Sql("/sql/UserMapperTest/delete.sql")
+    @Test
+    fun delete() {
+        userMapper.delete(1L)
+        val user: User? = userMapper.find(1L)
+        Assertions.assertNull(user)
+    }
 }
