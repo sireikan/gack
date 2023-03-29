@@ -1,5 +1,6 @@
 package com.sireikan.gack.http.controller
 
+import com.sireikan.gack.application.service.usecase.error.UseCaseException
 import com.sireikan.gack.application.service.usecase.user.CreateUserUseCase
 import com.sireikan.gack.application.service.usecase.user.DeleteUserUseCase
 import com.sireikan.gack.application.service.usecase.user.GetUserListUseCase
@@ -37,27 +38,46 @@ class UserController : UserApi {
     lateinit var deleteUserUseCase: DeleteUserUseCase
 
     override fun getUserId(id: Long): ResponseEntity<UserResponse> {
-        val userData: UserData = getUserUseCase.execute(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND,)
-        return ResponseEntity(
-            UserResponse(
-                userData.userId,
-                userData.userName,
-            ),
-            HttpStatus.OK,
-        )
+        try {
+            val userData: UserData = getUserUseCase.execute(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND,)
+            return ResponseEntity(
+                UserResponse(
+                    userData.userId,
+                    userData.userName,
+                ),
+                HttpStatus.OK,
+            )
+        } catch (useCaseException: UseCaseException) {
+            return ResponseEntity(
+                HttpStatus.BAD_REQUEST,
+            )
+        } catch (exception: Exception) {
+            return ResponseEntity(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            )
+        }
     }
 
     override fun getUser(): ResponseEntity<MultipleUserResponse> {
-        val userListData: UserListData = getUserListUseCase.execute()
-
-        return ResponseEntity(
-            MultipleUserResponse(
-                userListData.userList.stream().map { user ->
-                    UserResponse(user.userId, user.userName)
-                }.toList(),
-            ),
-            HttpStatus.OK,
-        )
+        try {
+            val userListData: UserListData = getUserListUseCase.execute()
+            return ResponseEntity(
+                MultipleUserResponse(
+                    userListData.userList.stream().map { user ->
+                        UserResponse(user.userId, user.userName)
+                    }.toList(),
+                ),
+                HttpStatus.OK,
+            )
+        } catch (useCaseException: UseCaseException) {
+            return ResponseEntity(
+                HttpStatus.BAD_REQUEST,
+            )
+        } catch (exception: Exception) {
+            return ResponseEntity(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            )
+        }
     }
 
     override fun postUser(userRequest: UserRequest?): ResponseEntity<UserResponse> {
@@ -66,15 +86,25 @@ class UserController : UserApi {
                 HttpStatus.BAD_REQUEST,
             )
         }
-        val createUserData: CreateUserData = CreateUserData.create(userRequest.name)
-        val id: Long = createUserUseCase.execute(createUserData)
-        return ResponseEntity(
-            UserResponse(
-                id,
-                createUserData.userName,
-            ),
-            HttpStatus.OK,
-        )
+        try {
+            val createUserData: CreateUserData = CreateUserData.create(userRequest.name)
+            val id: Long = createUserUseCase.execute(createUserData)
+            return ResponseEntity(
+                UserResponse(
+                    id,
+                    createUserData.userName,
+                ),
+                HttpStatus.OK,
+            )
+        } catch (useCaseException: UseCaseException) {
+            return ResponseEntity(
+                HttpStatus.BAD_REQUEST,
+            )
+        } catch (exception: Exception) {
+            return ResponseEntity(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            )
+        }
     }
 
     override fun putUserId(id: Long, userRequest: UserRequest?): ResponseEntity<Unit> {
@@ -83,17 +113,37 @@ class UserController : UserApi {
                 HttpStatus.BAD_REQUEST,
             )
         }
-        val updateUserData: UpdateUserData = UpdateUserData.create(id, userRequest.name)
-        updateUserUseCase.execute(updateUserData)
-        return ResponseEntity(
-            HttpStatus.OK,
-        )
+        try {
+            val updateUserData: UpdateUserData = UpdateUserData.create(id, userRequest.name)
+            updateUserUseCase.execute(updateUserData)
+            return ResponseEntity(
+                HttpStatus.OK,
+            )
+        } catch (useCaseException: UseCaseException) {
+            return ResponseEntity(
+                HttpStatus.BAD_REQUEST,
+            )
+        } catch (exception: Exception) {
+            return ResponseEntity(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            )
+        }
     }
 
     override fun deleteUserId(id: Long): ResponseEntity<Unit> {
-        deleteUserUseCase.execute(id)
-        return ResponseEntity(
-            HttpStatus.OK,
-        )
+        try {
+            deleteUserUseCase.execute(id)
+            return ResponseEntity(
+                HttpStatus.OK,
+            )
+        } catch (useCaseException: UseCaseException) {
+            return ResponseEntity(
+                HttpStatus.BAD_REQUEST,
+            )
+        } catch (exception: Exception) {
+            return ResponseEntity(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            )
+        }
     }
 }

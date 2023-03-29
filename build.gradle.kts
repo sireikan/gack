@@ -44,6 +44,8 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4")
+
     runtimeOnly("mysql:mysql-connector-java")
 
     compileOnly("io.swagger.core.v3:swagger-annotations:2.2.8")

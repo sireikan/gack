@@ -107,7 +107,7 @@ class GachaDBRepository(
         val created: String = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().time)
         gachaInfoMapper.insert(
             GachaInfo.create(
-                ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong()),
                 gacha.gachaId.id,
                 gacha.gachaInfo.gachaName.name,
                 gacha.gachaInfo.bannerImage.url,
@@ -128,7 +128,7 @@ class GachaDBRepository(
         gacha.gachaCostList.stream().forEach { cost ->
             gachaCostMapper.insert(
                 GachaCost.create(
-                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                    ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong()),
                     gacha.gachaId.id,
                     cost.costType.value,
                     cost.cost.cost,
@@ -148,7 +148,7 @@ class GachaDBRepository(
         gacha.gachaProbabilityList.stream().forEach { probability ->
             gachaProbabilityMapper.insert(
                 GachaProbability.create(
-                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                    ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong()),
                     gacha.gachaId.id,
                     probability.probability.probability,
                     probability.objectType.value,
@@ -176,7 +176,7 @@ class GachaDBRepository(
         gachaInfoMapper.deleteByGachaId(gacha.gachaId.id)
         gachaInfoMapper.insert(
             GachaInfo.create(
-                ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong()),
                 gacha.gachaId.id,
                 gacha.gachaInfo.gachaName.name,
                 gacha.gachaInfo.bannerImage.url,
@@ -198,7 +198,7 @@ class GachaDBRepository(
         gacha.gachaCostList.stream().forEach { cost ->
             gachaCostMapper.insert(
                 GachaCost.create(
-                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                    ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong()),
                     gacha.gachaId.id,
                     cost.costType.value,
                     cost.cost.cost,
@@ -219,7 +219,7 @@ class GachaDBRepository(
         gacha.gachaProbabilityList.stream().forEach { probability ->
             gachaProbabilityMapper.insert(
                 GachaProbability.create(
-                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                    ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong()),
                     gacha.gachaId.id,
                     probability.probability.probability,
                     probability.objectType.value,
@@ -247,7 +247,7 @@ class GachaDBRepository(
         gachaInfoMapper.deleteByGachaId(gachaId.id)
         gachaInfoMapper.insert(
             GachaInfo.create(
-                ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong()),
                 gachaId.id,
                 gachaInfo.gachaName.name,
                 gachaInfo.bannerImage.url,
@@ -273,7 +273,7 @@ class GachaDBRepository(
         gachaCostList.stream().forEach { cost ->
             gachaCostMapper.insert(
                 GachaCost.create(
-                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                    ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong()),
                     gachaId.id,
                     cost.costType.value,
                     cost.cost.cost,
@@ -301,7 +301,7 @@ class GachaDBRepository(
         gachaProbabilityList.stream().forEach { probability ->
             gachaProbabilityMapper.insert(
                 GachaProbability.create(
-                    ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE),
+                    ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong()),
                     gachaId.id,
                     probability.probability.probability,
                     probability.objectType.value,
