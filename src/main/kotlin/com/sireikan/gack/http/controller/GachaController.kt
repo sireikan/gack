@@ -92,9 +92,9 @@ class GachaController(
         }
     }
 
-    override fun getGachaId(id: Int): ResponseEntity<GachaResponse> {
+    override fun getGachaId(id: Long): ResponseEntity<GachaResponse> {
         try {
-            val gachaOutputData: GachaOutputData = getGachaUseCase.execute(GachaInputData.create(id.toLong())) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+            val gachaOutputData: GachaOutputData = getGachaUseCase.execute(GachaInputData.create(id)) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
             return ResponseEntity(
                 GachaResponse(
                     GachaInfoResponse(
@@ -179,7 +179,7 @@ class GachaController(
         }
     }
 
-    override fun putGachaId(id: Int, gachaPutRequest: GachaPutRequest?): ResponseEntity<Unit> {
+    override fun putGachaId(id: Long, gachaPutRequest: GachaPutRequest?): ResponseEntity<Unit> {
         if (gachaPutRequest == null) {
             return ResponseEntity(
                 HttpStatus.BAD_REQUEST,
@@ -188,7 +188,7 @@ class GachaController(
         try {
             updateGachaUseCase.execute(
                 GachaUpdateData.create(
-                    id.toLong(),
+                    id,
                     GachaInfoData.create(
                         gachaPutRequest.gachaInfo.gachaName,
                         gachaPutRequest.gachaInfo.bannerImage,
@@ -225,7 +225,7 @@ class GachaController(
     }
 
     override fun putGachaGachaIdGachaInfoId(
-        gachaId: Int,
+        id: Long,
         gachaInfoRequest: GachaInfoRequest?,
     ): ResponseEntity<Unit> {
         if (gachaInfoRequest == null) {
@@ -235,7 +235,7 @@ class GachaController(
         }
         try {
             updateGachaInfoUseCase.execute(
-                GachaInputData.create(gachaId.toLong()),
+                GachaInputData.create(id),
                 GachaInfoData.create(
                     gachaInfoRequest.gachaName,
                     gachaInfoRequest.bannerImage,
@@ -257,7 +257,7 @@ class GachaController(
     }
 
     override fun putGachaGachaIdGachaCostId(
-        gachaId: Int,
+        id: Long,
         multipleGachaCostRequest: MultipleGachaCostRequest?,
     ): ResponseEntity<Unit> {
         if (multipleGachaCostRequest == null || multipleGachaCostRequest.costs.isEmpty()) {
@@ -267,7 +267,7 @@ class GachaController(
         }
         try {
             updateGachaCostUseCase.execute(
-                GachaInputData.create(gachaId.toLong()),
+                GachaInputData.create(id),
                 multipleGachaCostRequest.costs.stream().map { cost ->
                     GachaCostData.create(
                         cost.costType,
@@ -290,7 +290,7 @@ class GachaController(
     }
 
     override fun putGachaGachaIdGachaProbabilityId(
-        gachaId: Int,
+        id: Long,
         multipleGachaProbabilityRequest: MultipleGachaProbabilityRequest?,
     ): ResponseEntity<Unit> {
         if (multipleGachaProbabilityRequest == null || multipleGachaProbabilityRequest.probabilities.isEmpty()) {
@@ -300,7 +300,7 @@ class GachaController(
         }
         try {
             updateGachaProbabilityUseCase.execute(
-                GachaInputData.create(gachaId.toLong()),
+                GachaInputData.create(id),
                 multipleGachaProbabilityRequest.probabilities.stream().map { probability ->
                     GachaProbabilityData.create(
                         probability.probability,
@@ -324,9 +324,9 @@ class GachaController(
         }
     }
 
-    override fun deleteGachaId(id: Int): ResponseEntity<Unit> {
+    override fun deleteGachaId(id: Long): ResponseEntity<Unit> {
         try {
-            deleteGachaUseCase.execute(id.toLong())
+            deleteGachaUseCase.execute(id)
             return ResponseEntity(
                 HttpStatus.OK,
             )

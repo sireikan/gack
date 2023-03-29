@@ -1,6 +1,6 @@
-insert into user (id, name, email, password) values
-    (1, 'test', 'test1@example.com', 'test')
+insert into user (id, name, created) values
+    (1, 'test', '2023-01-01 00:00:00')
 ;
-insert into user (id, name, email, password) values
-    (2, 'test', 'test2@example.com', 'test')
+insert into user (id, name, created) values
+    (2, 'test', '2023-01-01 00:00:00')
 ;

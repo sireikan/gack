@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class UserIdTest {
     @Test
     fun create() {
-        val userId: UserId = UserId(1)
-        Assertions.assertSame(1, userId.userId)
+        val userId: UserId = UserId(1L)
+        Assertions.assertSame(1L, userId.userId)
     }
 }
