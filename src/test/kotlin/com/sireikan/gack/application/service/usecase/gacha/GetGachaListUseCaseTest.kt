@@ -43,7 +43,7 @@ class GetGachaListUseCaseTest {
                 ),
             ),
         )
-        val actual = getGachaListUseCase.execute() ?: return
+        val actual = getGachaListUseCase.execute()
 
         Assertions.assertTrue(actual.gachaOutputDataList[0].gachaInfoData.gachaName == "name")
         Assertions.assertTrue(actual.gachaOutputDataList[0].gachaInfoData.bannerImage == "banner")

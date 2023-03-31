@@ -49,3 +49,6 @@ docker-compose down --volume
 ## klintCheck
 - 実行で一通りlint
 - Cleanしてから実行するがよい
+
+## api test
+- http://localhost:8080/swagger-ui.html

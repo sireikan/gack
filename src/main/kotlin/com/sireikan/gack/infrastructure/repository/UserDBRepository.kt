@@ -28,7 +28,7 @@ class UserDBRepository(private val userMapper: UserMapper) : UserRepository {
     }
 
     override fun insert(userName: UserName): Long {
-        val id: Long = ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE)
+        val id: Long = ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong())
         val created: String = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().time)
         userMapper.insert(
             com.sireikan.gack.infrastructure.entity.User.create(
