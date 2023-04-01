@@ -67,7 +67,7 @@ class UserControllerTest {
     fun postUser() {
         webClient.post().uri("/user")
             .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue("{\"name\":\"test\"}")
+            .bodyValue("{\"userId\":\"1\",\"name\":\"test\"}")
             .exchange()
             .expectStatus().isOk
             .expectBody()

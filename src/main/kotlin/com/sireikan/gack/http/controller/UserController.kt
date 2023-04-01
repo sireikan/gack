@@ -12,11 +12,16 @@ import com.sireikan.gack.application.service.usecase.user.data.UserData
 import com.sireikan.gack.application.service.usecase.user.data.UserListData
 import com.sireikan.gack.openapi.generated.controller.UserApi
 import com.sireikan.gack.openapi.generated.model.MultipleUserResponse
+import com.sireikan.gack.openapi.generated.model.PutUserRequest
 import com.sireikan.gack.openapi.generated.model.UserRequest
 import com.sireikan.gack.openapi.generated.model.UserResponse
+import io.swagger.v3.oas.annotations.Parameter
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -87,7 +92,7 @@ class UserController : UserApi {
             )
         }
         try {
-            val createUserData: CreateUserData = CreateUserData.create(userRequest.name)
+            val createUserData: CreateUserData = CreateUserData.create(userRequest.userId, userRequest.name)
             val id: Long = createUserUseCase.execute(createUserData)
             return ResponseEntity(
                 UserResponse(
@@ -107,14 +112,17 @@ class UserController : UserApi {
         }
     }
 
-    override fun putUserId(id: Long, userRequest: UserRequest?): ResponseEntity<Unit> {
-        if (userRequest == null) {
+    override fun putUserId(
+        @Parameter(description = "user id", required = true) @PathVariable(value = "id") id: Long,
+        @Parameter(description = "") @Valid @RequestBody(required = false) putUserRequest: PutUserRequest?
+    ): ResponseEntity<Unit> {
+        if (putUserRequest == null) {
             return ResponseEntity(
                 HttpStatus.BAD_REQUEST,
             )
         }
         try {
-            val updateUserData: UpdateUserData = UpdateUserData.create(id, userRequest.name)
+            val updateUserData: UpdateUserData = UpdateUserData.create(id, putUserRequest.name)
             updateUserUseCase.execute(updateUserData)
             return ResponseEntity(
                 HttpStatus.OK,

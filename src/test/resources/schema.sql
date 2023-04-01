@@ -2,9 +2,11 @@ CREATE DATABASE IF NOT EXISTS sample;
 
 CREATE TABLE IF NOT EXISTS user (
     id BIGINT AUTO_INCREMENT,
+    user_id BIGINT UNSIGNED NOT NULL,
     name text NOT NULL,
     created datetime NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE KEY (user_id)
 );
 
 DELETE FROM user;

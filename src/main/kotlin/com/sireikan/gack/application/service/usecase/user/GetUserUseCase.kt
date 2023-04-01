@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service
 class GetUserUseCase(private val userRepository: UserRepository) {
     fun execute(id: Long): UserData? {
         val user: User = userRepository.find(UserId(id)) ?: return null
-        return UserData.create(user.id.userId, user.name.userName)
+        return UserData.create(user.userId.userId, user.name.userName)
     }
 }

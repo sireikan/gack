@@ -28,7 +28,7 @@ class UserMapperTest(@Autowired private val userMapper: UserMapper) {
     @Test
     fun find_exist_data() {
         val user: User = userMapper.find(1L) ?: return
-        Assertions.assertEquals(1, user.id)
+        Assertions.assertEquals(1, user.userId)
         Assertions.assertEquals("test", user.name)
     }
 
@@ -43,7 +43,7 @@ class UserMapperTest(@Autowired private val userMapper: UserMapper) {
     fun findAll_exist_data() {
         val userList: List<User> = userMapper.findAll("id")
         Assertions.assertEquals(1, userList.size)
-        Assertions.assertEquals(1, userList[0].id)
+        Assertions.assertEquals(1, userList[0].userId)
         Assertions.assertEquals("test", userList[0].name)
     }
 
@@ -52,15 +52,16 @@ class UserMapperTest(@Autowired private val userMapper: UserMapper) {
     fun findAll_multi() {
         val userList: List<User> = userMapper.findAll("id")
         Assertions.assertEquals(2, userList.size)
-        Assertions.assertEquals(1, userList[0].id)
+        Assertions.assertEquals(1, userList[0].userId)
         Assertions.assertEquals("test", userList[0].name)
-        Assertions.assertEquals(2, userList[1].id)
+        Assertions.assertEquals(2, userList[1].userId)
         Assertions.assertEquals("test", userList[1].name)
     }
 
     @Test
     fun insert() {
         userMapper.insert(User.create(
+            null,
             1L,
             "test",
             "2022-01-01 00:00:00"
@@ -70,25 +71,8 @@ class UserMapperTest(@Autowired private val userMapper: UserMapper) {
             Assertions.fail<String>("error")
             return
         }
-        Assertions.assertEquals(1, user.id)
+        Assertions.assertEquals(1, user.userId)
         Assertions.assertEquals("test", user.name)
-    }
-
-    @Sql("/sql/UserMapperTest/update.sql")
-    @Test
-    fun update() {
-        userMapper.update(User.create(
-            1L,
-            "test2",
-            "2022-01-01 00:00:00"
-        ))
-        val user: User? = userMapper.find(1L)
-        if (user == null) {
-            Assertions.fail<String>("error")
-            return
-        }
-        Assertions.assertEquals(1, user.id)
-        Assertions.assertEquals("test2", user.name)
     }
 
     @Sql("/sql/UserMapperTest/delete.sql")

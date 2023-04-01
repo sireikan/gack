@@ -13,7 +13,7 @@ class GetUserListUseCase(private val userRepository: UserRepository) {
         val userList: List<User> = userRepository.findAll(UserOrderKey.USER_ID)
         return UserListData.create(
             userList.stream().map { user ->
-                UserData.create(user.id.userId, user.name.userName)
+                UserData.create(user.userId.userId, user.name.userName)
             }.toList(),
         )
     }

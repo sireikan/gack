@@ -8,8 +8,8 @@ import org.junit.jupiter.api.assertThrows
 class UserTest {
     @Test
     fun create() {
-        val user = User.create(1L, "name", "2023-01-01 00:00:00")
-        Assertions.assertSame(1L, user.id)
+        val user = User.create(1L, 1L, "name", "2023-01-01 00:00:00")
+        Assertions.assertSame(1L, user.userId)
         Assertions.assertSame("name", user.name)
         Assertions.assertSame("2023-01-01 00:00:00", user.created)
     }
@@ -17,7 +17,7 @@ class UserTest {
     @Test
     fun error() {
         val exception: RepositoryException = assertThrows<RepositoryException>() {
-            User.create(1L, "", "2023-01-01 00:00:00")
+            User.create(1L, 1L, "", "2023-01-01 00:00:00")
         }
         Assertions.assertSame("User is invalid.", exception.message)
     }

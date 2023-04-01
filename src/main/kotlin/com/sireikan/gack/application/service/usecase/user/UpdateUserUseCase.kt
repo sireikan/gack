@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UpdateUserUseCase(private val userRepository: UserRepository) {
     fun execute(updateUserData: UpdateUserData) {
-        val user: User = userRepository.find(UserId(updateUserData.userId)) ?: throw InvalidUserUseCaseException("User is invalid.")
+        userRepository.find(UserId(updateUserData.userId)) ?: throw InvalidUserUseCaseException("User is invalid.")
         userRepository.update(User(UserId(updateUserData.userId), UserName(updateUserData.userName)))
     }
 }
