@@ -11,7 +11,7 @@ class UserData private constructor(
             return UserData(userId, userName)
         }
         fun create(user: User): UserData {
-            return UserData(user.id.userId, user.name.userName)
+            return UserData(user.userId.userId, user.name.userName)
         }
     }
 }

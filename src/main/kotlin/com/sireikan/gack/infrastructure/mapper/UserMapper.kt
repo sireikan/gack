@@ -10,18 +10,15 @@ import org.apache.ibatis.annotations.Update
 
 @Mapper
 interface UserMapper {
-    @Select("select * from user where id = #{id}")
-    fun find(@Param("id") id: Long): User?
+    @Select("select * from user where user_id = #{userId}")
+    fun find(@Param("userId") userId: Long): User?
 
     @Select("select * from user order by #{order}")
     fun findAll(@Param("order") order: String): List<User>
 
-    @Insert("insert into user (id, name, created) values (#{id}, #{name}, #{created})")
+    @Insert("insert into user (user_id, name, created) values (#{userId}, #{name}, #{created})")
     fun insert(user: User)
 
-    @Update("update user set name = #{name} where id = #{id}")
-    fun update(user: User)
-
-    @Delete("delete from user where id = #{id}")
-    fun delete(@Param("id") id: Long)
+    @Delete("delete from user where user_id = #{userId}")
+    fun delete(@Param("userId") userId: Long)
 }

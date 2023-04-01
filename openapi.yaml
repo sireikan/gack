@@ -1,597 +1,943 @@
-openapi: 3.0.3
-x-stoplight:
-  id: frw7j6bzrk681
-info:
-  title: gack
-  version: '1.0'
-servers:
-  - url: 'http://localhost:8080'
-paths:
-  /user:
-    post:
-      summary: Create New User
-      operationId: post-user
-      responses:
-        '200':
-          description: User Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
-              examples:
-                Example 1:
-                  value:
-                    id: 0
-                    name: string
-        '400':
-          description: Missing Required Information
-        '409':
-          description: Email Already Taken
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserRequest'
-            examples:
-              Create User Bob Fellow:
-                value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
-        description: Post the necessary fields for the API to create a new user.
-      description: Create a new user.
-      tags:
-        - user
-    get:
-      summary: ''
-      operationId: get-user
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MultipleUserResponse'
-              examples:
-                Example 1:
-                  value:
-                    users:
-                      - id: 0
-                        name: string
-      description: Get Users
-      tags:
-        - user
-    parameters: []
-  '/user/{id}':
-    parameters:
-      - schema:
-          type: integer
-          format: int64
-        name: id
-        in: path
-        required: true
-        description: user id
-    get:
-      summary: Your GET endpoint
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
-              examples:
-                Example 1:
-                  value:
-                    id: 0
-                    name: string
-        '404':
-          description: Not Found
-      operationId: get-user-id
-      tags:
-        - user
-      description: ''
-    put:
-      summary: ''
-      operationId: put-user-id
-      responses:
-        '200':
-          description: OK
-      description: update user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserRequest'
-      tags:
-        - user
-    delete:
-      summary: ''
-      operationId: delete-user-id
-      responses:
-        '200':
-          description: OK
-      description: delete user
-      tags:
-        - user
-  '/gacha/{id}':
-    parameters:
-      - schema:
-          type: integer
-          format: int64
-        name: id
-        in: path
-        required: true
-    get:
-      summary: Your GET endpoint
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GachaResponse'
-              examples:
-                Example 1:
-                  value:
-                    gacha_info:
-                      gacha_name: name
-                      banner_image: 'https://hoge.png'
-                      exec_count: 1
-                    gacha_costs:
-                      costs:
-                        - cost_type: 0
-                          cost: 0
-                    gacha_probabilities:
-                      probabilities:
-                        - probability: 0
-                          object_type: 0
-                          object_id: 0
-                          object_count: 0
-        '404':
-          description: Not Found
-      operationId: get-gacha-id
-      tags:
-        - gacha
-    put:
-      summary: ''
-      operationId: put-gacha-id
-      responses:
-        '200':
-          description: OK
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GachaPutRequest'
-        description: ''
-      tags:
-        - gacha
-    delete:
-      summary: ''
-      operationId: delete-gacha-id
-      responses:
-        '200':
-          description: OK
-      tags:
-        - gacha
-  /gacha/:
-    get:
-      summary: Your GET endpoint
-      tags:
-        - gacha
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MultipleGachaResponse'
-              examples:
-                Example 1:
-                  value:
-                    gachas:
-                      - gacha_info:
-                          gacha_name: string
-                          banner_image: string
-                          exec_count: 0
-                        gacha_costs:
-                          costs:
-                            - cost_type: 0
-                              cost: 0
-                        gacha_probabilities:
-                          probabilities:
-                            - probability: 0
-                              object_type: 0
-                              object_id: 0
-                              object_count: 0
-      operationId: get-gacha
-    post:
-      summary: ''
-      operationId: post-gacha
-      responses:
-        '200':
-          description: OK
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GachaPostRequest'
-            examples:
-              Example 1:
-                value:
-                  gacha_id: 0
-                  gacha_info:
-                    gacha_name: string
-                    banner_image: string
-                    exec_count: 0
-                  gacha_costs:
-                    costs:
-                      - cost_type: 0
-                        cost: 0
-                  gacha_probabilities:
-                    probabilities:
-                      - probability: 0
-                        object_type: 0
-                        object_id: 0
-                        object_count: 0
-      tags:
-        - gacha
-  '/gacha/{id}/gachaCost/':
-    parameters:
-      - schema:
-          type: integer
-          format: int64
-        name: id
-        in: path
-        required: true
-    put:
-      summary: ''
-      operationId: put-gacha-gachaId-gachaCost-id
-      responses:
-        '200':
-          description: OK
-      tags:
-        - gacha
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MultipleGachaCostRequest'
-            examples:
-              Example 1:
-                value:
-                  costs:
-                    - cost_type: 0
-                      cost: 0
-  '/gacha/{id}/gachaProbability/':
-    parameters:
-      - schema:
-          type: integer
-          format: int64
-        name: id
-        in: path
-        required: true
-    put:
-      summary: ''
-      operationId: put-gacha-gachaId-gachaProbability-id
-      responses:
-        '200':
-          description: OK
-      tags:
-        - gacha
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MultipleGachaProbabilityRequest'
-            examples:
-              Example 1:
-                value:
-                  probabilities:
-                    - probability: 0
-                      object_type: 0
-                      object_id: 0
-                      object_count: 0
-        description: ''
-      description: ''
-  '/gacha/{id}/gachaInfo/':
-    parameters:
-      - schema:
-          type: integer
-          format: int64
-        name: id
-        in: path
-        required: true
-    put:
-      summary: ''
-      operationId: put-gacha-gachaId-gachaInfo-id
-      responses:
-        '200':
-          description: OK
-      tags:
-        - gacha
-      description: ''
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GachaInfoRequest'
-            examples:
-              Example 1:
-                value:
-                  gacha_name: string
-                  banner_image: string
-                  exec_count: 0
-components:
-  schemas:
-    UserRequest:
-      title: UserRequest
-      x-stoplight:
-        id: w4lh9zce4nbyj
-      type: object
-      properties:
-        name:
-          type: string
-      required:
-        - name
-    UserResponse:
-      title: UserResponse
-      x-stoplight:
-        id: tzazowquuet89
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-      required:
-        - id
-        - name
-    MultipleUserResponse:
-      title: MultipleUserResponse
-      x-stoplight:
-        id: vgmamje9jniw8
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserResponse'
-      required:
-        - users
-    GachaRequest:
-      title: GachaRequest
-      x-stoplight:
-        id: 8917jz2f2qrvy
-      type: object
-      properties:
-        gacha_id:
-          type: integer
-          format: int64
-      required:
-        - gacha_id
-    GachaInfoResponse:
-      title: GachaInfoResponse
-      x-stoplight:
-        id: bay8rmrdmqnw2
-      type: object
-      properties:
-        gacha_name:
-          type: string
-        banner_image:
-          type: string
-        exec_count:
-          type: integer
-      required:
-        - gacha_name
-        - banner_image
-        - exec_count
-    GachaCostResponse:
-      title: GachaCostResponse
-      x-stoplight:
-        id: ovj3qp2umzy41
-      type: object
-      properties:
-        cost_type:
-          type: integer
-        cost:
-          type: integer
-      required:
-        - cost_type
-        - cost
-    GachaProbabilityResponse:
-      title: GachaProbabilityResponse
-      x-stoplight:
-        id: fxrcil3c4b9wl
-      type: object
-      properties:
-        probability:
-          type: integer
-        object_type:
-          type: integer
-        object_id:
-          type: integer
-          format: int64
-        object_count:
-          type: integer
-      required:
-        - probability
-        - object_type
-        - object_id
-        - object_count
-    MultipleGachaCostResponse:
-      title: MultipleGachaCostResponse
-      x-stoplight:
-        id: o3v5j8lvvh3ff
-      type: object
-      properties:
-        costs:
-          type: array
-          items:
-            $ref: '#/components/schemas/GachaCostResponse'
-      required:
-        - costs
-    MultipleGachaProbabilityResponse:
-      title: MultipleGachaProbabilityResponse
-      x-stoplight:
-        id: okiwjvufl1wfa
-      type: object
-      properties:
-        probabilities:
-          type: array
-          items:
-            $ref: '#/components/schemas/GachaProbabilityResponse'
-      required:
-        - probabilities
-    MultipleGachaInfoResponse:
-      title: MultipleGachaInfoResponse
-      x-stoplight:
-        id: cise2xx8i90hc
-      type: object
-      properties:
-        infos:
-          type: array
-          items:
-            $ref: '#/components/schemas/GachaInfoResponse'
-      required:
-        - infos
-    GachaResponse:
-      title: GachaResponse
-      x-stoplight:
-        id: aw5xak3o01e4n
-      type: object
-      properties:
-        gacha_info:
-          $ref: '#/components/schemas/GachaInfoResponse'
-        gacha_costs:
-          $ref: '#/components/schemas/MultipleGachaCostResponse'
-        gacha_probabilities:
-          $ref: '#/components/schemas/MultipleGachaProbabilityResponse'
-      required:
-        - gacha_info
-        - gacha_costs
-        - gacha_probabilities
-    MultipleGachaResponse:
-      title: MultipleGachaResponse
-      x-stoplight:
-        id: lq401bz72wx4x
-      type: object
-      properties:
-        gachas:
-          type: array
-          items:
-            $ref: '#/components/schemas/GachaResponse'
-      required:
-        - gachas
-    GachaPostRequest:
-      title: GachaPostRequest
-      x-stoplight:
-        id: ze6a0i1kw1bh9
-      type: object
-      properties:
-        gacha_id:
-          type: integer
-          format: int64
-        gacha_info:
-          $ref: '#/components/schemas/GachaInfoRequest'
-        gacha_costs:
-          $ref: '#/components/schemas/MultipleGachaCostRequest'
-        gacha_probabilities:
-          $ref: '#/components/schemas/MultipleGachaProbabilityRequest'
-      required:
-        - gacha_id
-        - gacha_info
-        - gacha_costs
-        - gacha_probabilities
-    GachaInfoRequest:
-      title: GachaInfoRequest
-      x-stoplight:
-        id: cwriuge0pmbru
-      type: object
-      properties:
-        gacha_name:
-          type: string
-        banner_image:
-          type: string
-        exec_count:
-          type: integer
-      required:
-        - gacha_name
-        - banner_image
-        - exec_count
-    GachaCostRequest:
-      title: GachaCostRequest
-      x-stoplight:
-        id: v3ng1opoxtftz
-      type: object
-      properties:
-        cost_type:
-          type: integer
-        cost:
-          type: integer
-      required:
-        - cost_type
-        - cost
-    GachaProbabilityRequest:
-      title: GachaProbabilityRequest
-      x-stoplight:
-        id: 4767jrh58b1ie
-      type: object
-      properties:
-        probability:
-          type: integer
-        object_type:
-          type: integer
-        object_id:
-          type: integer
-          format: int64
-        object_count:
-          type: integer
-      required:
-        - probability
-        - object_type
-        - object_id
-        - object_count
-    MultipleGachaCostRequest:
-      title: MultipleGachaCostRequest
-      x-stoplight:
-        id: bt718igppkl5m
-      type: object
-      properties:
-        costs:
-          type: array
-          items:
-            $ref: '#/components/schemas/GachaCostRequest'
-      required:
-        - costs
-    MultipleGachaProbabilityRequest:
-      title: MultipleGachaProbabilityRequest
-      x-stoplight:
-        id: bt7y5jzwoiyjt
-      type: object
-      properties:
-        probabilities:
-          type: array
-          items:
-            $ref: '#/components/schemas/GachaProbabilityRequest'
-      required:
-        - probabilities
-    GachaPutRequest:
-      title: GachaPutRequest
-      x-stoplight:
-        id: psmu7w8iepy2m
-      type: object
-      properties:
-        gacha_info:
-          $ref: '#/components/schemas/GachaInfoRequest'
-        gacha_costs:
-          $ref: '#/components/schemas/MultipleGachaCostRequest'
-        gacha_probabilities:
-          $ref: '#/components/schemas/MultipleGachaProbabilityRequest'
-      required:
-        - gacha_info
-        - gacha_costs
-        - gacha_probabilities
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "frw7j6bzrk681"
+  },
+  "info": {
+    "title": "gack",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "summary": "Create New User",
+        "operationId": "post-user",
+        "responses": {
+          "200": {
+            "description": "User Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 0,
+                      "name": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequest"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "userId": 0,
+                    "name": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Post the necessary fields for the API to create a new user."
+        },
+        "description": "Create a new user.",
+        "tags": [
+          "user"
+        ]
+      },
+      "get": {
+        "summary": "",
+        "operationId": "get-user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultipleUserResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "users": [
+                        {
+                          "id": 0,
+                          "name": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get Users",
+        "tags": [
+          "user"
+        ]
+      },
+      "parameters": []
+    },
+    "/user/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "user id"
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 0,
+                      "name": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-user-id",
+        "tags": [
+          "user"
+        ],
+        "description": ""
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-user-id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "update user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutUserRequest"
+              }
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-user-id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "delete user",
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/gacha/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GachaResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "gacha_info": {
+                        "gacha_name": "name",
+                        "banner_image": "https://hoge.png",
+                        "exec_count": 1
+                      },
+                      "gacha_costs": {
+                        "costs": [
+                          {
+                            "cost_type": 0,
+                            "cost": 0
+                          }
+                        ]
+                      },
+                      "gacha_probabilities": {
+                        "probabilities": [
+                          {
+                            "probability": 0,
+                            "object_type": 0,
+                            "object_id": 0,
+                            "object_count": 0
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-gacha-id",
+        "tags": [
+          "gacha"
+        ]
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-gacha-id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GachaPutRequest"
+              }
+            }
+          },
+          "description": ""
+        },
+        "tags": [
+          "gacha"
+        ]
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-gacha-id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "gacha"
+        ]
+      }
+    },
+    "/gacha/": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [
+          "gacha"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultipleGachaResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "gachas": [
+                        {
+                          "gacha_info": {
+                            "gacha_name": "string",
+                            "banner_image": "string",
+                            "exec_count": 0
+                          },
+                          "gacha_costs": {
+                            "costs": [
+                              {
+                                "cost_type": 0,
+                                "cost": 0
+                              }
+                            ]
+                          },
+                          "gacha_probabilities": {
+                            "probabilities": [
+                              {
+                                "probability": 0,
+                                "object_type": 0,
+                                "object_id": 0,
+                                "object_count": 0
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-gacha"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-gacha",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GachaPostRequest"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "gacha_id": 0,
+                    "gacha_info": {
+                      "gacha_name": "string",
+                      "banner_image": "string",
+                      "exec_count": 0
+                    },
+                    "gacha_costs": {
+                      "costs": [
+                        {
+                          "cost_type": 0,
+                          "cost": 0
+                        }
+                      ]
+                    },
+                    "gacha_probabilities": {
+                      "probabilities": [
+                        {
+                          "probability": 0,
+                          "object_type": 0,
+                          "object_id": 0,
+                          "object_count": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "gacha"
+        ]
+      }
+    },
+    "/gacha/{id}/gachaCost/": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "",
+        "operationId": "put-gacha-gachaId-gachaCost-id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "gacha"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MultipleGachaCostRequest"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "costs": [
+                      {
+                        "cost_type": 0,
+                        "cost": 0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gacha/{id}/gachaProbability/": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "",
+        "operationId": "put-gacha-gachaId-gachaProbability-id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "gacha"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MultipleGachaProbabilityRequest"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "probabilities": [
+                      {
+                        "probability": 0,
+                        "object_type": 0,
+                        "object_id": 0,
+                        "object_count": 0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "description": ""
+      }
+    },
+    "/gacha/{id}/gachaInfo/": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "",
+        "operationId": "put-gacha-gachaId-gachaInfo-id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "gacha"
+        ],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GachaInfoRequest"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "gacha_name": "string",
+                    "banner_image": "string",
+                    "exec_count": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserRequest": {
+        "title": "UserRequest",
+        "x-stoplight": {
+          "id": "w4lh9zce4nbyj"
+        },
+        "type": "object",
+        "x-examples": {},
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId",
+          "name"
+        ]
+      },
+      "UserResponse": {
+        "title": "UserResponse",
+        "x-stoplight": {
+          "id": "tzazowquuet89"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "MultipleUserResponse": {
+        "title": "MultipleUserResponse",
+        "x-stoplight": {
+          "id": "vgmamje9jniw8"
+        },
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserResponse"
+            }
+          }
+        },
+        "required": [
+          "users"
+        ]
+      },
+      "GachaRequest": {
+        "title": "GachaRequest",
+        "x-stoplight": {
+          "id": "8917jz2f2qrvy"
+        },
+        "type": "object",
+        "properties": {
+          "gacha_id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "gacha_id"
+        ]
+      },
+      "GachaInfoResponse": {
+        "title": "GachaInfoResponse",
+        "x-stoplight": {
+          "id": "bay8rmrdmqnw2"
+        },
+        "type": "object",
+        "properties": {
+          "gacha_name": {
+            "type": "string"
+          },
+          "banner_image": {
+            "type": "string"
+          },
+          "exec_count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "gacha_name",
+          "banner_image",
+          "exec_count"
+        ]
+      },
+      "GachaCostResponse": {
+        "title": "GachaCostResponse",
+        "x-stoplight": {
+          "id": "ovj3qp2umzy41"
+        },
+        "type": "object",
+        "properties": {
+          "cost_type": {
+            "type": "integer"
+          },
+          "cost": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "cost_type",
+          "cost"
+        ]
+      },
+      "GachaProbabilityResponse": {
+        "title": "GachaProbabilityResponse",
+        "x-stoplight": {
+          "id": "fxrcil3c4b9wl"
+        },
+        "type": "object",
+        "properties": {
+          "probability": {
+            "type": "integer"
+          },
+          "object_type": {
+            "type": "integer"
+          },
+          "object_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "object_count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "probability",
+          "object_type",
+          "object_id",
+          "object_count"
+        ]
+      },
+      "MultipleGachaCostResponse": {
+        "title": "MultipleGachaCostResponse",
+        "x-stoplight": {
+          "id": "o3v5j8lvvh3ff"
+        },
+        "type": "object",
+        "properties": {
+          "costs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GachaCostResponse"
+            }
+          }
+        },
+        "required": [
+          "costs"
+        ]
+      },
+      "MultipleGachaProbabilityResponse": {
+        "title": "MultipleGachaProbabilityResponse",
+        "x-stoplight": {
+          "id": "okiwjvufl1wfa"
+        },
+        "type": "object",
+        "properties": {
+          "probabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GachaProbabilityResponse"
+            }
+          }
+        },
+        "required": [
+          "probabilities"
+        ]
+      },
+      "MultipleGachaInfoResponse": {
+        "title": "MultipleGachaInfoResponse",
+        "x-stoplight": {
+          "id": "cise2xx8i90hc"
+        },
+        "type": "object",
+        "properties": {
+          "infos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GachaInfoResponse"
+            }
+          }
+        },
+        "required": [
+          "infos"
+        ]
+      },
+      "GachaResponse": {
+        "title": "GachaResponse",
+        "x-stoplight": {
+          "id": "aw5xak3o01e4n"
+        },
+        "type": "object",
+        "properties": {
+          "gacha_info": {
+            "$ref": "#/components/schemas/GachaInfoResponse"
+          },
+          "gacha_costs": {
+            "$ref": "#/components/schemas/MultipleGachaCostResponse"
+          },
+          "gacha_probabilities": {
+            "$ref": "#/components/schemas/MultipleGachaProbabilityResponse"
+          }
+        },
+        "required": [
+          "gacha_info",
+          "gacha_costs",
+          "gacha_probabilities"
+        ]
+      },
+      "MultipleGachaResponse": {
+        "title": "MultipleGachaResponse",
+        "x-stoplight": {
+          "id": "lq401bz72wx4x"
+        },
+        "type": "object",
+        "properties": {
+          "gachas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GachaResponse"
+            }
+          }
+        },
+        "required": [
+          "gachas"
+        ]
+      },
+      "GachaPostRequest": {
+        "title": "GachaPostRequest",
+        "x-stoplight": {
+          "id": "ze6a0i1kw1bh9"
+        },
+        "type": "object",
+        "properties": {
+          "gacha_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "gacha_info": {
+            "$ref": "#/components/schemas/GachaInfoRequest"
+          },
+          "gacha_costs": {
+            "$ref": "#/components/schemas/MultipleGachaCostRequest"
+          },
+          "gacha_probabilities": {
+            "$ref": "#/components/schemas/MultipleGachaProbabilityRequest"
+          }
+        },
+        "required": [
+          "gacha_id",
+          "gacha_info",
+          "gacha_costs",
+          "gacha_probabilities"
+        ]
+      },
+      "GachaInfoRequest": {
+        "title": "GachaInfoRequest",
+        "x-stoplight": {
+          "id": "cwriuge0pmbru"
+        },
+        "type": "object",
+        "properties": {
+          "gacha_name": {
+            "type": "string"
+          },
+          "banner_image": {
+            "type": "string"
+          },
+          "exec_count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "gacha_name",
+          "banner_image",
+          "exec_count"
+        ]
+      },
+      "GachaCostRequest": {
+        "title": "GachaCostRequest",
+        "x-stoplight": {
+          "id": "v3ng1opoxtftz"
+        },
+        "type": "object",
+        "properties": {
+          "cost_type": {
+            "type": "integer"
+          },
+          "cost": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "cost_type",
+          "cost"
+        ]
+      },
+      "GachaProbabilityRequest": {
+        "title": "GachaProbabilityRequest",
+        "x-stoplight": {
+          "id": "4767jrh58b1ie"
+        },
+        "type": "object",
+        "properties": {
+          "probability": {
+            "type": "integer"
+          },
+          "object_type": {
+            "type": "integer"
+          },
+          "object_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "object_count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "probability",
+          "object_type",
+          "object_id",
+          "object_count"
+        ]
+      },
+      "MultipleGachaCostRequest": {
+        "title": "MultipleGachaCostRequest",
+        "x-stoplight": {
+          "id": "bt718igppkl5m"
+        },
+        "type": "object",
+        "properties": {
+          "costs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GachaCostRequest"
+            }
+          }
+        },
+        "required": [
+          "costs"
+        ]
+      },
+      "MultipleGachaProbabilityRequest": {
+        "title": "MultipleGachaProbabilityRequest",
+        "x-stoplight": {
+          "id": "bt7y5jzwoiyjt"
+        },
+        "type": "object",
+        "properties": {
+          "probabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GachaProbabilityRequest"
+            }
+          }
+        },
+        "required": [
+          "probabilities"
+        ]
+      },
+      "GachaPutRequest": {
+        "title": "GachaPutRequest",
+        "x-stoplight": {
+          "id": "psmu7w8iepy2m"
+        },
+        "type": "object",
+        "properties": {
+          "gacha_info": {
+            "$ref": "#/components/schemas/GachaInfoRequest"
+          },
+          "gacha_costs": {
+            "$ref": "#/components/schemas/MultipleGachaCostRequest"
+          },
+          "gacha_probabilities": {
+            "$ref": "#/components/schemas/MultipleGachaProbabilityRequest"
+          }
+        },
+        "required": [
+          "gacha_info",
+          "gacha_costs",
+          "gacha_probabilities"
+        ]
+      },
+      "PutUserRequest": {
+        "title": "PutUserRequest",
+        "x-stoplight": {
+          "id": "ejv21ral69mft"
+        },
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    }
+  }
+}

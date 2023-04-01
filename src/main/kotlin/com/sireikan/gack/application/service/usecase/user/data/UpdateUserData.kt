@@ -11,7 +11,7 @@ class UpdateUserData private constructor(
             return UpdateUserData(userId, userName)
         }
         fun create(user: User): UpdateUserData {
-            return UpdateUserData(user.id.userId, user.name.userName)
+            return UpdateUserData(user.userId.userId, user.name.userName)
         }
     }
 }

@@ -9,43 +9,46 @@ import com.sireikan.gack.infrastructure.mapper.UserMapper
 import org.springframework.stereotype.Component
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.ThreadLocalRandom
 
 @Component
 class UserDBRepository(private val userMapper: UserMapper) : UserRepository {
 
     override fun find(userId: UserId): User? {
         val user = userMapper.find(userId.userId) ?: return null
-        return User(UserId(user.id), UserName(user.name))
+        return User(UserId(user.userId), UserName(user.name))
     }
 
     override fun findAll(userOrderKey: UserOrderKey): List<User> {
         val order = buildOrderColumn(userOrderKey)
         val userList: List<com.sireikan.gack.infrastructure.entity.User> = userMapper.findAll(order)
         return userList.stream().map { user ->
-            User(UserId(user.id), UserName(user.name))
+            User(UserId(user.userId), UserName(user.name))
         }.toList()
     }
 
-    override fun insert(userName: UserName): Long {
-        val id: Long = ThreadLocalRandom.current().nextLong(1, Int.MAX_VALUE.toLong())
+    override fun insert(userId: UserId, userName: UserName): Long {
         val created: String = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().time)
         userMapper.insert(
             com.sireikan.gack.infrastructure.entity.User.create(
-                id,
+                null,
+                userId.userId,
                 userName.userName,
                 created,
             ),
         )
-        return id
+        return userId.userId
     }
 
     override fun update(user: User) {
-        userMapper.update(
+        userMapper.delete(user.userId.userId)
+
+        val created: String = SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Calendar.getInstance().time)
+        userMapper.insert(
             com.sireikan.gack.infrastructure.entity.User.create(
-                user.id.userId,
-                user.name.userName,
                 null,
+                user.userId.userId,
+                user.name.userName,
+                created,
             ),
         )
     }

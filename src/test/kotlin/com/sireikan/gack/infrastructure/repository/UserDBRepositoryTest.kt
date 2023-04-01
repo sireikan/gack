@@ -34,11 +34,11 @@ class UserDBRepositoryTest {
     @Test
     fun find_exist() {
         Mockito.`when`(userMapper.find(1L)).thenReturn(
-            User.create(1L, "name", "2023-01-01 00:00:00")
+            User.create(1L, 1L, "name", "2023-01-01 00:00:00")
         )
         val actual = userRepository.find(UserId(1L)) ?: return
 
-        Assertions.assertSame(1L, actual.id.userId)
+        Assertions.assertSame(1L, actual.userId.userId)
         Assertions.assertSame("name", actual.name.userName)
     }
 
@@ -53,19 +53,13 @@ class UserDBRepositoryTest {
     @Test
     fun findAll_exist() {
         Mockito.`when`(userMapper.findAll("id")).thenReturn(
-            listOf(User.create(1L, "name", "2023-01-01 00:00:00")),
+            listOf(User.create(1L, 1L, "name", "2023-01-01 00:00:00")),
         )
         val actual = userRepository.findAll(UserOrderKey.USER_ID)
 
         Assertions.assertEquals(1, actual.size)
-        Assertions.assertSame(1L, actual.get(0).id.userId)
+        Assertions.assertSame(1L, actual.get(0).userId.userId)
         Assertions.assertSame("name", actual.get(0).name.userName)
-    }
-
-    @Test
-    fun update() {
-        Mockito.doNothing().`when`(userMapper).update(User.create(1L, "name", "2023-01-01 00:00:00"))
-        userRepository.update(com.sireikan.gack.domain.model.user.User(UserId(1L), UserName("name2")))
     }
 
     @Test
