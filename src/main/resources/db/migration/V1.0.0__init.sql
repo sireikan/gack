@@ -7,5 +7,6 @@ CREATE TABLE user (
     email varchar(120) NOT NULL,
     password text NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE KEY (email)
+    UNIQUE KEY (email),
+    UNIQUE KEY (user_id)
 );
